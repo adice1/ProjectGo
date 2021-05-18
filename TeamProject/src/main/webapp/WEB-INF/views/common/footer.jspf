@@ -1,0 +1,19 @@
+<%@ page contentType="text/html; charset=UTF-8"%>
+<style type="text/css">
+footer {
+	background-color: #F3EEE8;
+	height: 250px;
+}
+
+</style>
+
+<footer>
+<hr/>
+<br/>
+<h5>개인정보 방침   |   사이트 맵   |   고객센터<br/><br/>
+위치 : 에이콘 아카데미 서울 강남구 테헤란로 124<br/><br/>
+전화변호 : 010 - xxxx - xxxx<br/><br/>
+조원 : 송증빈, 이충현, 변의준, 김영신
+</h5>
+<br/>
+</footer>
