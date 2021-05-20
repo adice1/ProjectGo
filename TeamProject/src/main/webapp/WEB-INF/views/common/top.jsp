@@ -28,12 +28,12 @@ body .box{
 	<li><a href="${topHome}index?formpath=intro">소개</a></li>	
 	<li><a href="${topHome}index?formpath=board">게시판</a></li>
 	<li><a href="${topHome}index?formpath=preQuestions">기출문제</a></li>
-	<li><a href="${topHome}index?formpath=studyroom">자율 학습방</a></li>
+	<li><a href="${topHome}index?formpath=selfStudy">자율 학습방</a></li>
 	<%	if(sessionId==null){ %>
-	<li style="margin-left: 1050px"><a href="${topHome}index?formpath=login">로그인</a></li>
+	<li style="margin-left: 530px"><a href="${topHome}index?formpath=login">로그인</a></li>
 	<li><a href="${topHome}index?formpath=member">회원가입</a></li>
 	<%}else{ 	%>
-	<li style="margin-left: 730px"> ${id } 님 환영합니다.</li>
+	<li style="margin-left: 530px"> ${id } 님 환영합니다.</li>
 	<li><a href="${topHome}login/logout">로그아웃</a></li>
 	<%} %>
 </ul>

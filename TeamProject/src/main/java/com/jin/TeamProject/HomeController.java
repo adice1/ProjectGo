@@ -66,6 +66,12 @@ public class HomeController {
 	}
 	@RequestMapping(value = "/preQuestions")
 	public String preQuestions() {
-		return "";
-	}	
+		return "PreQuestions/preQuestionsForm";
+	}
+	@RequestMapping(value = "/selfStudy")
+	public String studyroom() {
+		return "SelfStudy/selfStudyForm";
+	}
+	
+	
 }
