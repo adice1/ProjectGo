@@ -3,5 +3,5 @@
 <c:url var="home" value="/"/>
 
 <center>
-<h1>공부 방 페이지입니다.</h1>
+<h1>기출문제 페이지입니다.</h1>
 </center>
