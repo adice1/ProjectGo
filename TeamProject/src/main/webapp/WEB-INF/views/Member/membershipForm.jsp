@@ -2,9 +2,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:url var="home" value="/"/>
 
-<%-- <center>
-<h1>회원가입 페이지입니다.</h1>
-</center> --%>
+<script type="text/javascript">
+function SearchPostcode(cmd){
+	window.name="우편번호 검색";
+	window.open(cmd, "_blank", "top=500, left=500, width=400, height=400");
+}
+</script>
 <center>
 <h3><font color="red">${msg }</font></h3>
 <form action="${home }membership/memberProc" method="post">

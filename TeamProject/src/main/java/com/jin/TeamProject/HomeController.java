@@ -15,8 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.jin.Login.ILoginService;
-import com.jin.Login.Login;
+import com.jin.Member.Member;
+
+
 
 /**
  * Handles requests for the application home page.
@@ -24,7 +25,7 @@ import com.jin.Login.Login;
 @Controller
 public class HomeController {
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-	
+	@Autowired private HttpSession session;
 	@RequestMapping(value = "/")
 	public String index(Model model) {
 		model.addAttribute("formpath", "home");
@@ -53,7 +54,12 @@ public class HomeController {
 		return "forward:/Member/loginForm";
 	}
 	@RequestMapping(value = "/member")
-	public String member() {
+	public String member(Model model, Member member) {
+		Boolean authState = (Boolean)session.getAttribute("authState");
+//		logger.warn(authState+"");
+		
+		if(authState==null)
+			session.setAttribute("authState", false);
 		return "Member/membershipForm";
 	}
 	@RequestMapping(value = "/studyroom")
