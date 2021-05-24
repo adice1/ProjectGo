@@ -16,12 +16,10 @@ $(document).ready(function(){
     
   });
   $("#Questions").click(function(){
-	  
 	    $(".questions").slideToggle("fast");
 	    $(".panel").slideUp("fast");
 	  });
 });
-
 </script>
 
 <style type="text/css">
@@ -37,14 +35,12 @@ ul li{display: inline-block; margin: 15px 30px;}
 body .box{
 	background-color: #F3EEE8;
 }
-.panel, #board, .questions, #uestions {
-  
-  background-color: #F3EEE8;
-  /* border: solid 1px #c3c3c3; */
-}
+
 .panel, .questions {
+  background-color: #ffffff;
   padding: 3px;
   display: none;
+  
 }
 </style>
 <div class="box">
@@ -65,16 +61,7 @@ body .box{
 	<li style="margin-left: 330px"> ${id } 님 환영합니다.</li>
 	<li><a href="${topHome}login/logout">로그아웃</a></li>
 	<%} %>
-	
-	<div style="margin-left: 185px"><a class="panel" href="${topHome}index?formpath=QuestionBoard">Q&A 게시판</a></div>
-	<div style="margin-left: 185px"><a class="panel" href="${topHome}index?formpath=freeBoard">자유 게시판</a></div>
-	
-	<div style="margin-left: 322px"><a class="questions" href="${topHome}index?formpath=preYearQuestions">연도별</a></div>
-	<div style="margin-left: 322px"><a class="questions" href="${topHome}index?formpath=preFitQuestions">맞춤형</a></div>
-	<div style="margin-left: 322px"><a class="questions" href="${topHome}index?formpath=preRandQuestions">랜덤 기출</a></div>
-	
 </ul>
-<br/>
 </div>
 
 <hr/>
