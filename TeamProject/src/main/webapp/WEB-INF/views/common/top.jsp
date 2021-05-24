@@ -22,7 +22,7 @@ body .box{
 }
 </style>
 <div class="box">
-<h1 align="center">에이콘 아카데미</h1>
+<h1 align="center">에이콘 아카데미</h1> 
 <ul>
 	<li><a href="${topHome}index?formpath=home">홈</a></li>
 	<li><a href="${topHome}index?formpath=intro">소개</a></li>	
