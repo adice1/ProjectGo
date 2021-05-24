@@ -67,11 +67,11 @@ body .box{
 	<%} %>
 	
 	<div style="margin-left: 185px"><a class="panel" href="${topHome}index?formpath=QuestionBoard">Q&A 게시판</a></div>
-	<div style="margin-left: 185px"><a class="panel" href="${topHome}index?formpath=freeBoard">자유 게시판</a></div>
+	<div style="margin-left: 185px"><a class="panel" href="${topHome}index?formpath=communityboard">자유 게시판</a></div>
 	
-	<div style="margin-left: 322px"><a class="questions" href="${topHome}index?formpath=preYearQuestions">연도별</a></div>
-	<div style="margin-left: 322px"><a class="questions" href="${topHome}index?formpath=preFitQuestions">맞춤형</a></div>
-	<div style="margin-left: 322px"><a class="questions" href="${topHome}index?formpath=preRandQuestions">랜덤 기출</a></div>
+	<div style="margin-left: 322px"><a class="questions" href="${topHome}index?formpath=yearExam">연도별</a></div>
+	<div style="margin-left: 322px"><a class="questions" href="${topHome}index?formpath=smartExam">맞춤형</a></div>
+	<div style="margin-left: 322px"><a class="questions" href="${topHome}index?formpath=randExam">랜덤 기출</a></div>
 	
 </ul>
 <br/>
