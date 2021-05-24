@@ -16,12 +16,10 @@ $(document).ready(function(){
     
   });
   $("#Questions").click(function(){
-	  
 	    $(".questions").slideToggle("fast");
 	    $(".panel").slideUp("fast");
 	  });
 });
-
 </script>
 
 <style type="text/css">
@@ -41,6 +39,7 @@ body .box{
   background-color: #FFFFFF;
   padding: 3px;
   display: none;
+  
 }
 </style>
 <div class="box">
@@ -61,5 +60,4 @@ body .box{
 	<%} %>
 </ul>
 </div>
-
 <hr/>
