@@ -66,13 +66,31 @@ public class HomeController {
 	public String Studyroom() {
 		return "Studyroom/studyroomForm";
 	}
-	@RequestMapping(value = "/board")
-	public String board() {
-		return "Board/boardForm";
+	
+	@RequestMapping(value = "/QuestionBoard")
+	public String QuestionBoard() {
+		return "Board/questionBoardForm";
 	}
-	@RequestMapping(value = "/preQuestions")
-	public String preQuestions() {
-		return "PreQuestions/preQuestionsForm";
+	@RequestMapping(value = "/freeBoard")
+	public String freeBoard() {
+		return "Board/freeBoardForm";
+	}
+	
+	@RequestMapping(value = "/preYearQuestions")
+	public String preYearQuestions() {
+		return "PreQuestions/preYearQuestionsForm";
+	}
+	@RequestMapping(value = "/preFitQuestions")
+	public String preFitQuestions() {
+		return "PreQuestions/preFitQuestionsForm";
+	}
+	@RequestMapping(value = "/preRandQuestions")
+	public String preRandQuestions() {
+		return "PreQuestions/preRandQuestionsForm";
+	}
+	@RequestMapping(value = "/videoLecture")
+	public String videoLecture() {
+		return "videoLecture/videoLectureForm";
 	}
 	@RequestMapping(value = "/selfStudy")
 	public String studyroom() {
