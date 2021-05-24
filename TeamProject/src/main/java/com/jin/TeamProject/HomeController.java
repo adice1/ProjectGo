@@ -62,31 +62,27 @@ public class HomeController {
 			session.setAttribute("authState", false);
 		return "Member/membershipForm";
 	}
-	@RequestMapping(value = "/studyroom")
-	public String Studyroom() {
-		return "Studyroom/studyroomForm";
-	}
 	
 	@RequestMapping(value = "/QuestionBoard")
 	public String QuestionBoard() {
-		return "Board/questionBoardForm";
+		return "Board/questionboardForm";
 	}
-	@RequestMapping(value = "/freeBoard")
+	@RequestMapping(value = "/communityboard")
 	public String freeBoard() {
-		return "Board/freeBoardForm";
+		return "Board/communityboardForm";
 	}
 	
-	@RequestMapping(value = "/preYearQuestions")
-	public String preYearQuestions() {
-		return "PreQuestions/preYearQuestionsForm";
+	@RequestMapping(value = "/yearExam")
+	public String yearExam() {
+		return "Exam/yearExamForm";
 	}
-	@RequestMapping(value = "/preFitQuestions")
-	public String preFitQuestions() {
-		return "PreQuestions/preFitQuestionsForm";
+	@RequestMapping(value = "/smartExam")
+	public String smartExam() {
+		return "Exam/smartExamForm";
 	}
-	@RequestMapping(value = "/preRandQuestions")
-	public String preRandQuestions() {
-		return "PreQuestions/preRandQuestionsForm";
+	@RequestMapping(value = "/randExam")
+	public String randExam() {
+		return "Exam/randExamForm";
 	}
 	@RequestMapping(value = "/videoLecture")
 	public String videoLecture() {
@@ -94,7 +90,7 @@ public class HomeController {
 	}
 	@RequestMapping(value = "/selfStudy")
 	public String studyroom() {
-		return "SelfStudy/selfStudyForm";
+		return "selfStudy/selfStudyForm";
 	}
 	
 	
