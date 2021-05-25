@@ -7,7 +7,7 @@
 <center>
 <form action="${home }commboard/writeProc" method="post" enctype="multipart/form-data">
 <input type="hidden" name="pno" value="${pno }">
-<input type="text" name="no" value="${board.no }">
+<input type="hidden" name="no" value="${board.no }">
 <table style="width: 650px; ">
 	<tr>
 		<td style="width: 80px; height:40px;" align="right">작성자</td>
@@ -25,11 +25,7 @@
 		<td colspan=2 align="right">
 		<textarea name="contents" style="width: 650px; height: 300px">${board.contents }</textarea></td>
 	</tr>
-	<tr>
-		<td align='right' height=40 colspan=2>
-			<input type=file name="uploadfile" style="width: 300px; "/> 
-		</td>
-	</tr>
+
 	<tr>
 		<td align='center' height=40 colspan=2>
 			<input type=submit value='${btnName }' style="width: 120px; "/>

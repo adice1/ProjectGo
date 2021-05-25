@@ -34,12 +34,12 @@ public class CommBoardController {
 	
 	
 	@RequestMapping(value = "commboardProc")
-	public String commboardProc(Model model) {
+	public String commboardProc(Model model, HttpServletRequest request) {
 		
-			List<CommBoard> board = iServ.select();
+			List<CommBoard> boardLst = iServ.SelectBoard(request);
 			int cnt = iServ.boardCount();
-			logger.warn("게시글 총 갯수 = "+cnt);
-			model.addAttribute("boardLst", board);
+			model.addAttribute("boardLst", boardLst);
+			model.addAttribute("navi", iServ.getNavi(request));
 			
 			logger.warn("자유게시판 연결 성공");
 			return "forward:/index?formpath=commboard";
@@ -76,6 +76,14 @@ public class CommBoardController {
 			logger.warn("자유게시판 작성 성공");
 			return "forward:/index?formpath=commboard";
 		}
+	@RequestMapping(value = "detailRead")
+	public String detailRead(Model model, @RequestParam int writeNo) {
+		
+		
+		logger.warn(writeNo+"입니다.");
+		model.addAttribute("board", iServ.detailRead(writeNo));
+		return "forward:/index?formpath=detailRead";
+	}
 
 
 	

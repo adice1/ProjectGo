@@ -10,7 +10,7 @@ $(document).ready(function() {
 	$("div.title").css("cursor", "pointer").click(function(){
 		let no = $(this).attr("id");
 		$("#writeNo").val(no);
-		$("#frm").attr("action", "${home }board/detailRead");
+		$("#frm").attr("action", "${home }commboard/detailRead");
 		$("#frm").submit();
 	})
 	$("#allSelect").click(function() {
@@ -61,6 +61,7 @@ $(document).ready(function() {
 		</td>
 		<td style="width: 80px; height:40px;" align="center">${board.id }</td>
 		<td style="width: 120px; height:40px;" align="center">${board.writedate }</td>
+		<td style="width: 80px; height:40px;" align="center">${board.hit }</td>
 	</tr>
 	</c:forEach>
 	<tr><td colspan=5><hr/></td></tr>
@@ -80,7 +81,7 @@ ${navi }
 <table>
 <tr>
 <td>
-<form id="frm" action="${home }board/boardProc" method="post">
+<form id="frm" action="${home }commboard/commboardProc" method="post">
 	<select name="searchName">
 		<option value="all">전체</option>
 		<option value="title">제목</option>

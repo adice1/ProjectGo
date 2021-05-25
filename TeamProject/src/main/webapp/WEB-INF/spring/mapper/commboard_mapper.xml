@@ -1,10 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jin.CommBoard.ICommBoardDao">
-<select id="select" resultType="com.jin.CommBoard.CommBoard">
-		SELECT *
-		from commboard
-</select>
+<select id="SelectBoard" parameterType="Map" resultType="com.jin.CommBoard.CommBoard">
+
+		SELECT no, id, title, contents, writedate, hit
+		FROM(
+			SELECT LEVEL, no, id, LPAD(' ',	4*(LEVEL-1))||title as title, contents,
+			writeDate, nvl(readNo, 0) as hit, pno, depth, ROWNUM AS RNUM
+			FROM(
+				SELECT b.no, id, title, contents, writeDate, h.readNo, nvl(rpl.pno, 0) as	pno,
+				nvl(rpl.depth, 0) as depth
+				FROM commboard b
+				LEFT JOIN Hits h
+				ON b.no = h.no 
+				LEFT JOIN reply rpl
+				ON b.no = rpl.no
+			)
+			<if test="searchName!=null">
+			<choose>
+				<when test="searchName=='all'">
+					WHERE title like '%'||#{searchWord}||'%'
+					OR id like '%'||#{searchWord}||'%'
+				</when>
+				<otherwise>
+					WHERE #{searchName} like '%'||#{searchWord}||'%'
+				</otherwise>
+			</choose>
+			</if>
+			START WITH pno=0
+			CONNECT BY PRIOR no=pno
+			ORDER SIBLINGS BY no desc
+		)
+	<![CDATA[WHERE RNUM>=#{start} AND RNUM<=#{end}]]>
+	</select>
 
 <insert id="Insert" parameterType="com.jin.CommBoard.CommBoard">
 	<selectKey keyProperty="no" resultType="int" order="BEFORE">
@@ -19,4 +47,25 @@
 	select count(*)
 	from commboard
 </select>
+
+<select id="detailRead" parameterType="int" resultType="com.jin.CommBoard.CommBoard">
+	select *
+	from commboard
+	where no = #{writeNo}
+</select>
+
+<select id="BoardCount" resultType="int">
+		SELECT COUNT(*) FROM commboard
+		<if test="searchName!=null">
+		<choose>
+			<when test="searchName=='all'">
+				WHERE title like '%'||#{searchWord}||'%'
+				OR id like '%'||#{searchWord}||'%'
+			</when>
+			<otherwise>
+				WHERE ${searchName} like '%'||#{searchWord}||'%'
+			</otherwise>
+		</choose>
+		</if>
+	</select>
 </mapper>

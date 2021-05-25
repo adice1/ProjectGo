@@ -69,6 +69,7 @@ public class HomeController {
 	public String QuestionBoard() {
 		return "Board/questionboardForm";
 	}
+	//--자유 게시판 영역--
 	@RequestMapping(value = "/commboard")
 	public String freeBoard() {
 		return "CommBoard/boardForm";
@@ -77,7 +78,11 @@ public class HomeController {
 	public String commboardwrite() {
 		return "CommBoard/writeForm";
 	}
-	
+	@RequestMapping(value = "/detailRead")
+	public String detailRead() {
+		return "CommBoard/viewForm";
+	}
+	// --자유게시판 영역--
 	@RequestMapping(value = "/yearExam")
 	public String yearExam() {
 		return "Exam/yearExamForm";

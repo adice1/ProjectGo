@@ -14,8 +14,18 @@ public class CommBoard {
     private String contents;
 
     private Date writedate;
+    
+    private int hit;
 
-    public int getNo() {
+    public int getHit() {
+		return hit;
+	}
+
+	public void setHit(int hit) {
+		this.hit = hit;
+	}
+
+	public int getNo() {
         return no;
     }
 
