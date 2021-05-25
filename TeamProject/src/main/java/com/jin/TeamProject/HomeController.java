@@ -25,7 +25,9 @@ import com.jin.Member.Member;
 @Controller
 public class HomeController {
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	
 	@Autowired private HttpSession session;
+	
 	@RequestMapping(value = "/")
 	public String index(Model model) {
 		model.addAttribute("formpath", "home");
@@ -67,9 +69,13 @@ public class HomeController {
 	public String QuestionBoard() {
 		return "Board/questionboardForm";
 	}
-	@RequestMapping(value = "/communityboard")
+	@RequestMapping(value = "/commboard")
 	public String freeBoard() {
-		return "Board/communityboardForm";
+		return "CommBoard/boardForm";
+	}
+	@RequestMapping(value = "/commboardwrite")
+	public String commboardwrite() {
+		return "CommBoard/writeForm";
 	}
 	
 	@RequestMapping(value = "/yearExam")
