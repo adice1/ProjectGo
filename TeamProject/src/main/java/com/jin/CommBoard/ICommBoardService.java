@@ -7,8 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 public interface ICommBoardService {
 	
 	public List<CommBoard> SelectBoard(HttpServletRequest request);
-	public void Insert(CommBoard commboard);
 	public int boardCount();
 	public CommBoard detailRead(int writeNo);
 	public String getNavi(HttpServletRequest request);
+	public void Write(CommBoard board, HttpServletRequest request);
+	public void Modify(CommBoard board);
 }

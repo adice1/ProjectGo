@@ -7,8 +7,10 @@ import javax.servlet.http.HttpServletRequest;
 
 public interface ICommBoardDao {
 	public List<CommBoard> SelectBoard(Map<String, Object> boardMap);
-	public void Insert(CommBoard commboard);
 	public int boardCount();
 	public CommBoard detailRead(int writeNo);
 	public int BoardCount(Map<String, Object> boardMap);
+	public int Write(CommBoard board);
+	public void InsertReply(Map<String, Integer> replyMap);
+	public void Modify(CommBoard board);
 }

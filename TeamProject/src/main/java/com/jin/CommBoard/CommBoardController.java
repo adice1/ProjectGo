@@ -47,35 +47,34 @@ public class CommBoardController {
 	
 	@RequestMapping(value = "write")
 	public String commboardwrite(Model model, HttpSession session) {	
-			String id = (String) session.getAttribute("id");
 		
 			logger.warn("글쓰기 연결 성공");
-			model.addAttribute("usrId", id);
+			model.addAttribute("usrId", session.getAttribute("id"));
 			model.addAttribute("btnName", "글쓰기");
+			model.addAttribute("proc", "writeProc");
 			return "forward:/index?formpath=commboardwrite";
 		}
 	
 	@RequestMapping(value = "writeProc")
-	public String commboardwriteProc(Model model,
-			@RequestParam String id,
-			@RequestParam String contents,
-			@RequestParam String title) {
-
-			CommBoard commboard = new CommBoard();
-		
-//			logger.warn("작성자 : "+id);
-//			logger.warn("제목 : "+title);
-//			logger.warn("내용 : "+contents);
-			
-			commboard.setId(id);
-			commboard.setTitle(title);
-			commboard.setContents(contents);
-			
-			iServ.Insert(commboard);
-			
-			logger.warn("자유게시판 작성 성공");
-			return "forward:/index?formpath=commboard";
+	public String commboardwriteProc(CommBoard board, HttpServletRequest request) {
+		iServ.Write(board, request);
+			return "forward:/commboard/commboardProc";
 		}
+	
+	@RequestMapping(value = "modify")
+	public String modify(Model model, HttpSession session, CommBoard board) {
+		model.addAttribute("usrId", session.getAttribute("id"));
+		model.addAttribute("btnName", "수정");
+		model.addAttribute("proc", "modifyProc");
+		return "forward:/index?formpath=commboardwrite";
+	}
+	
+	@RequestMapping(value = "modifyProc")
+	public String modifyProc(CommBoard board) {
+		iServ.Modify(board);
+		return "forward:/board/boardProc";
+	}
+	
 	@RequestMapping(value = "detailRead")
 	public String detailRead(Model model, @RequestParam int writeNo) {
 		

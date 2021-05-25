@@ -35,6 +35,7 @@ $(document).ready(function() {
 <center>
 <form id="frm" action="${home }commboard/write" method="post">
 <input type="hidden" name="writeNo" id="writeNo"/>
+
 <table style="width: 650px; ">
 	<thead>
 	<tr>

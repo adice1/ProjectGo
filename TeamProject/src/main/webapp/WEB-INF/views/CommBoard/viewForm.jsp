@@ -37,7 +37,7 @@
 		<td colspan=2 align="right">
 			<button style="width: 60px; ">글쓰기</button>
 			<button formaction="${home }board/reply" style="width: 60px; ">답글</button>
-			<button formaction="${home }board/modify" style="width: 60px; ">수정</button>
+			<button formaction="${home }commboard/modify" style="width: 60px; ">수정</button>
 			<button formaction="${home }board/delete" style="width: 60px; ">삭제</button>
 			<button formaction="${home }board/boardProc" style="width: 60px; ">목록</button>
 		</td>

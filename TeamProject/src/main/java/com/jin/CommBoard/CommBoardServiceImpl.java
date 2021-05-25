@@ -1,6 +1,7 @@
 package com.jin.CommBoard;
 import com.jin.TeamProject.BoardTools;
 
+import java.lang.System.Logger;
 import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -35,8 +36,10 @@ public class CommBoardServiceImpl implements ICommBoardService{
 		String searchName = request.getParameter("searchName");
 		if(searchName != null) {
 			boardMap.put("searchName", searchName);
+			System.out.println(boardMap.get("searchName"));
 			String searchWord = request.getParameter("searchWord");
 			boardMap.put("searchWord", searchWord);
+			System.out.println(boardMap.get("searchWord"));
 		}
 		return boardMap;
 	}
@@ -56,6 +59,7 @@ public class CommBoardServiceImpl implements ICommBoardService{
 		
 		int totalPage = iCommBoardDao.BoardCount(boardMap);
 		String url=request.getContextPath()+"/commboard/commboardProc?";
+		
 		if(boardMap.get("searchName")!=null) {
 			url+="searchName="+boardMap.get("searchName")+"&";
 			url+="searchWord="+boardMap.get("searchWord")+"&";	
@@ -67,13 +71,6 @@ public class CommBoardServiceImpl implements ICommBoardService{
 	}
 
 	@Override
-	public void Insert(CommBoard commboard) {
-		Date writedate = new Date(System.currentTimeMillis());
-		commboard.setWritedate(writedate);
-		iCommBoardDao.Insert(commboard);
-	}
-
-	@Override
 	public int boardCount() {
 		return iCommBoardDao.boardCount();
 	}
@@ -82,5 +79,28 @@ public class CommBoardServiceImpl implements ICommBoardService{
 	public CommBoard detailRead(int writeNo) {
 		return iCommBoardDao.detailRead(writeNo);
 	}
-	
+
+	@Override
+	public void Write(CommBoard board, HttpServletRequest request) {
+		Date writedate = new Date(System.currentTimeMillis());
+		
+		board.setWritedate(writedate);
+		iCommBoardDao.Write(board);
+		
+//		if(!"".contentEquals(request.getParameter("pno"))){
+//			/*현재 글번호 - baord.getNo(), 부모 글번호 - pno*/
+//			Map<String, Integer> replyMap = new HashMap<String, Integer>();
+//			replyMap.put("no", board.getNo());
+//			replyMap.put("pno", Integer.parseInt(request.getParameter("pno")) );
+//			iCommBoardDao.InsertReply(replyMap);
+//		}
+		
+	}
+
+	@Override
+	public void Modify(CommBoard board) {
+		iCommBoardDao.Modify(board);
+	}
+
+
 }

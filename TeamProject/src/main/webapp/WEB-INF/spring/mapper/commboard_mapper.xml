@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jin.CommBoard.ICommBoardDao">
+
 <select id="SelectBoard" parameterType="Map" resultType="com.jin.CommBoard.CommBoard">
 
 		SELECT no, id, title, contents, writedate, hit
@@ -32,27 +33,45 @@
 			ORDER SIBLINGS BY no desc
 		)
 	<![CDATA[WHERE RNUM>=#{start} AND RNUM<=#{end}]]>
-	</select>
+</select>
 
-<insert id="Insert" parameterType="com.jin.CommBoard.CommBoard">
-	<selectKey keyProperty="no" resultType="int" order="BEFORE">
+<insert id="Write" parameterType="com.jin.CommBoard.CommBoard">
+		<selectKey keyProperty="no" resultType="int" order="BEFORE">
 			SELECT
 			nvl(max(no), 0)+1 FROM commboard
 		</selectKey>
-	insert into commboard(no,id, title, contents, writedate)
-	values(#{no} ,#{id}, #{title}, #{contents}, #{writedate})
-</insert>
+		INSERT INTO commboard(no, id, title, contents, writedate)
+		VALUES(#{no},#{id},#{title},#{contents},#{writedate})
+	</insert>
 
 <select id="boardCount" resultType="int">
 	select count(*)
 	from commboard
 </select>
 
+<insert id="InsertReply" parameterType="HashMap">
+		<selectKey keyProperty="depth" resultType="int"
+			order="BEFORE">
+			select nvl(min(depth), 0)+1
+			from reply
+			where no=#{pno}
+		</selectKey>
+		INSERT INTO reply
+		VALUES(#{no},#{pno},#{depth})
+	</insert>
+
 <select id="detailRead" parameterType="int" resultType="com.jin.CommBoard.CommBoard">
 	select *
 	from commboard
 	where no = #{writeNo}
 </select>
+
+<update id="Modify" parameterType="com.jin.CommBoard.CommBoard">
+		UPDATE commboard
+		SET title =
+		#{title}, contents=#{contents}
+		WHERE no=#{no}
+	</update>
 
 <select id="BoardCount" resultType="int">
 		SELECT COUNT(*) FROM commboard

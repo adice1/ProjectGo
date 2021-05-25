@@ -7,7 +7,7 @@
 <center>
 <form action="${home }commboard/writeProc" method="post" enctype="multipart/form-data">
 <input type="hidden" name="pno" value="${pno }">
-<input type="hidden" name="no" value="${board.no }">
+
 <table style="width: 650px; ">
 	<tr>
 		<td style="width: 80px; height:40px;" align="right">작성자</td>

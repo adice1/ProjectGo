@@ -5,7 +5,7 @@ import java.sql.Date;
 // 자유 게시판 
 public class CommBoard {
 
-	private int no;
+	private Integer no;
 
     private String id;
 
@@ -14,16 +14,16 @@ public class CommBoard {
     private String contents;
 
     private Date writedate;
-    
-    private int hit;
+  //클릭수
+  	private int hit;
+  	
+  	public int getHit() {
+  		return hit;
+  	}
 
-    public int getHit() {
-		return hit;
-	}
-
-	public void setHit(int hit) {
-		this.hit = hit;
-	}
+  	public void setHit(int hit) {
+  		this.hit = hit;
+  	}
 
 	public int getNo() {
         return no;
