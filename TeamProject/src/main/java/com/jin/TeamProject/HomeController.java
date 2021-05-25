@@ -92,6 +92,14 @@ public class HomeController {
 	public String studyroom() {
 		return "selfStudy/selfStudyForm";
 	}
+	@RequestMapping(value = "/myInfo")
+	public String myInfo() {
+		return "MyInfo/myInfoForm";
+	}
+	@RequestMapping(value = "/videoLst")
+	public String videoLst() {
+		return "MyInfo/videoLstForm";
+	}
 	
 	
 }
