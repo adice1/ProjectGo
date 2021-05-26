@@ -5,7 +5,7 @@
 <center>
 <h1> ${authNum }</h1>
 <form action="${home }myInfo/MyInfoProc" method="post">
-<input type="hidden" id="authNumProc" name="authNumProc" value=" ${authNum }">
+<input type="hidden" id="authNumProc" name="authNumProc" value="${authNum }">
 <table>
 	<tr><td colspan="4" align="center"><h1>내 정보 수정</h1><hr/><br/></td></tr>
 	<tr>
@@ -22,6 +22,10 @@
 		</td>
 		<td colspan="2"><button formaction="${home }myInfo/MyAuthOk">인증 확인</button></td>
 	</tr>
+	
+	
+	<!--집가서 여기서 부터 수정-->
+	<c:forEach var="" items="">
 	<tr>
 		<td align='right'>우편번호</td>
 		<td>
@@ -41,6 +45,7 @@
 			<input type=text name='addr2' style="width: 475px; "/> 
 		</td>
 	</tr>
+	</c:forEach>
 	<tr>
 		<td align='right' height=40>새 패스워드</td>
 		<td>
@@ -51,7 +56,6 @@
 			<input type=text name='newPwOk' placeholder='pw 입력'/> 
 		</td>
 	</tr>
-	
 	<tr>
 		<td align='center' height=40 colspan=4>
 			<input type=submit value='수정' style="width: 120px; "/>

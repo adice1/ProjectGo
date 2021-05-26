@@ -13,12 +13,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.jin.Member.Member;
+import com.jin.Member.Postcode;
 
 @Controller
-@RequestMapping("myInfo")
+@RequestMapping(value = "myInfo")
 public class MyInfoController {
 	private static final Logger logger = LoggerFactory.getLogger(MyInfoController.class);
 	@Autowired private IMyInfoService iMyInfoServ;
+	@RequestMapping(value = "MyInfoFormProc")
+	public String MyInfoFormProc(Postcode postcode, Model model) {
+		Postcode myPost = iMyInfoServ.MyPostSelect();
+		model.addAttribute("myPost"+myPost);
+		logger.warn("내 정보에 어서오세요");
+		return "forward:/index?formpath=myInfo";
+	}
 	@RequestMapping(value = "MyInfoProc")
 	public String MyInfoProc(HttpSession session
 	 ,@RequestParam String pw ) {
@@ -33,7 +41,7 @@ public class MyInfoController {
 		logger.warn("비밀번호 DB : "+authNum);
 		logger.warn("인증id"+id);
 		if(authNum == 0)
-			model.addAttribute("authNum", "다시 인증해주세요");
+			model.addAttribute("authNum", "비밀번호 다시 입력");
 		else
 			model.addAttribute("authNum",authNum);
 		

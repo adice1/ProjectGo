@@ -1,6 +1,7 @@
 package com.jin.MyInfo;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.jin.Login.Login;
 import com.jin.Member.Member;
+import com.jin.Member.Postcode;
 import com.jin.mail.SHA;
 
 @Service
@@ -32,13 +34,17 @@ public class MyInfoServiceImpl implements IMyInfoService{
 		SHA sha = new SHA();
 		String pwCnt = sha.encryptSHA512(pw);
 		Map<String, String> myLst = new HashMap<String, String>();
+		
 		myLst.put("id", sessionId);
 		myLst.put("pw", pwCnt);
+		
 		int myCnt = iMyInfoDao.MyAuth(myLst);
+		
 		if(myCnt == 1) {
-		int authNum = authNum();
-		return authNum;
+			int authNum = authNum();
+			return authNum;
 		}
+		
 		return 0;
 	}
 
@@ -46,8 +52,18 @@ public class MyInfoServiceImpl implements IMyInfoService{
 	public String MyAuthOk(String authNumProc, String authNumOk) {
 		logger.warn("서비스 임플 :"+authNumProc);
 		logger.warn("서비스 임플 :"+authNumOk);
-		if(authNumProc.equals(authNumOk))
+		
+		if(authNumProc.contentEquals(authNumOk))
 			return "인증 확인되었습니다.";
+		
 		return "다시 인증해주세요";
+	}
+
+	@Override
+	public Postcode MyPostSelect() {
+		String sessionId = (String)session.getAttribute("id");
+		Postcode myPost = iMyInfoDao.MyPostSelect(sessionId);
+		
+		return myPost;
 	}
 }

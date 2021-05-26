@@ -6,4 +6,8 @@ select count(*) from login
 WHERE pw = #{pw}
 and id = #{id}
 </select>
+<select id="MyPostSelect" parameterType="String" resultType="com.jin.Member.Postcode">
+SELECT * FROM postcode
+WHERE id =#{id}
+</select>
 </mapper>
