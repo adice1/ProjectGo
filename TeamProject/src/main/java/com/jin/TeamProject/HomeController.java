@@ -78,7 +78,7 @@ public class HomeController {
 	public String commboardwrite() {
 		return "CommBoard/writeForm";
 	}
-	@RequestMapping(value = "/detailRead")
+	@RequestMapping(value = "/commboardview")
 	public String detailRead() {
 		return "CommBoard/viewForm";
 	}

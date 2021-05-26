@@ -6,7 +6,7 @@
 
 		SELECT no, id, title, contents, writedate, hit
 		FROM(
-			SELECT LEVEL, no, id, LPAD(' ',	4*(LEVEL-1))||title as title, contents,
+			SELECT LEVEL, no, id, LPAD('[re]',	4*(LEVEL-1))||title as title, contents,
 			writeDate, nvl(readNo, 0) as hit, pno, depth, ROWNUM AS RNUM
 			FROM(
 				SELECT b.no, id, title, contents, writeDate, h.readNo, nvl(rpl.pno, 0) as	pno,
@@ -60,22 +60,42 @@
 		VALUES(#{no},#{pno},#{depth})
 	</insert>
 
-<select id="detailRead" parameterType="int" resultType="com.jin.CommBoard.CommBoard">
+<select id="detailRead" parameterType="String" resultType="com.jin.CommBoard.CommBoard">
 	select *
 	from commboard
 	where no = #{writeNo}
 </select>
+
+<insert id="Hits" parameterType="Map">
+	<selectKey keyProperty="readno" resultType="int"
+		order="BEFORE">
+		SELECT nvl(max(readno), 0)+1
+		FROM hits
+		WHERE no=#{no}
+	</selectKey>
+	<choose>
+		<when test="readno == 1">
+			INSERT INTO hits(no, readNo)
+			VALUES(#{no}, #{readno})
+		</when>
+		<otherwise>
+			UPDATE hits
+			SET readno=#{readno}
+			WHERE no=#{no}
+		</otherwise>
+	</choose>
+</insert>
 
 <update id="Modify" parameterType="com.jin.CommBoard.CommBoard">
 		UPDATE commboard
 		SET title =
 		#{title}, contents=#{contents}
 		WHERE no=#{no}
-	</update>
+</update>
 
 <select id="BoardCount" resultType="int">
 		SELECT COUNT(*) FROM commboard
-		<if test="searchName!=null">
+	<if test="searchName!=null">
 		<choose>
 			<when test="searchName=='all'">
 				WHERE title like '%'||#{searchWord}||'%'
@@ -85,6 +105,11 @@
 				WHERE ${searchName} like '%'||#{searchWord}||'%'
 			</otherwise>
 		</choose>
-		</if>
-	</select>
+	</if>
+</select>
+
+<delete id="Delete" parameterType="String">
+	DELETE FROM commboard
+	WHERE no=#{no}
+</delete>
 </mapper>

@@ -35,11 +35,11 @@
 	</tr>
 	<tr>
 		<td colspan=2 align="right">
-			<button style="width: 60px; ">글쓰기</button>
-			<button formaction="${home }board/reply" style="width: 60px; ">답글</button>
+			<button formaction="${home }commboard/write" style="width: 60px; ">글쓰기</button>
+			<button formaction="${home }commboard/reply" style="width: 60px; ">답글</button>
 			<button formaction="${home }commboard/modify" style="width: 60px; ">수정</button>
-			<button formaction="${home }board/delete" style="width: 60px; ">삭제</button>
-			<button formaction="${home }board/boardProc" style="width: 60px; ">목록</button>
+			<button formaction="${home }commboard/delete" style="width: 60px; ">삭제</button>
+			<button formaction="${home }commboard/commboardProc" style="width: 60px; ">목록</button>
 		</td>
 	</tr>
 </table>

@@ -1,7 +1,6 @@
 package com.jin.CommBoard;
 import com.jin.TeamProject.BoardTools;
 
-import java.lang.System.Logger;
 import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -76,8 +75,15 @@ public class CommBoardServiceImpl implements ICommBoardService{
 	}
 
 	@Override
-	public CommBoard detailRead(int writeNo) {
-		return iCommBoardDao.detailRead(writeNo);
+	public Map<String, Object> detailRead(String writeNo) {
+		Map<String, Object> boardMap = new HashMap<String, Object>();
+		boardMap.put("board", iCommBoardDao.detailRead(writeNo));
+		
+		Map<String, Integer> hitsMap = new HashMap<String, Integer>();
+		hitsMap.put("no", Integer.parseInt(writeNo));
+		iCommBoardDao.Hits(hitsMap);
+		
+		return boardMap;
 	}
 
 	@Override
@@ -87,19 +93,31 @@ public class CommBoardServiceImpl implements ICommBoardService{
 		board.setWritedate(writedate);
 		iCommBoardDao.Write(board);
 		
-//		if(!"".contentEquals(request.getParameter("pno"))){
-//			/*현재 글번호 - baord.getNo(), 부모 글번호 - pno*/
-//			Map<String, Integer> replyMap = new HashMap<String, Integer>();
-//			replyMap.put("no", board.getNo());
-//			replyMap.put("pno", Integer.parseInt(request.getParameter("pno")) );
-//			iCommBoardDao.InsertReply(replyMap);
-//		}
+		if(!"".contentEquals(request.getParameter("pno"))){
+			/*현재 글번호 - baord.getNo(), 부모 글번호 - pno*/
+			Map<String, Integer> replyMap = new HashMap<String, Integer>();
+			replyMap.put("no", board.getNo());
+			replyMap.put("pno", Integer.parseInt(request.getParameter("pno")) );
+			iCommBoardDao.InsertReply(replyMap);
+		}
 		
 	}
 
 	@Override
 	public void Modify(CommBoard board) {
+//		System.out.println("보드 넘버 : " + board.getNo());
 		iCommBoardDao.Modify(board);
+	}
+
+	@Override
+	public void Delete(String no) {
+		iCommBoardDao.Delete(no);
+	}
+	@Override
+	public void Deletes(String[] chkboxs) {
+
+		for(String no : chkboxs)
+			iCommBoardDao.Delete(no);
 	}
 
 

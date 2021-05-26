@@ -25,15 +25,15 @@ public class CommBoard {
   		this.hit = hit;
   	}
 
-	public int getNo() {
-        return no;
-    }
+    public Integer getNo() {
+		return no;
+	}
 
-    public void setNo(int no) {
-        this.no = no;
-    }
+	public void setNo(Integer no) {
+		this.no = no;
+	}
 
-    public String getId() {
+	public String getId() {
         return id;
     }
 

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -32,23 +33,20 @@ public class CommBoardController {
 	@Autowired
 	private ICommBoardService iServ;
 	
-	
 	@RequestMapping(value = "commboardProc")
 	public String commboardProc(Model model, HttpServletRequest request) {
 		
 			List<CommBoard> boardLst = iServ.SelectBoard(request);
-			int cnt = iServ.boardCount();
 			model.addAttribute("boardLst", boardLst);
 			model.addAttribute("navi", iServ.getNavi(request));
 			
-			logger.warn("자유게시판 연결 성공");
+//			logger.warn("자유게시판 연결 성공");
 			return "forward:/index?formpath=commboard";
 		}
 	
 	@RequestMapping(value = "write")
 	public String commboardwrite(Model model, HttpSession session) {	
-		
-			logger.warn("글쓰기 연결 성공");
+//			logger.warn("글쓰기 연결 성공");
 			model.addAttribute("usrId", session.getAttribute("id"));
 			model.addAttribute("btnName", "글쓰기");
 			model.addAttribute("proc", "writeProc");
@@ -57,13 +55,16 @@ public class CommBoardController {
 	
 	@RequestMapping(value = "writeProc")
 	public String commboardwriteProc(CommBoard board, HttpServletRequest request) {
+		logger.warn(board.getNo()+"");
 		iServ.Write(board, request);
 			return "forward:/commboard/commboardProc";
 		}
 	
 	@RequestMapping(value = "modify")
 	public String modify(Model model, HttpSession session, CommBoard board) {
+		
 		model.addAttribute("usrId", session.getAttribute("id"));
+		model.addAttribute("board", board);
 		model.addAttribute("btnName", "수정");
 		model.addAttribute("proc", "modifyProc");
 		return "forward:/index?formpath=commboardwrite";
@@ -72,18 +73,35 @@ public class CommBoardController {
 	@RequestMapping(value = "modifyProc")
 	public String modifyProc(CommBoard board) {
 		iServ.Modify(board);
-		return "forward:/board/boardProc";
+		return "forward:/commboard/commboardProc";
 	}
 	
 	@RequestMapping(value = "detailRead")
-	public String detailRead(Model model, @RequestParam int writeNo) {
-		
-		
-		logger.warn(writeNo+"입니다.");
-		model.addAttribute("board", iServ.detailRead(writeNo));
-		return "forward:/index?formpath=detailRead";
+	public String detailRead(Model model, @RequestParam String writeNo) {
+		Map<String, Object> boardMap = iServ.detailRead(writeNo);
+		model.addAttribute("board", boardMap.get("board"));
+		return "forward:/index?formpath=commboardview";
 	}
-
-
+	
+	@RequestMapping(value = "reply")
+	public String reply(Model model, @RequestParam String pno, HttpSession session) {
+		model.addAttribute("usrId", session.getAttribute("id"));
+		model.addAttribute("btnName", "글쓰기");
+		model.addAttribute("proc", "writeProc");
+		
+		model.addAttribute("pno", pno);
+		return "forward:/index?formpath=commboardwrite";
+	}
+	@RequestMapping(value = "delete")
+	public String delete(@RequestParam String no) {
+		iServ.Delete(no);
+		return "forward:/commboard/commboardProc";
+	}
+	@RequestMapping(value = "deletes")
+	public String deletes(HttpServletRequest reqeust) {
+		String [] chkboxs = reqeust.getParameterValues("chkbox");
+		iServ.Deletes(chkboxs);
+		return "forward:/commboard/commboardProc";
+	}
 	
 }

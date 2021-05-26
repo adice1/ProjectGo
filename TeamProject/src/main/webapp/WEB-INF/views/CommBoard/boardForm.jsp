@@ -4,7 +4,6 @@
 <c:url var="home" value="/"/>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
 <script type="text/javascript">
 $(document).ready(function() {
 	$("div.title").css("cursor", "pointer").click(function(){
@@ -35,7 +34,6 @@ $(document).ready(function() {
 <center>
 <form id="frm" action="${home }commboard/write" method="post">
 <input type="hidden" name="writeNo" id="writeNo"/>
-
 <table style="width: 650px; ">
 	<thead>
 	<tr>
@@ -70,7 +68,7 @@ $(document).ready(function() {
 		<td colspan=2><input id="allSelect" type="checkbox"/>전체선택</td>
 		<td colspan=3 align="right">
 			<!-- <input type="button" value='삭제' style="width: 100px; "/> -->
-			<button formaction="${home }board/deletes" style="width: 100px; ">삭제</button>
+			<button formaction="${home }commboard/deletes" style="width: 100px; ">삭제</button>
 			<button style="width: 100px; ">글쓰기</button>
 		</td>
 	</tr>
