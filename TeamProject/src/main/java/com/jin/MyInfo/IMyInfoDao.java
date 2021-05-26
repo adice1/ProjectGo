@@ -1,5 +1,7 @@
 package com.jin.MyInfo;
 
-public interface IMyInfoDao {
+import java.util.Map;
 
+public interface IMyInfoDao {
+	public int MyAuth(Map<String, String> myLst);
 }
