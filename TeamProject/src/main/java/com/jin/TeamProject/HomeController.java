@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.jin.Member.Member;
+import com.jin.exam.IExamService;
 
 
 
@@ -25,7 +26,8 @@ import com.jin.Member.Member;
 @Controller
 public class HomeController {
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-	@Autowired private HttpSession session;
+	/* @Autowired */private HttpSession session;
+	@Autowired IExamService iExam;
 	@RequestMapping(value = "/")
 	public String index(Model model) {
 		model.addAttribute("formpath", "home");
@@ -73,7 +75,10 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "/yearExam")
-	public String yearExam() {
+	public String yearExam(Model model) {
+		String pageName = "<h3>연도별 기출문제 페이지입니다 </h3>";
+		model.addAttribute("pageName", pageName);
+		model.addAttribute("option", iExam.PrevExamOption());
 		return "Exam/yearExamForm";
 	}
 	@RequestMapping(value = "/smartExam")
