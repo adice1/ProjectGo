@@ -31,10 +31,20 @@
 		</td>
 	</tr>
 	<tr>
-		<td colspan=2><hr/></td>
+		<td colspan=2><hr/><br /></td>
 	</tr>
 	<tr>
-		<td colspan=2 align="right">
+			<td><textarea style="width: 460px; height: 60px; margin-bottom: 20px;"/>123213313</textarea></td>
+		<td>
+			<input type="button" style="width: 60px; height: 60px; margin-top: -20; margin-right: 10px; margin-left: 10px;" value="쓰기">
+			<input type="button" style="width: 60px; height: 60px; margin-top: -20; margin-right: 10px;" value="취소">
+		</td>
+	</tr>	
+	<tr>
+		<td colspan=2><hr /></td>
+	</tr>
+	<tr>
+		<td colspan=2 align="right" >
 			<button formaction="${home }commboard/write" style="width: 60px; ">글쓰기</button>
 			<button formaction="${home }commboard/reply" style="width: 60px; ">답글</button>
 			<button formaction="${home }commboard/modify" style="width: 60px; ">수정</button>
