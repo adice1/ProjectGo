@@ -59,6 +59,12 @@ public class CommBoardController {
 			return "forward:/index?formpath=commboardwrite";
 		}
 	
+	@RequestMapping(value = "commentwrite", method = RequestMethod.POST)
+	public String commentwrite(Model model, Comment comment, String name) {
+		ICommentServ.Insert(comment);
+		return "forward:/index?formpath=commboardview";
+	}
+	
 	@RequestMapping(value = "writeProc")
 	public String commboardwriteProc(CommBoard board, HttpServletRequest request) {
 		logger.warn(board.getNo()+"");
@@ -83,11 +89,18 @@ public class CommBoardController {
 	}
 	
 	@RequestMapping(value = "detailRead")
-	public String detailRead(Model model, @RequestParam String writeNo) {
+	public String detailRead(Model model, @RequestParam String writeNo, HttpSession session) {
 		Map<String, Object> boardMap = iServ.detailRead(writeNo);
+		
+		List<Comment> commentlst = ICommentServ.SelectComment(writeNo);
+		
 		model.addAttribute("board", boardMap.get("board"));
+		model.addAttribute("usrId", session.getAttribute("id"));
+		model.addAttribute("commentlst", commentlst);
+		
 		return "forward:/index?formpath=commboardview";
 	}
+
 	
 	@RequestMapping(value = "reply")
 	public String reply(Model model, @RequestParam String pno, HttpSession session) {
@@ -108,17 +121,6 @@ public class CommBoardController {
 		String [] chkboxs = reqeust.getParameterValues("chkbox");
 		iServ.Deletes(chkboxs);
 		return "forward:/commboard/commboardProc";
-	}
-	@ResponseBody
-	@RequestMapping(value = "test", method = RequestMethod.POST)
-	public String test(Model model, CommBoard board, String name) {
-
-		logger.warn(board.getNo() + "");
-		logger.warn(board.getTitle());
-		logger.warn(board.getContents());
-		logger.warn(board.getWritedate()+"");
-		
-		return "forward:/index?formpath=commboardview";
 	}
 	
 }

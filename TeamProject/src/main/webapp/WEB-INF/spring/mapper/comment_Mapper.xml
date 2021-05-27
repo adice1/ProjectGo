@@ -2,7 +2,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jin.CommBoardComment.ICommentDao">
 <insert id="Insert" parameterType="com.jin.CommBoardComment.Comment">
-	insert into commBoardcomment(comment_contents)
-	values('${comment_contents}')
+	<selectKey keyProperty="comment_no" resultType="int" order="BEFORE">
+		SELECT	nvl(max(comment_no), 0)+1 FROM commboardcomment
+	</selectKey>
+	
+	insert into commBoardcomment(COMMENT_BNO, COMMENT_NO, COMMENT_CONTENTS, COMMENT_ID, COMMENT_WRITEDATE)
+	values(#{Comment_bno}, #{comment_no}, #{comment_contents}, #{comment_id}, #{comment_writedate})
 </insert>
+<select id="SelectComment" parameterType="String" resultType="com.jin.CommBoardComment.Comment">
+	select *
+	from commboardcomment
+	where comment_bno = #{writeNo }
+</select>
 </mapper>

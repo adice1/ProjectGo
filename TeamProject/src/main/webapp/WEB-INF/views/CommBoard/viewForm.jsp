@@ -5,29 +5,50 @@
 <script>
 	$(document).ready(function() {
 		$("#btn").click(function() {
-			$.ajax({
-				url: "${home}/commboard/test",
-				type: "post",
-				data: {
-					no : $("#commNo").val(),
-					title : $("#commTitle").val(),
-					contents : $("#commContents").val(),
-					writedate : $("#commwritedate").val()
-				}
-		});
+			if($("#comment_id").val() != "")
+			{
+				if($("#comment_contents").val() !== "")
+				{
+					$.ajax({
+						url: "${home}/commboard/commentwrite",
+						type: "post",
+						data: {
+							Comment_bno : $("#commNo").val(),
+							comment_contents : $("#comment_contents").val(),
+							comment_id : $("#comment_id").val()
+						}
+					}).done(function(result){
+							alert("댓글이 등록되었습니다.");
+							$("#comment_contents").val(" ")
+							//
+							$("#commentlist").append(
+									"<br />"+
+									"<input id='commentlist_id' type='text' value='" +$("#comment_id").val()+ "'disabled='disabled' />" +
+									"<input id='commentlist_contents' type='text' value='" +$("#comment_contents").val()+ "' />" +
+									"<input id='ommentlist_writedate' type='text' value='${comment.comment_writedate}' disabled='disabled' />"+
+									"<input type='button' value='수정' />"+
+									"<input type='button' value='삭제' /><br />");
+							//
+						});
+ 				}
+ 				else alert("내용을 입력해주세요!");
+ 			}
+ 			else alert("로그인을 해주세요!")
+ 		})
+ 		//이부분에서 에이젝스로 업데이트 해야댐 컨트롤부분따로해야댐
 	})
-})
 </script>
 
 <center>
+<form action="${home }commboard/detailRead">
 <input type="hidden" id="boardObject" value="${board }">
 <input type="hidden" id="userName" value="song">
 
 <input type="hidden" name="pno" value="${board.no }">
 <input type="hidden" id="commNo" name="no" value="${board.no }">
 <input type="hidden" id="commTitle" name="title" value="${board.title }">
-<input type="hidden" id="commContents"name="contents" value="${board.contents }">
-<input type="hidden" id="commwritedate"name="contents" value="${board.writedate }">
+<input type="hidden" id="commContents" value="${board.contents }">
+<input type="hidden" id="commwritedate" value="${board.writedate }">
 
 <table style="width: 650px; ">
 	<tr>
@@ -55,12 +76,28 @@
 	</tr>
 	<tr>
 			<td>
-				<textarea name="comment_contents" />${comment.comment_contents }</textarea>
-				<input id="comment" type="text">
-				<button id="btn">쓰기</button>
-				<button>취소</button>
+				<textarea id="comment_contents" name="comment_contents" /></textarea>
+				<input id="comment_id" type="text" value="${usrId }" disabled="disabled" />
+				<input type="button" id="btn" value="작성완료" />
+				<input type="button" value="취소" />
+				<div id="commentlist"></div>
 			</td>
-	</tr>	
+			
+	</tr>
+				<c:forEach var="comment" items="${commentlst }">
+					<tr>
+						<td>
+							<br />
+							<input id="commentlist_id" type="text" value="${comment.comment_id}" disabled="disabled" />
+							<input id="commentlist_contents" type="text" value="${comment.comment_contents}" />
+							<input id="commentlist_writedate" type="text" value="${comment.comment_writedate}" disabled="disabled" />
+							<input type="button" id="listbtn" value="수정" />
+							<input type="button" id="listdel" value="삭제" />
+						</td>
+					</tr>
+				</c:forEach>
+
+	
 	<tr>
 		<td colspan=2><hr /></td>
 	</tr>
@@ -74,4 +111,5 @@
 		</td>
 	</tr>
 </table>
+</form>
 </center>

@@ -5,6 +5,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.jin.CommBoardComment.Comment;
+
 public interface ICommBoardService {
 	
 	public List<CommBoard> SelectBoard(HttpServletRequest request);

@@ -1,6 +1,7 @@
 package com.jin.CommBoardComment;
 
 import java.sql.Date;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,11 +13,20 @@ public class CommentServiceImpl implements ICommentService{
 	
 	private static final Logger logger = LoggerFactory.getLogger(CommentServiceImpl.class);
 	
-	@Autowired private ICommentDao iBoardDao;
+	@Autowired private ICommentDao icommentDao;
 	
 	@Override
 	public void Insert(Comment comment) {
-		iBoardDao.Insert(comment);
+		Date writedate = new Date(System.currentTimeMillis());
+		
+		comment.setComment_writedate(writedate);
+		
+		icommentDao.Insert(comment);
+	}
+
+	@Override
+	public List<Comment> SelectComment(String writeNo) {
+		return icommentDao.SelectComment(writeNo);
 	}
 	
 }

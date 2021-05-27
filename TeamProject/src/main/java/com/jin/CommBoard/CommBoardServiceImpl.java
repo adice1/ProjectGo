@@ -1,4 +1,5 @@
 package com.jin.CommBoard;
+import com.jin.CommBoardComment.Comment;
 import com.jin.TeamProject.BoardTools;
 
 import java.sql.Date;
@@ -119,6 +120,5 @@ public class CommBoardServiceImpl implements ICommBoardService{
 		for(String no : chkboxs)
 			iCommBoardDao.Delete(no);
 	}
-
 
 }
