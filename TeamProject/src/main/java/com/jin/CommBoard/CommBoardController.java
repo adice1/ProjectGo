@@ -18,7 +18,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.jin.CommBoardComment.Comment;
+import com.jin.CommBoardComment.ICommentService;
 import com.jin.Login.ILoginService;
 import com.jin.Login.Login;
 
@@ -32,6 +35,9 @@ public class CommBoardController {
 	
 	@Autowired
 	private ICommBoardService iServ;
+	@Autowired
+	private ICommentService ICommentServ;
+	
 	
 	@RequestMapping(value = "commboardProc")
 	public String commboardProc(Model model, HttpServletRequest request) {
@@ -102,6 +108,17 @@ public class CommBoardController {
 		String [] chkboxs = reqeust.getParameterValues("chkbox");
 		iServ.Deletes(chkboxs);
 		return "forward:/commboard/commboardProc";
+	}
+	@ResponseBody
+	@RequestMapping(value = "test", method = RequestMethod.POST)
+	public String test(Model model, CommBoard board, String name) {
+
+		logger.warn(board.getNo() + "");
+		logger.warn(board.getTitle());
+		logger.warn(board.getContents());
+		logger.warn(board.getWritedate()+"");
+		
+		return "forward:/index?formpath=commboardview";
 	}
 	
 }

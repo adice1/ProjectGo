@@ -2,13 +2,33 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:url var="home" value="/"/>
+<script>
+	$(document).ready(function() {
+		$("#btn").click(function() {
+			$.ajax({
+				url: "${home}/commboard/test",
+				type: "post",
+				data: {
+					no : $("#commNo").val(),
+					title : $("#commTitle").val(),
+					contents : $("#commContents").val(),
+					writedate : $("#commwritedate").val()
+				}
+		});
+	})
+})
+</script>
 
 <center>
-<form action="${home }board/write">
+<input type="hidden" id="boardObject" value="${board }">
+<input type="hidden" id="userName" value="song">
+
 <input type="hidden" name="pno" value="${board.no }">
-<input type="hidden" name="no" value="${board.no }">
-<input type="hidden" name="title" value="${board.title }">
-<input type="hidden" name="contents" value="${board.contents }">
+<input type="hidden" id="commNo" name="no" value="${board.no }">
+<input type="hidden" id="commTitle" name="title" value="${board.title }">
+<input type="hidden" id="commContents"name="contents" value="${board.contents }">
+<input type="hidden" id="commwritedate"name="contents" value="${board.writedate }">
+
 <table style="width: 650px; ">
 	<tr>
 		<td style="width: 300px; height:40px;" valign="middle"><h2>${board.title }</h2></td>
@@ -34,11 +54,12 @@
 		<td colspan=2><hr/><br /></td>
 	</tr>
 	<tr>
-			<td><textarea style="width: 460px; height: 60px; margin-bottom: 20px;"/>123213313</textarea></td>
-		<td>
-			<input type="button" style="width: 60px; height: 60px; margin-top: -20; margin-right: 10px; margin-left: 10px;" value="쓰기">
-			<input type="button" style="width: 60px; height: 60px; margin-top: -20; margin-right: 10px;" value="취소">
-		</td>
+			<td>
+				<textarea name="comment_contents" />${comment.comment_contents }</textarea>
+				<input id="comment" type="text">
+				<button id="btn">쓰기</button>
+				<button>취소</button>
+			</td>
 	</tr>	
 	<tr>
 		<td colspan=2><hr /></td>
@@ -53,5 +74,4 @@
 		</td>
 	</tr>
 </table>
-</form>
 </center>
