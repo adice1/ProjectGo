@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.jin.Login.Login;
 import com.jin.Member.Member;
 import com.jin.Member.Postcode;
+import com.jin.Member.Zipcode;
 import com.jin.mail.SHA;
 
 @Service
@@ -60,10 +61,33 @@ public class MyInfoServiceImpl implements IMyInfoService{
 	}
 
 	@Override
-	public Postcode MyPostSelect() {
-		String sessionId = (String)session.getAttribute("id");
-		Postcode myPost = iMyInfoDao.MyPostSelect(sessionId);
+	public List<Postcode> MyPostSelect() {
+		String id = (String)session.getAttribute("id");
+		List<Postcode> myPost = iMyInfoDao.MyPostSelect(id);
 		
 		return myPost;
+	}
+
+	@Override
+	public List<Zipcode> zipModifySelect(String addr) {
+		
+		return iMyInfoDao.zipModifySelect(addr);
+	}
+
+	@Override
+	public void MyInfoProc(String zipcode, String addr1, String addr2, String newPw) {
+		String sessionId = (String)session.getAttribute("id");
+		SHA sha = new SHA();
+		
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("id", sessionId);
+		map.put("zipcode", zipcode);
+		map.put("addr1", addr1);
+		map.put("addr2", addr2);
+		map.put("newPw", sha.encryptSHA512(newPw));
+		
+		iMyInfoDao.MyInfoProcPost(map);
+		iMyInfoDao.MyInfoProcPw(map);
+		
 	}
 }

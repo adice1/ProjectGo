@@ -3,11 +3,31 @@
 <mapper namespace="com.jin.MyInfo.IMyInfoDao">
 <select id="MyAuth" parameterType="String" resultType="int">
 select count(*) from login
-WHERE pw = #{pw}
-and id = #{id}
+WHERE pw = #{pw,jdbcType=VARCHAR}
+and id = #{id,jdbcType=VARCHAR}
 </select>
 <select id="MyPostSelect" parameterType="String" resultType="com.jin.Member.Postcode">
 SELECT * FROM postcode
-WHERE id =#{id}
+WHERE id=#{id,jdbcType=VARCHAR}
 </select>
+<select id="zipModifySelect" parameterType="String" resultType="com.jin.Member.Zipcode">
+		SELECT * FROM zipcode
+		WHERE DONG like '%'||#{dong}||'%'
+		OR DORO like '%'||#{doro}||'%'
+	</select>
+
+<update id="MyInfoProcPost" parameterType="Map">
+UPDATE Postcode
+SET
+    zipcode = #{zipcode,jdbcType=VARCHAR}, 
+    addr1 = #{addr1,jdbcType=VARCHAR}, 
+    addr2 = #{addr2,jdbcType=VARCHAR}
+WHERE id= #{id}
+</update>
+<update id="MyInfoProcPw" parameterType="Map">
+UPDATE Login
+SET 
+    pw = #{newPw,jdbcType=VARCHAR}
+WHERE id = #{id,jdbcType=VARCHAR}
+</update>
 </mapper>
