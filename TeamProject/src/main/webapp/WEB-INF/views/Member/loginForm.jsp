@@ -6,6 +6,7 @@
 <h3><font color="red">${msg }</font></h3>
 <form action="${home }login/loginProc" method="post">
 <table>
+	<h1><a style="width: 300px; height:140px;" href="${home }login/loginProc?id=admin&pw=123">관리자 로그인</a></h1>
 	<tr>
 		<td>아이디</td>
 		<td><input type=text name='id' placeholder='ID 입력'/></td>
@@ -20,6 +21,7 @@
 			<input type=reset value='취소' style="width: 86px; "/> 
 		</td>
 	</tr>
+		
 </table>
 </form>
 </center>

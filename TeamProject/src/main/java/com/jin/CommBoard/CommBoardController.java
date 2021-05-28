@@ -3,6 +3,7 @@ package com.jin.CommBoard;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -58,23 +59,21 @@ public class CommBoardController {
 			model.addAttribute("proc", "writeProc");
 			return "forward:/index?formpath=commboardwrite";
 		}
-	
-	@RequestMapping(value = "commentwrite", method = RequestMethod.POST)
-	public String commentwrite(Model model, Comment comment) {	
-		
-		ICommentServ.Insert(comment);
-		
+	@RequestMapping(value = "commentwrite", produces="application/json", method = RequestMethod.POST)
+	@ResponseBody
+	public Comment commentwrite(Comment comment) {
+		ICommentServ.Insert(comment);	
 		List<Comment> commentlst = ICommentServ.SelectComment(comment.getComment_bno()+"");
-		
-//		for(Comment c : commentlst)
-//			logger.warn(c.getComment_contents());
-		
-		model.addAttribute("commentlst", commentlst);
-		
-		return "forward:/index?formpath=commboardview";
+		return comment;
+	}
+	
+	@RequestMapping(value = "commentSelect", produces="application/json", method = RequestMethod.POST)
+	@ResponseBody
+	public List<Comment> commentSelect(Comment comment) {
+		List<Comment> commentlst = ICommentServ.SelectComment(comment.getComment_bno()+"");
+		return commentlst;
 	}
 
-	
 	@RequestMapping(value = "writeProc")
 	public String commboardwriteProc(CommBoard board, HttpServletRequest request) {
 		logger.warn(board.getNo()+"");
@@ -108,6 +107,9 @@ public class CommBoardController {
 		model.addAttribute("usrId", session.getAttribute("id"));
 		model.addAttribute("commentlst", commentlst);
 		
+		for(Comment c :commentlst  )
+			logger.warn(c.getComment_no()+"");
+			
 		return "forward:/index?formpath=commboardview";
 	}
 

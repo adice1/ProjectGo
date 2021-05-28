@@ -19,6 +19,10 @@ public class LoginServiceImpl implements ILoginService {
 	}
 	@Override
 	public int LoginProc(Login login) {
+		
+		System.out.println(login.getId());
+		System.out.println(login.getPw());
+		
 		login.setPw((new SHA()).encryptSHA512(login.getPw()));
 		int cnt = iLoginDao.LoginProc(login);
 		System.out.println(login.getPw());

@@ -15,10 +15,10 @@ public class CommentServiceImpl implements ICommentService{
 	
 	@Autowired private ICommentDao icommentDao;
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	public void Insert(Comment comment) {
 		Date writedate = new Date(System.currentTimeMillis());
-		
 		comment.setComment_writedate(writedate);
 		
 		icommentDao.Insert(comment);

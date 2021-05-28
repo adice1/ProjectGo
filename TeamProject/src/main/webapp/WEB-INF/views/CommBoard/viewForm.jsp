@@ -4,32 +4,51 @@
 <c:url var="home" value="/"/>
 <script>
 	$(document).ready(function() {
+		
+		$.ajax({
+			url: "${home}commboard/commentSelect",
+			type: "post",
+			data: {
+				Comment_bno : $("#commNo").val()
+			},
+			success : function(data){
+				console.log(data);
+					for(var i=0; i<data.length; i++){
+					$(".commentlist").append(
+							"<br />"+
+							"<input id='commentlist_id' type='text' value='" + data[i].comment_id + "'disabled='disabled' />" +
+							"<input id='commentlist_contents' type='text' value='" + data[i].comment_contents + "' />" +
+							"<input id='ommentlist_writedate' type='text' value='"+ data[i].comment_writedate +"' disabled='disabled' />"+	
+							"<input type='button' value='수정' />"+
+							"<input type='button' value='삭제' /><br />");
+					}
+			}
+		})
+						
 		$("#btn").click(function() {
 			if($("#comment_id").val() != "")
 			{
 				if($("#comment_contents").val() !== "")
 				{
 					$.ajax({
-						url: "${home}/commboard/commentwrite",
+						url: "${home}commboard/commentwrite",
 						type: "post",
 						data: {
 							Comment_bno : $("#commNo").val(),
 							comment_contents : $("#comment_contents").val(),
 							comment_id : $("#comment_id").val()
 						},
-						success : function(response){
-							alert("댓글이 등록되었습니다.");
-// 							console.log($("#comment_contents").val())
-							console.dir(response);
-							//
-							$("#commentlist").append(
-									"<br />"+
-									"<input id='commentlist_id' type='text' value='" +$("#comment_id").val()+ "'disabled='disabled' />" +
-									"<input id='commentlist_contents' type='text' value='" +$("#comment_contents").val()+ "' />" +
-									"<input id='ommentlist_writedate' type='text' value='${comment.comment_writedate}' disabled='disabled' />"+
-									"<input type='button' value='수정' />"+
-									"<input type='button' value='삭제' /><br />");
-							//
+						success : function(data){
+// 							alert("댓글이 등록되었습니다.");
+							$("#comment_contents").val("")
+							console.log(data);
+								$(".commentlist").append(
+										"<br />"+
+										"<input id='commentlist_id' type='text' value='" + data.comment_id + "'disabled='disabled' />" +
+										"<input id='commentlist_contents' type='text' value='" + data.comment_contents + "' />" +
+										"<input id='ommentlist_writedate' type='text' value='"+ data.comment_writedate +"' disabled='disabled' />"+	
+										"<input type='button' value='수정' />"+
+										"<input type='button' value='삭제' /><br />");
 						}
 					})
  				}
@@ -37,11 +56,11 @@
  			}
  			else alert("로그인을 해주세요!")
  		})
- 		
- 		$("#listbtn").click(function(){
- 			var contents = $(".commentlist").children('#commentlist_id').val()
- 			console.dir(contents)
- 		})
+//
+//  		$("#listbtn").click(function(){
+//  			var contents = $(".commentlist").children('#commentlist_id').val()
+//  			console.dir(contents)
+//  		})
 // 
 	})
 </script>
@@ -89,22 +108,22 @@
 			</td>
 			
 	</tr>
-				<c:forEach var="comment" items="${commentlst }">
+<%-- 				<c:forEach var="comment" items="${commentlst }"> --%>
 					<tr>
 						<td>
 							<br />
 							<div class="commentlist" id="commentlist">
-								<input id="commentlist_no" type="hidden" value="${comment.comment_no }">
-								<input id="commentlist_id" type="text" value="${comment.comment_id}" disabled="disabled" />
-								<input id="commentlist_contents" type="text" value="${comment.comment_contents}" />
-								<input id="commentlist_writedate" type="text" value="${comment.comment_writedate}" disabled="disabled" />
-								<input type="button" id="listbtn" value="수정" />
-								<input type="button" id="listdel" value="삭제" />
+<%-- 								<input id="commentlist_no" type="hidden" value="${comment.comment_no }"> --%>
+<%-- 								<input id="commentlist_id" type="text" value="${comment.comment_id}" disabled="disabled" /> --%>
+<%-- 								<input id="commentlist_contents" type="text" value="${comment.comment_contents}" /> --%>
+<%-- 								<input id="commentlist_writedate" type="text" value="${comment.comment_writedate}" disabled="disabled" /> --%>
+<!-- 								<input type="button" id="listbtn" value="수정" /> -->
+<!-- 								<input type="button" id="listdel" value="삭제" /> -->
 							</div>
 						</td>
 					</tr>
-				</c:forEach>
-
+<%-- 				</c:forEach> --%>
+			
 	
 	<tr>
 		<td colspan=2><hr /></td>
