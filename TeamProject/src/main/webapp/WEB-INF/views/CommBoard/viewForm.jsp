@@ -16,10 +16,11 @@
 							Comment_bno : $("#commNo").val(),
 							comment_contents : $("#comment_contents").val(),
 							comment_id : $("#comment_id").val()
-						}
-					}).done(function(result){
+						},
+						success : function(response){
 							alert("댓글이 등록되었습니다.");
-							$("#comment_contents").val(" ")
+// 							console.log($("#comment_contents").val())
+							console.dir(response);
 							//
 							$("#commentlist").append(
 									"<br />"+
@@ -29,22 +30,26 @@
 									"<input type='button' value='수정' />"+
 									"<input type='button' value='삭제' /><br />");
 							//
-						});
+						}
+					})
  				}
  				else alert("내용을 입력해주세요!");
  			}
  			else alert("로그인을 해주세요!")
  		})
- 		//이부분에서 에이젝스로 업데이트 해야댐 컨트롤부분따로해야댐
+ 		
+ 		$("#listbtn").click(function(){
+ 			var contents = $(".commentlist").val()
+ 			console.dir(contents)
+ 		})
+// 
 	})
 </script>
-
 <center>
 <form action="${home }commboard/detailRead">
-<input type="hidden" id="boardObject" value="${board }">
-<input type="hidden" id="userName" value="song">
 
 <input type="hidden" name="pno" value="${board.no }">
+
 <input type="hidden" id="commNo" name="no" value="${board.no }">
 <input type="hidden" id="commTitle" name="title" value="${board.title }">
 <input type="hidden" id="commContents" value="${board.contents }">
@@ -88,11 +93,14 @@
 					<tr>
 						<td>
 							<br />
-							<input id="commentlist_id" type="text" value="${comment.comment_id}" disabled="disabled" />
-							<input id="commentlist_contents" type="text" value="${comment.comment_contents}" />
-							<input id="commentlist_writedate" type="text" value="${comment.comment_writedate}" disabled="disabled" />
-							<input type="button" id="listbtn" value="수정" />
-							<input type="button" id="listdel" value="삭제" />
+							<div class="commentlist" id="commentlist">
+								<input id="commentlist_no" type="hidden" value="${comment.comment_no }">
+								<input id="commentlist_id" type="text" value="${comment.comment_id}" disabled="disabled" />
+								<input id="commentlist_contents" type="text" value="${comment.comment_contents}" />
+								<input id="commentlist_writedate" type="text" value="${comment.comment_writedate}" disabled="disabled" />
+								<input type="button" id="listbtn" value="수정" />
+								<input type="button" id="listdel" value="삭제" />
+							</div>
 						</td>
 					</tr>
 				</c:forEach>

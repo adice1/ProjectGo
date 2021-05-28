@@ -60,10 +60,20 @@ public class CommBoardController {
 		}
 	
 	@RequestMapping(value = "commentwrite", method = RequestMethod.POST)
-	public String commentwrite(Model model, Comment comment, String name) {
+	public String commentwrite(Model model, Comment comment) {	
+		
 		ICommentServ.Insert(comment);
+		
+		List<Comment> commentlst = ICommentServ.SelectComment(comment.getComment_bno()+"");
+		
+//		for(Comment c : commentlst)
+//			logger.warn(c.getComment_contents());
+		
+		model.addAttribute("commentlst", commentlst);
+		
 		return "forward:/index?formpath=commboardview";
 	}
+
 	
 	@RequestMapping(value = "writeProc")
 	public String commboardwriteProc(CommBoard board, HttpServletRequest request) {
