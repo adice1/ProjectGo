@@ -39,7 +39,7 @@
  		})
  		
  		$("#listbtn").click(function(){
- 			var contents = $(".commentlist").val()
+ 			var contents = $(".commentlist").children('#commentlist_id').val()
  			console.dir(contents)
  		})
 // 
