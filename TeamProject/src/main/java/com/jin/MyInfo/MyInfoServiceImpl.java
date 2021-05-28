@@ -23,7 +23,6 @@ public class MyInfoServiceImpl implements IMyInfoService{
 	private static final Logger logger = LoggerFactory.getLogger(MyInfoServiceImpl.class);
 	@Autowired private IMyInfoDao iMyInfoDao;
 	@Autowired private HttpSession session;
-	
 	public int authNum() { //인증번호 생성
 		Random rand = new Random();
 		return rand.nextInt(10000);
@@ -41,7 +40,12 @@ public class MyInfoServiceImpl implements IMyInfoService{
 		
 		int myCnt = iMyInfoDao.MyAuth(myLst);
 		
+		Boolean authPwState =(Boolean) session.getAttribute("authPwState");
+		logger.warn(authPwState+"");
+		
 		if(myCnt == 1) {
+			session.setAttribute("authPwState", true);
+			logger.warn(authPwState+"MyAuth > authPwState");
 			int authNum = authNum();
 			return authNum;
 		}
@@ -53,10 +57,16 @@ public class MyInfoServiceImpl implements IMyInfoService{
 	public String MyAuthOk(String authNumProc, String authNumOk) {
 		logger.warn("서비스 임플 :"+authNumProc);
 		logger.warn("서비스 임플 :"+authNumOk);
-		
-		if(authNumProc.contentEquals(authNumOk))
-			return "인증 확인되었습니다.";
-		
+		Boolean authPwState = (Boolean)session.getAttribute("authPwState");
+		Boolean authPwOk = (Boolean)session.getAttribute("authPwOk");
+		logger.warn(authPwState+"authPwState");
+		logger.warn(authPwOk+"authPwOk");
+		if(authPwState == false)
+			return "비밀번호 인증번호를 생성해주세요";
+			if(authNumProc.contentEquals(authNumOk)) {
+				session.setAttribute("authPwOk", true);
+				return "인증 확인되었습니다.";
+			}
 		return "다시 인증해주세요";
 	}
 
@@ -70,24 +80,39 @@ public class MyInfoServiceImpl implements IMyInfoService{
 
 	@Override
 	public List<Zipcode> zipModifySelect(String addr) {
-		
 		return iMyInfoDao.zipModifySelect(addr);
 	}
 
 	@Override
-	public void MyInfoProc(String zipcode, String addr1, String addr2, String newPw) {
+	public void MyInfoProc(String zipcode, String addr1, String addr2) {
 		String sessionId = (String)session.getAttribute("id");
-		SHA sha = new SHA();
+//		SHA sha = new SHA();
 		
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("id", sessionId);
 		map.put("zipcode", zipcode);
 		map.put("addr1", addr1);
 		map.put("addr2", addr2);
-		map.put("newPw", sha.encryptSHA512(newPw));
-		
+//		map.put("newPw", sha.encryptSHA512(newPw));
+
 		iMyInfoDao.MyInfoProcPost(map);
+//		iMyInfoDao.MyInfoProcPw(map);
+	}
+
+	@Override
+	public void MyInfoProcPw(String newPw) {
+		Boolean authPwState = (Boolean)session.getAttribute("authPwState");
+		Boolean authPwOk = (Boolean)session.getAttribute("authPwOk");
+//		if(authPwState == false) return "인증번호를 생성하세요";
+		logger.warn(authPwState+"MyInfoProcPw");
+		logger.warn(authPwOk+"MyInfoProcPw");
+		String sessionId = (String)session.getAttribute("id");
+		SHA sha = new SHA();
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("id", sessionId);
+		map.put("newPw", sha.encryptSHA512(newPw));
 		iMyInfoDao.MyInfoProcPw(map);
 		
 	}
+	
 }
