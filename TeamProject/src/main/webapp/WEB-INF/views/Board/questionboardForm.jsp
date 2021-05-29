@@ -14,7 +14,7 @@ $(document).ready(function() {
 });
 </script>
 <center>
-<h2>Q&A게시판에 오신것을 환영합니다.</h2>
+<h3>Q&A게시판에 오신것을 환영합니다</h3>
 <form id="frm" action="${home }QuestionBoard/QuestionWrite" method="post">
 <input type="hidden" id="writeNo" name="writeNo"/>
 <table style="width: 650px; ">
