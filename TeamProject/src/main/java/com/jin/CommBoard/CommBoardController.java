@@ -59,6 +59,7 @@ public class CommBoardController {
 			model.addAttribute("proc", "writeProc");
 			return "forward:/index?formpath=commboardwrite";
 		}
+	
 	@RequestMapping(value = "commentwrite", produces="application/json", method = RequestMethod.POST)
 	@ResponseBody
 	public Comment commentwrite(Comment comment) {
@@ -73,10 +74,24 @@ public class CommBoardController {
 		List<Comment> commentlst = ICommentServ.SelectComment(comment.getComment_bno()+"");
 		return commentlst;
 	}
+	@RequestMapping(value = "commentmodify", produces="application/json", method = RequestMethod.POST)
+	@ResponseBody
+	public String commentmodify(Comment comment) {
+		ICommentServ.ModifyComment(comment);
+		return "secces";
+	}
+	
+	@RequestMapping(value = "commentdelete", produces="application/json", method = RequestMethod.POST)
+	@ResponseBody
+	public String commentdelete(Comment comment) {
+		ICommentServ.DeleteComment(comment);
+		return "";
+	}
+	
 
 	@RequestMapping(value = "writeProc")
 	public String commboardwriteProc(CommBoard board, HttpServletRequest request) {
-		logger.warn(board.getNo()+"");
+//		logger.warn(board.getNo()+"");
 		iServ.Write(board, request);
 			return "forward:/commboard/commboardProc";
 		}
@@ -90,6 +105,7 @@ public class CommBoardController {
 		model.addAttribute("proc", "modifyProc");
 		return "forward:/index?formpath=commboardwrite";
 	}
+	
 	
 	@RequestMapping(value = "modifyProc")
 	public String modifyProc(CommBoard board) {
@@ -107,8 +123,8 @@ public class CommBoardController {
 		model.addAttribute("usrId", session.getAttribute("id"));
 		model.addAttribute("commentlst", commentlst);
 		
-		for(Comment c :commentlst  )
-			logger.warn(c.getComment_no()+"");
+//		for(Comment c :commentlst  )
+//			logger.warn(c.getComment_no()+"");
 			
 		return "forward:/index?formpath=commboardview";
 	}

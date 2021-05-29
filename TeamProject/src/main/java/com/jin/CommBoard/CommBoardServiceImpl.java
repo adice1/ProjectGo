@@ -121,4 +121,5 @@ public class CommBoardServiceImpl implements ICommBoardService{
 			iCommBoardDao.Delete(no);
 	}
 
+
 }

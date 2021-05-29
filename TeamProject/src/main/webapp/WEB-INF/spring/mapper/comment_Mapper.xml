@@ -14,4 +14,13 @@
 	from commboardcomment
 	where comment_bno = #{writeNo }
 </select>
+<update id="ModifyComment" parameterType="com.jin.CommBoardComment.Comment">
+	update commboardcomment
+	set comment_contents = #{comment_contents}, comment_writedate=#{comment_writedate}
+	where comment_no=#{comment_no}
+</update>
+<delete id="DeleteComment" parameterType="com.jin.CommBoardComment.Comment">
+	DELETE FROM commboardcomment
+	WHERE comment_no=#{comment_no}
+</delete>
 </mapper>
