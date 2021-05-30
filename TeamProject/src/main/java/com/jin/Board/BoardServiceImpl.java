@@ -102,5 +102,17 @@ public class BoardServiceImpl implements IBoardService{
 		boardMap.put("attachLst", iBoardDao.DetailreadAttach(writeNo));
 		return boardMap;
 	}
+	@Override
+	public void Delete(String no) {
+		iBoardDao.Delete(no);
+		
+	}
+	@Override
+	public void Deletes(String[] chkboxs) {
+		for(String no : chkboxs)
+			iBoardDao.Delete(no);
+		
+	}
+	
 
 }

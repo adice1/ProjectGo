@@ -56,4 +56,9 @@ SELECT no, id, title, contents, writedate, hit
      INSERT INTO reply
      VALUES(${no},${pno},${depth})
 </insert>
+
+<delete id="Delete" parameterType="String">
+		DELETE FROM board
+		WHERE no=#{no}
+	</delete>
 </mapper>

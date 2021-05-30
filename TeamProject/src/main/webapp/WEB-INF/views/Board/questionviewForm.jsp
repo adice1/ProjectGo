@@ -3,7 +3,7 @@
 <c:url var="home" value="/" />
 <center>
 <form action="${home }QuestionBoard/QuestionWrite" >
-<input type="hidden" name="pno" value="${board.no }">
+<input type="hidden" name="pn" value="${board.no }">
 <table style="width: 650px; ">
 	<tr>
 		<td style="width: 300px; height:40px;" valign="middle"><h2>${board.title }</h2></td>
@@ -33,7 +33,7 @@
 			<input type=button style="width: 60px; " value='글쓰기'/> 
 			<button style="width: 60px; " formaction="${home }QuestionBoard/reply"> 답글</button>
 			<input type=button style="width: 60px; " value='수정'/>
-			<input type=button style="width: 60px; " value='삭제'/>
+			<button formaction="${home }QuestionBoard/delete" style="width: 60px; ">삭제</button>
 			<input type=button style="width: 60px; " value='목록'/>
 		</td>
 	</tr>

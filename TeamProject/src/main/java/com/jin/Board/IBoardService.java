@@ -13,4 +13,8 @@ public interface IBoardService {
 
 	public Map<String, Object> DetailRead(String writeNo);
 
+	public void Delete(String no);
+
+	public void Deletes(String[] chkboxs);
+
 }

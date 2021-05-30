@@ -19,4 +19,8 @@ public interface IBoardDao {
 
 	public List<Map<String, Object>> DetailreadAttach(String writeNo);
 
+	public void Delete(String no);
+
+	
+
 }

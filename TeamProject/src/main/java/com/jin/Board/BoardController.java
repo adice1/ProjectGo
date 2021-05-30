@@ -50,9 +50,21 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value = "reply")
-	public String reply(Model model, @RequestParam String pno) {
-		model.addAttribute("pno", pno);
-		return "forward:/index?formpath=questionwrite";
+	public String reply(Model model, @RequestParam String pn) {
+		logger.warn(pn);
+		model.addAttribute("pno", pn);
+		return "forward:/index?formpath=questionreply";
+	}
+	@RequestMapping(value = "delete")
+	public String delete(@RequestParam String no) {
+		iBoardServ.Delete(no);
+		return "forward:/QuestionBoard/boardProc";
+	}
+	@RequestMapping(value = "deletes")
+	public String deletes(HttpServletRequest reqeust) {
+		String [] chkboxs = reqeust.getParameterValues("chkbox");
+		iBoardServ.Deletes(chkboxs);
+		return "forward:/QuestionBoard/boardProc";
 	}
 
 }
