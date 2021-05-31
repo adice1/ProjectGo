@@ -2,47 +2,129 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:url var="home" value="/"/>
 
+<link
+    rel="stylesheet"
+    href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
+    integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp"
+    crossorigin="anonymous">
+    
+ <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Tangerine"> 
+   
+
 <style>
-  #sidebar {
-    width: 250px;
-    position: fixed;
-    top: 0;
-    left: -250px;
-    height: 100%;
-    z-index: 999;
-    background: #333;
-    color: #fff;
-    transition: all 0.3s;
+    body {
+    margin: 0px;
 }
-#sidebar.active {
-    left: 0;
+ 
+header {
+    height: 50px;
+    width: 100%;
+    background-color: grey;
+    color: white;
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+    font-size: x-large;
+}
+ 
+#sidebar {
+    display: none;
+    position: fixed;
+    top: 25%;
+    right: 0;
+    bottom: 0px;
+    background-color: #ccccccd4;
+    color: white;
+    width: 300px;
+    height: 50%;
+    text-align: center;
+}
+ 
+.fa-angle-double-left{
+	size: 30px;
+    right: 7%;
+    top: 600px;
+    position: absolute;
+    font-size: 4em;
 }
 
-.overlay {
-    position: fixed;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.7);
-    z-index: 998;
-    display: none;
+input {
+	margin-top : 20%;
+	margin-left : 25%;
+	margin-right : 10%;
+	width : 60px;
+	height : 60px;
+}
+
+.canvas{   
+   	width: 1200px;
+    height: 900px;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 0px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%);
+    position: absolute;
+    right: 0%;
+    left: 25%;
+    bottom: 17%;
+}
+
+#tab {
+	position: absolute;
+    width: 400px;
+    height: 900px;
+    right: 12%;
+    top: 202px;
+    border-radius: 15px;
+    box-shadow: 0 0px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%);
 }
 </style>
 
-<script>
-	$('#sidebarCollapse').on('click', function () {
-    	$('#sidebar').addClass('active');
-    	$('.overlay').fadeIn();
-	});
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 
-	$('.overlay').on('click', function () {
-    	$('#sidebar').removeClass('active');
-    	$('.overlay').fadeOut();
-	});
+<script>
+$(document).ready(function(){
+    var target = $("#sidebar");
+
+    // 버튼을 클릭하면 사이드바 열림
+    $(document).on("click", "#OpenBtn", function (e){
+        target.show();
+        target.addClass('emphasized');
+    });
+
+    // 사이드바 외부를 클릭하면 사이드바 닫힘
+    $(document).mouseup(function (e){
+        if(target.has(e.target).length==0) {
+            target.hide();
+            target.removeClass('emphasized');
+        } 
+    });
+    
+    $("#test1").click(function(){
+    	alert("글씨체를 선택하셨습니다.")
+    });
+    
+    $("#test2").click(function(){
+    	alert("볼드를 선택하셨습니다");
+    });
+    $("#test2").click(function(){
+    	alert("크기를 선택하셨습니다");
+    });
+    
+});
 
 </script>
 
-<div id="wrap">
-     <nav id="sidebar"></nav>
-     <button id="sidebarCollapse">토글</button> 
-     <div class="overlay"></div>
-</div>
+
+<body>
+	
+	<i class="fas fa-angle-double-left" id="OpenBtn"></i>
+	<canvas id="jsCanvas" class="canvas"></canvas>
+	
+	
+	<table id="tab">
+		<tr>
+		</tr>
+	</table>
+  
+</body>
