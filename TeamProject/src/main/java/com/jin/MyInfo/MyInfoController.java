@@ -84,5 +84,5 @@ public class MyInfoController {
 		List<Zipcode> zipLst = iMyInfoServ.zipModifySelect(addr);
 		model.addAttribute("zipLst", zipLst);
 		return "MyInfo/postModifyForm";
-	}
+	} 
 }
