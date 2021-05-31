@@ -19,9 +19,8 @@ function postModify(cmd){
 	<tr>
 		<td align='right' height=40>현재 비밀번호</td>
 		<td>
-			<input type="text" name="pw" id="pw"> 
+			<input type="password" value="123" readonly="readonly" name="pw" id="pw"> 
 		</td>
-		<%-- <td colspan="2"><button formaction="${home }myInfo/MyAuth">비밀번호 변경</button></td> --%>
 		<td colspan="2"><button onclick="postModify('${home}myInfo/passModify')">비밀번호 변경</button></td>
 	</tr>
 	
