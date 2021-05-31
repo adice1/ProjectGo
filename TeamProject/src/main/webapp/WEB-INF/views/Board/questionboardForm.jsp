@@ -4,13 +4,13 @@
 <style>
 div.reply{
 
-   border: 1px solid black; padding: 10px;
+   border: 1px solid black; padding: 5px;
    padding: 10px;
    margin: 30px;
 }
 
 #reply2{
-  margin-top: 20px;
+  margin-top: 10px;
    
 }
 
@@ -24,6 +24,9 @@ div.reply{
     margin-top: 20px;
 
 }
+.pon{
+   margin-bottom: 25px;
+}
 
 </style>
 
@@ -32,17 +35,15 @@ div.reply{
 $(document).ready(function() {
 	$("div.title").css("cursor", "pointer").click(function(){
 		let no = $(this).attr("id");
-		$("#writeN").val(no);
+		$("#writeNo").val(no);
 		$("#frm").attr("action", "${home }QuestionBoard/detailRead");
 		$("#frm").submit();
 	})
-	
 	$("#allSelect").click(function() {
 		console.log(this.checked);
 		$(".chkbox").prop('checked', this.checked);
 		console.log($(".chkbox").length);
 	})
-	
 	$(".chkbox").click(function() {
 		console.log($(".chkbox").length);
 		console.log($(".chkbox:checked").length);
@@ -62,12 +63,11 @@ function proc(cmd){
 	document.getElementById('frm').submit();
 
 </script>
-<html>
-<body>
-<center>
-<form id="frm" action="${home }QuestionBoard/QuestionWrite" method="post">
 
-<input type="hidden" id="writeN" name="writeNo"/>
+<center>
+<h3 class="pon">댓글 목록</h3>
+<form id="frm" action="${home }QuestionBoard/QuestionWrite" method="post">
+<input type="hidden" id="writeNo" name="writeNo"/>
 <table style="width: 650px; ">
 	<thead>
 	<tr>
@@ -86,10 +86,9 @@ function proc(cmd){
 		<td style="width: 80px; height:20px;" align="center"><hr/></td>
 	</tr>
 	<c:forEach var="board" items="${boardLst }">
-	
 	<tr>
 		<td style="width: 40px; height:40px;" align="center">
-		<input class="chkbox" type="checkbox" name="chkbox" value="${board.no }" /></td>
+		<input type="checkbox" name="chkbox" value="${board.no }"/></td>
 		<td style="width: 330px; height:40px;" align="center"><pre>
 		<div class="title" id="${board.no }">${board.title }</div></pre></td>
 		<td style="width: 80px; height:40px;" align="center">${board.id }</td>
@@ -99,7 +98,7 @@ function proc(cmd){
 	</c:forEach>
 	<tr><td colspan=5><hr/></td></tr>
 	<tr>
-		<td colspan=2><input id="allSelect" type="checkbox"/>전체선택</td>
+		<td colspan=2><input id="allSelect" type="checkbox"  />전체선택</td>
 		<td colspan=3 align="right">
 			<button style="width: 100px; ">글쓰기</button>
 			<button formaction="${home }QuestionBoard/deletes" style="width: 100px; ">삭제</button>
@@ -108,23 +107,15 @@ function proc(cmd){
 	<tr><td colspan=5><hr/></td></tr>
 </table>
 </form>
+<div class="reply" align="center" style="width: 620px;">
+<h3>답글목록</h3>
 
-<div class="reply" style="width: 600px; ">
+       <div id="reply2" align="center">${board.id } </div>
+       <div id="reply3" align="center">${board.writedate } </div>
+       <div id="reply4" align="center">${board.contents }</div>
 
-
-
-       
-       <div id='reply2' style="width: 80px; height:20px;" align="center">${board.id }</div>
-             
-       <div id='reply3' style="width: 120px; height:20px;" align="center">${board.writedate }</div>
-             
-       <div id='reply4' style="width: 650px; height: 300px">${board.contents }</div>
 </div>
-
-</body>
-</html>
- 이전 1 2 3 4 다음
-<center>
+${navi }
 <table>
 <tr>
 <td>

@@ -16,6 +16,8 @@ public interface IBoardService {
 	public void Deletes(String[] chkboxs);
 
 
-	public List<Board> SelectBoard();
+	public List<Board> SelectBoard(HttpServletRequest request);
+
+	public String getNavi(HttpServletRequest request);
 
 }

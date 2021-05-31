@@ -13,13 +13,19 @@ public interface IBoardDao {
 
 	public void InsertReply(Map<String, Integer> replyMap);
 
-	public List<Board> SelectBoard();
 
 	public Board DetailRead(String writeNo);
 
 	public List<Map<String, Object>> DetailreadAttach(String writeNo);
 
 	public void Delete(String no);
+
+
+	public List<Board> SelectBoard(Map<String, Object> boardMap);
+
+	public int BoardCount(Map<String, Object> boardMap);
+
+	
 
 	
 

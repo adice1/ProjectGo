@@ -23,6 +23,8 @@ public class BoardController {
 	@RequestMapping(value = "QuestionWrite")
 	public String write(Model model, HttpSession session) {
 		model.addAttribute("usrId", session.getAttribute("id"));
+		model.addAttribute("btnName", "±Û¾²±â");
+		model.addAttribute("proc", "writePRoc");
 		
 		return "forward:/index?formpath=questionwrite";
 	}
@@ -35,12 +37,13 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value = "boardProc")
-	public String boardProc(Model model) {
-		List<Board> boardLst = iBoardServ.SelectBoard();
-//		logger.warn(boardLst.size()+"");
+	public String boardProc(Model model, HttpServletRequest request) {
+		List<Board> boardLst = iBoardServ.SelectBoard(request);
+		model.addAttribute("navi", iBoardServ.getNavi(request));
 		model.addAttribute("boardLst", boardLst);
 		return "forward:/index?formpath=QuestionBoard";
 	}
+	
 	@RequestMapping(value = "detailRead")
 	public String boardProc(Model model, @RequestParam String writeNo) {
 		Map<String, Object>boardMap = iBoardServ.DetailRead(writeNo);

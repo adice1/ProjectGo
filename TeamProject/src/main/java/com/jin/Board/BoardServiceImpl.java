@@ -20,11 +20,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.jin.TeamProject.BoardTools;
+
 @Service
 public class BoardServiceImpl implements IBoardService{
 	private static final Logger logger = LoggerFactory.getLogger(BoardServiceImpl.class);
 	@Autowired private IBoardDao iBoardDao;
 	private final String UPLOADPATH = "/resources/upload/";
+	
+	private final int PAGEBLOCK = 10;
 
 	@Override
 	public void Write(Board board, HttpServletRequest request) {
@@ -54,7 +58,7 @@ public class BoardServiceImpl implements IBoardService{
 //		logger.warn("Upload");
 		while(iterator.hasNext()){
 			String fieldName = iterator.next();
-//			logger.warn("fieldName : "+fieldName);
+			logger.warn("fieldName : "+fieldName);
 			multipartFile = multiRequest.getFile(fieldName);
 	        
 			if(multipartFile.isEmpty() == false){
@@ -89,11 +93,7 @@ public class BoardServiceImpl implements IBoardService{
 	}
 		
 
-	@Override
-	public List<Board> SelectBoard() {
-		
-		return iBoardDao.SelectBoard();
-	}
+	
 
 	@Override
 	public Map<String, Object> DetailRead(String writeNo) {
@@ -113,8 +113,48 @@ public class BoardServiceImpl implements IBoardService{
 			iBoardDao.Delete(no);
 		
 	}
-	
-	
-	
+	@Override
+	public List<Board> SelectBoard(HttpServletRequest request) {
+		Map<String, Object> boardMap = getSearchMap(request);	
+		int currentPage = getCurrentPage(request);
+		
+		boardMap.put("start", 1+PAGEBLOCK*(currentPage-1));
+		boardMap.put("end", PAGEBLOCK*currentPage);
 
+		return iBoardDao.SelectBoard(boardMap);
+	}
+	private int getCurrentPage(HttpServletRequest request) {
+		int currentPage = 1;
+		String param = request.getParameter("currentPage");
+		if(param!=null)	currentPage = Integer.parseInt(param);
+		
+		return currentPage;
+	}
+	private Map<String, Object> getSearchMap(HttpServletRequest request) {
+        Map<String, Object> boardMap = new HashMap<String, Object>();
+		
+		String searchName = request.getParameter("searchName");
+		if(searchName != null) {
+			boardMap.put("searchName", searchName);
+			String searchWord = request.getParameter("searchWord");
+			boardMap.put("searchWord", searchWord);
+		}
+		return boardMap;
+	}
+	@Override
+	public String getNavi(HttpServletRequest request) {
+		Map<String, Object> boardMap = getSearchMap(request);
+		int currentPage = getCurrentPage(request);
+		
+		int totalPage = iBoardDao.BoardCount(boardMap);
+		String url = request.getContextPath()+"QuestionBoard/boardProc?";
+		if(boardMap.get("searchName")!=null){
+			url+="searchName="+boardMap.get("searchName");
+			url+="searchWord="+boardMap.get("searchWord");
+		}
+		url+="currentPage=";
+		String tag = BoardTools.getNavi(currentPage, PAGEBLOCK, totalPage, url);
+		return tag;
+	}
 }
+
