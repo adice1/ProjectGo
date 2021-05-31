@@ -175,7 +175,6 @@
 					<tr>
 						<td>
 								<br />
-								<div class="commenttitle">
 								<div class="commentlist" id="commentlist">
 <%-- 									<input id="commentlist_no" type="hidden" value="${comment.comment_no }"> --%>
 <%-- 									<input id="commentlist_id" type="text" value="${comment.comment_id}" disabled="disabled" /> --%>
