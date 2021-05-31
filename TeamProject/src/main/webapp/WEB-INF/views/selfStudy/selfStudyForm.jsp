@@ -3,32 +3,46 @@
 <c:url var="home" value="/"/>
 
 <style>
-.canvas{
-    width: 700px;
-    height: 700px;
-    background-color: white;
-    border-radius: 15px;
-    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+  #sidebar {
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: -250px;
+    height: 100%;
+    z-index: 999;
+    background: #333;
+    color: #fff;
+    transition: all 0.3s;
+}
+#sidebar.active {
+    left: 0;
+}
+
+.overlay {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 998;
+    display: none;
 }
 </style>
 
-<center>
-<form action="selfstudy/test">
+<script>
+	$('#sidebarCollapse').on('click', function () {
+    	$('#sidebar').addClass('active');
+    	$('.overlay').fadeIn();
+	});
 
-	<canvas id="jsCanvas" class="canvas">
-		<input type="input" name="tv" value="테스트값" />
-		<input type="submit" value="확인"/>
-		
+	$('.overlay').on('click', function () {
+    	$('#sidebar').removeClass('active');
+    	$('.overlay').fadeOut();
+	});
 
-		
-	</canvas>
-	
-	<div id="mySidenav" class="sidenav">
-		<a href="#">About</a>
-		<a href="#">Services</a>
-		<a href="#">Clients</a>
-		<a href="#">Contact</a>
-	</div>
-	
-</form>
-</center>
+</script>
+
+<div id="wrap">
+     <nav id="sidebar"></nav>
+     <button id="sidebarCollapse">토글</button> 
+     <div class="overlay"></div>
+</div>
