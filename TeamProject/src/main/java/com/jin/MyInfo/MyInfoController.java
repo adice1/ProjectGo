@@ -27,13 +27,14 @@ public class MyInfoController {
 	public String MyInfoFormProc(Postcode postcode, Model model) {
 		List<Postcode> myPost = iMyInfoServ.MyPostSelect();
 		model.addAttribute("myPost", myPost);
-		logger.warn("내 정보에 어서오세요");
+		
+		 session.setAttribute("authPwState", false);
+		 session.setAttribute("authPwOk", false);
+		 
 		return "forward:/index?formpath=myInfo";
 	}
 	@RequestMapping(value = "MyInfoProc")
 	public String MyInfoProc(@RequestParam String zipcode, @RequestParam String addr1, @RequestParam String addr2) {
-		logger.warn("내 정보 업데이트");
-		logger.warn("창이 닫쳤습니다.");
 		iMyInfoServ.MyInfoProc(zipcode, addr1, addr2);
 		
 		return "forward:/myInfo/MyInfoFormProc";
@@ -41,10 +42,8 @@ public class MyInfoController {
 	@RequestMapping(value = "MyAuth") // 비밀번호 일치 비교
 	public String MyAuth(HttpSession session, @RequestParam String pw, Model model ) {
 		String id = (String)session.getAttribute("id");
-		
 		int authNum = iMyInfoServ.MyAuth(pw);
-		logger.warn("비밀번호 DB : "+authNum);
-		logger.warn("인증id"+id);
+		
 		if(authNum == 0)
 			model.addAttribute("authNum", "비밀번호 다시 입력");
 		else
@@ -54,16 +53,12 @@ public class MyInfoController {
 	}
 	@RequestMapping(value = "MyAuthOk") //인증 값 일치 비교
 	public String MyAuthOk(@RequestParam String authNumProc, @RequestParam String authNumOk, Model model) {
-		logger.warn("컨트롤러"+authNumOk);
-		logger.warn("컨트롤러"+authNumProc);
-		logger.warn(iMyInfoServ.MyAuthOk(authNumProc, authNumOk));
 		
 		model.addAttribute("authNum", iMyInfoServ.MyAuthOk(authNumProc, authNumOk));
 		return "forward:/myInfo/passModify";
 	}
 	@RequestMapping(value = "passModify")	//비밀번호 팝업 창
 	public String passModify() {
-		logger.warn("비밀번호 팝업 창입니다.");
 		
 		Boolean authPwState = (Boolean)session.getAttribute("authPwState");
 		Boolean authPwOk = (Boolean)session.getAttribute("authPwOk");
@@ -75,9 +70,7 @@ public class MyInfoController {
 		return "MyInfo/passModifyForm";
 	}
 	@RequestMapping(value = "MyInfoProcPw")//비밀번호 수정 
-	public String MyInfoProcPw(String newPw) {
-		logger.warn("비밀번호 수정중입니다.");
-		logger.warn("newPw"+newPw);
+	public String MyInfoProcPw(String newPw, Model model) {
 		iMyInfoServ.MyInfoProcPw(newPw);
 		
 		return "forward:/myInfo/MyInfoFormProc";
@@ -88,15 +81,8 @@ public class MyInfoController {
 	}
 	@RequestMapping(value = "postModifySelect") //주소 셀렉트 값
 	public String postModifySelect(Model model ,@RequestParam String addr) {
-		logger.warn("addr"+ addr);
 		List<Zipcode> zipLst = iMyInfoServ.zipModifySelect(addr);
 		model.addAttribute("zipLst", zipLst);
 		return "MyInfo/postModifyForm";
 	}
-	
-	
-
-	
-
-	
 }

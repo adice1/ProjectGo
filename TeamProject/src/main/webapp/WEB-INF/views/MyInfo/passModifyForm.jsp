@@ -1,7 +1,7 @@
+<%@page import="org.apache.ibatis.reflection.SystemMetaObject"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:url var="home" value="/"/>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script type="text/javascript">
 function ModifyPwCloss(cmd){
@@ -25,7 +25,6 @@ function MyInfoProc(cmd, frmId) {
 <center>
 <h1> ${authNum }</h1>
 <form id="frm" action="${home }myInfo/passModify" method="post">
-<input type="hidden" id="authNumProc" name="authNumProc" value="${authNum }">
 <input type="hidden" id="authNumProc" name="authNumProc" value="${authNum }">
 <table>
 	<tr><td colspan="4" align="center"><h1>비밀번호 수정</h1><hr/><br/></td></tr>
@@ -57,7 +56,6 @@ function MyInfoProc(cmd, frmId) {
 	</tr>
 	<tr>
 		<td align='center' height=40 colspan=4>
-			<%-- <input onclick="MyInfoProc('${home }myInfo/MyInfoProcPw', 'frm');" type=submit value='수정' style="width: 120px; "/> --%>
 			<button onclick="MyInfoProc('${home }myInfo/MyInfoProcPw', 'frm');"  style="width: 120px;">수정</button>
 			<button onclick="ModifyPwCloss('${home }myInfo/MyInfoFormProc');"  style="width: 120px;">나가기</button>
 		</td>
