@@ -43,10 +43,11 @@ header {
  
 .fa-angle-double-left{
 	size: 30px;
-    right: 7%;
+    right: 27%;
     top: 600px;
     position: absolute;
     font-size: 4em;
+    z-index: 1;
 }
 
 input {
@@ -70,6 +71,7 @@ input {
 }
 
 #tab {
+	display: none;
 	position: absolute;
     width: 400px;
     height: 900px;
@@ -84,21 +86,22 @@ input {
 
 <script>
 $(document).ready(function(){
-    var target = $("#sidebar");
+    var target = $("#tab");
 
     // 버튼을 클릭하면 사이드바 열림
     $(document).on("click", "#OpenBtn", function (e){
         target.show();
         target.addClass('emphasized');
     });
-
+	    
     // 사이드바 외부를 클릭하면 사이드바 닫힘
-    $(document).mouseup(function (e){
-        if(target.has(e.target).length==0) {
-            target.hide();
-            target.removeClass('emphasized');
-        } 
-    });
+	$(document).mousedown(function (e){
+		if(target.has(e.target).length==0) {
+			target.hide();
+	  		target.removeClass('emphasized');
+	    } 
+	});
+
     
     $("#test1").click(function(){
     	alert("글씨체를 선택하셨습니다.")
@@ -119,12 +122,13 @@ $(document).ready(function(){
 <body>
 	
 	<i class="fas fa-angle-double-left" id="OpenBtn"></i>
-	<canvas id="jsCanvas" class="canvas"></canvas>
+	<canvas id="jsCanvas" class="canvas">
+		
+	</canvas>
+		<table id="tab">
+			<tr>
+			</tr>
+		</table>
 	
-	
-	<table id="tab">
-		<tr>
-		</tr>
-	</table>
   
 </body>
