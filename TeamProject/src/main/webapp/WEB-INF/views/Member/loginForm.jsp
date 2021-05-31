@@ -20,6 +20,7 @@
 			<input type=reset value='취소' style="width: 86px; "/> 
 		</td>
 	</tr>
+		
 </table>
 </form>
 </center>

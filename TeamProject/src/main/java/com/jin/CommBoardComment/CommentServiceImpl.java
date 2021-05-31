@@ -15,10 +15,10 @@ public class CommentServiceImpl implements ICommentService{
 	
 	@Autowired private ICommentDao icommentDao;
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	public void Insert(Comment comment) {
 		Date writedate = new Date(System.currentTimeMillis());
-		
 		comment.setComment_writedate(writedate);
 		
 		icommentDao.Insert(comment);
@@ -27,6 +27,19 @@ public class CommentServiceImpl implements ICommentService{
 	@Override
 	public List<Comment> SelectComment(String writeNo) {
 		return icommentDao.SelectComment(writeNo);
+	}
+
+	@Override
+	public void ModifyComment(Comment comment) {
+		Date writedate = new Date(System.currentTimeMillis());
+		comment.setComment_writedate(writedate);
+		icommentDao.ModifyComment(comment);
+		
+	}
+
+	@Override
+	public void DeleteComment(Comment comment) {
+		icommentDao.DeleteComment(comment);
 	}
 	
 }

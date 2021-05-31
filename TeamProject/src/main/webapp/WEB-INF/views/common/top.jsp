@@ -39,7 +39,10 @@ a:hover{color:#cc3300; font-weight:bold; }
 a:active{color:#ff00cc; text-decoration:underline; }
 -->
 ul{list-style: none;}
-ul li{display: inline-block; margin: 15px 30px;}
+ul li{
+	display: inline-block;
+	 margin: 15px 30px;
+	}
 *{margin:0; padding:0;}
 body .box{
 	background-color: #F3EEE8;
