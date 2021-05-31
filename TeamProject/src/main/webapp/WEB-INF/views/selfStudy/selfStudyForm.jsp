@@ -51,8 +51,8 @@ header {
 }
 
 input {
-	margin-top : 20%;
-	margin-left : 25%;
+	margin-top : 5%;
+	margin-left : 10%;
 	margin-right : 10%;
 	width : 60px;
 	height : 60px;
@@ -126,8 +126,58 @@ $(document).ready(function(){
 		
 	</canvas>
 		<table id="tab">
+			
+			<th><label>메뉴</label></th>
 			<tr>
+				<td><input type="button" value="1" /></td>
+				<td><input type="button" value="2" /></td>
+				<td><input type="button" value="3" /></td>
+				<td><input type="button" value="4" /></td>
+				<td><input type="button" value="5" /></td>
 			</tr>
+			
+			<th><label>스톱워치</label></th>
+			<tr>
+				<td><input type="button" value="6" /></td>
+				<td><input type="button" value="7" /></td>
+				<td><input type="button" value="8" /></td>
+				<td><input type="button" value="9" /></td>
+				<td><input type="button" value="10" /></td>
+			</tr>
+			
+			<tr>
+				<td><input type="button" value="11" /></td>
+				<td><input type="button" value="12" /></td>
+				<td><input type="button" value="13" /></td>
+				<td><input type="button" value="14" /></td>
+				<td><input type="button" value="15" /></td>
+			</tr>
+			
+			<tr>
+				<td><input type="button" value="16" /></td>
+				<td><input type="button" value="17" /></td>
+				<td><input type="button" value="18" /></td>
+				<td><input type="button" value="19" /></td>
+				<td><input type="button" value="20" /></td>
+			</tr>
+			
+			<th><label>필기도구</label></th>
+			<tr>
+				<td><input type="button" value="21" /></td>
+				<td><input type="button" value="22" /></td>
+				<td><input type="button" value="23" /></td>
+				<td><input type="button" value="24" /></td>
+				<td><input type="button" value="25" /></td>
+			</tr>
+			
+			<tr>
+				<td><input type="button" value="26" /></td>
+				<td><input type="button" value="27" /></td>
+				<td><input type="button" value="28" /></td>
+				<td><input type="button" value="29" /></td>
+				<td><input type="button" value="30" /></td>
+			</tr>
+			
 		</table>
 	
   
