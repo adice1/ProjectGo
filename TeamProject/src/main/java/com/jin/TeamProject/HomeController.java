@@ -111,6 +111,5 @@ public class HomeController {
 	public String videoLst() {
 		return "MyInfo/videoLstForm";
 	}
-	
-	
+		
 }

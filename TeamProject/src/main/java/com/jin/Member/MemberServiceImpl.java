@@ -52,7 +52,6 @@ public class MemberServiceImpl implements IMemberService{
 			session.setAttribute("authState", true);
 			return "인증 완료";
 		}
-
 		return "인증 실패";
 	}
 	@Override
