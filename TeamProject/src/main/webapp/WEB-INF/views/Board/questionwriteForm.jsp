@@ -4,7 +4,7 @@
 <c:url var="home" value="/"/>
 
 <center>
-<h3>답변을 작성하시오.</h3>
+<h3>댓글 페이지</h3>
 <form action="${home }QuestionBoard/QuestionwriteProc" method="post" enctype="multipart/form-data">
 <input type="text" name="pno" value="${pno }">
 <table style="width: 650px; ">

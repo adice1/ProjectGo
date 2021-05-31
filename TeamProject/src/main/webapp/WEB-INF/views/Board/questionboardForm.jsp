@@ -63,10 +63,10 @@ function proc(cmd){
 
 </script>
 <html>
-
 <body>
 <center>
 <form id="frm" action="${home }QuestionBoard/QuestionWrite" method="post">
+
 <input type="hidden" id="writeN" name="writeNo"/>
 <table style="width: 650px; ">
 	<thead>
@@ -111,29 +111,32 @@ function proc(cmd){
 
 <div class="reply" style="width: 600px; ">
 
+
+
        
        <div id='reply2' style="width: 80px; height:20px;" align="center">${board.id }</div>
              
        <div id='reply3' style="width: 120px; height:20px;" align="center">${board.writedate }</div>
              
        <div id='reply4' style="width: 650px; height: 300px">${board.contents }</div>
-
- 
 </div>
 
 </body>
 </html>
-이전 1 2 3 4 다음
+ 이전 1 2 3 4 다음
+<center>
 <table>
 <tr>
 <td>
-	<select>
-		<option>전체</option>
-		<option>제목</option>
-		<option>작성자</option>
+<form id="frm" action="${home }QuestionBoard/boardProc" method="post">
+	<select name="searchName">
+		<option value="all">전체</option>
+		<option value="title">제목</option>
+		<option value="id">작성자</option>
 	</select>
-	<input type=text name='search'/>
-	<input type=button name='searchBtn' value='검색' style="width: 80px; "/>
+	<input type=text name='searchWord'/>
+	<input type="submit" name='searchBtn' value='검색' style="width: 80px; "/>
+	</form>
 </td>
 </tr>
 </table>

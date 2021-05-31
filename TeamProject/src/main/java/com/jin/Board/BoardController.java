@@ -23,6 +23,7 @@ public class BoardController {
 	@RequestMapping(value = "QuestionWrite")
 	public String write(Model model, HttpSession session) {
 		model.addAttribute("usrId", session.getAttribute("id"));
+		
 		return "forward:/index?formpath=questionwrite";
 	}
 	
@@ -38,7 +39,6 @@ public class BoardController {
 		List<Board> boardLst = iBoardServ.SelectBoard();
 //		logger.warn(boardLst.size()+"");
 		model.addAttribute("boardLst", boardLst);
-		
 		return "forward:/index?formpath=QuestionBoard";
 	}
 	@RequestMapping(value = "detailRead")
@@ -50,13 +50,14 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value = "reply")
-	public String reply(Model model, @RequestParam String pn) {
-		logger.warn(pn);
-		model.addAttribute("pno", pn);
-		return "forward:/index?formpath=questionreply";
+	public String reply(Model model, @RequestParam String pno) {
+		logger.warn(pno);
+		model.addAttribute("pno", pno);
+		return "forward:/index?formpath=questionwrite";
 	}
 	@RequestMapping(value = "delete")
 	public String delete(@RequestParam String no) {
+		logger.warn(no);
 		iBoardServ.Delete(no);
 		return "forward:/QuestionBoard/boardProc";
 	}

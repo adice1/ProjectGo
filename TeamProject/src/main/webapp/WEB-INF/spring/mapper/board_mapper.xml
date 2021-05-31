@@ -61,4 +61,5 @@ SELECT no, id, title, contents, writedate, hit
 		DELETE FROM board
 		WHERE no=#{no}
 	</delete>
+		
 </mapper>
