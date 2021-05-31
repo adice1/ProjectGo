@@ -8,10 +8,8 @@
     integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp"
     crossorigin="anonymous">
     
- <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Tangerine"> 
-   
-
+ <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine"> 
+ 
 <style>
     body {
     margin: 0px;
@@ -87,7 +85,13 @@ input {
 <script>
 $(document).ready(function(){
     var target = $("#tab");
-
+    
+		timerStart = setInterval(function() {
+			var nowTime = new Date().getTime() //1ms당 한 번씩 현재시간 timestamp를 불러와 nowTime에 저장
+			var sec = newTime.getSeconds() //초
+			$("stopwatch").html(newTime.getSeconds() - sec)
+			}, 1)
+    
     // 버튼을 클릭하면 사이드바 열림
     $(document).on("click", "#OpenBtn", function (e){
         target.show();
@@ -102,47 +106,34 @@ $(document).ready(function(){
 	    } 
 	});
 
-    
-    $("#test1").click(function(){
-    	alert("글씨체를 선택하셨습니다.")
-    });
-    
-    $("#test2").click(function(){
-    	alert("볼드를 선택하셨습니다");
-    });
-    $("#test2").click(function(){
-    	alert("크기를 선택하셨습니다");
-    });
-    
+// 	$("#stopwatch").click(function(){
+// 		let today = new Date()
+// 		let lastHours = today.getHours();
+// 		console.log(lastHours - today.getHours());
+// 		$("#stopwatch").html(lastHours - today.getHours());
+// 	})
+	
 });
-
 </script>
 
 
 <body>
 	
 	<i class="fas fa-angle-double-left" id="OpenBtn"></i>
-	<canvas id="jsCanvas" class="canvas">
+	<canvas id="jsCanvas" class="canvas"></canvas>
+	
+	<table id="tab">
 		
-	</canvas>
-		<table id="tab">
-			
 			<th><label>메뉴</label></th>
 			<tr>
-				<td><input type="button" value="1" /></td>
-				<td><input type="button" value="2" /></td>
-				<td><input type="button" value="3" /></td>
-				<td><input type="button" value="4" /></td>
-				<td><input type="button" value="5" /></td>
+				<td colspan="2"><center><p>기출 문제 불러오기</p></td>
+				<td colspan="2"><center><p>필기 불러오기 </p></td>
+				<td colspan="2"><center><p>저장하기</p></td>
 			</tr>
 			
 			<th><label>스톱워치</label></th>
 			<tr>
-				<td><input type="button" value="6" /></td>
-				<td><input type="button" value="7" /></td>
-				<td><input type="button" value="8" /></td>
-				<td><input type="button" value="9" /></td>
-				<td><input type="button" value="10" /></td>
+				<td colspan="6"><center><p id="stopwatch">1</p></center></td>
 			</tr>
 			
 			<tr>
@@ -177,8 +168,8 @@ $(document).ready(function(){
 				<td><input type="button" value="29" /></td>
 				<td><input type="button" value="30" /></td>
 			</tr>
-			
-		</table>
+		</center>
+	</table>
 	
   
 </body>
