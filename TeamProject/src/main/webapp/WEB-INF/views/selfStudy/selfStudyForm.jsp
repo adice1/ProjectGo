@@ -86,14 +86,19 @@ input {
 
 <script>
 $(document).ready(function(){
+	
 	let target = $("#tab");
+	let flag = $("#flag")
+	
 	var tic = 0;
     var timer
-	
+    var currentTime;
+    
     // 버튼을 클릭하면 사이드바 열림
     $(document).on("click", "#OpenBtn", function (e){
         target.show();
         target.addClass('emphasized');
+        
     });
 	    
     // 사이드바 외부를 클릭하면 사이드바 닫힘
@@ -104,12 +109,13 @@ $(document).ready(function(){
 	    } 
 	});
 
-	$("#start").click(function(){
+    $("#start").click(function(){
 		
-		var currentTime;
 		var sec = 0;
 		var min = 0;
 		var hour = 0;
+		
+		$("#flag").val("false")
 		
 		timer = setInterval(function(){
 			
@@ -120,9 +126,9 @@ $(document).ready(function(){
 			sec = tic % 60;
 			min = min % 60;
 			
-			var currentHour = hour;
-			var currentMin = min;
-			var currentsec = sec;
+			let currentHour = hour;
+			let currentMin = min;
+			let currentsec = sec;
 			
 			if(currentHour < 10)	currentHour = "0" + hour
 			if(currentMin < 10)		currentMin = "0" + min
@@ -133,17 +139,50 @@ $(document).ready(function(){
 			$("#StopWatch").html(currentTime)
 			$("#saveTimer").val(currentTime)
 			
+// 			if($("#flag").val() == true){
+// 				currentHour = 0;
+// 				currentMin = 0;
+// 				currentsec = 0;
+// 			}
+			
 			},	1000)
-	})
+	}).mouseover(function(){
+    	$(this).css("color", "blue")
+    	$(this).css("box-shadow", "0 0px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%");
+    }).mouseout(function(){
+    	$(this).css("color", "black")
+    	$(this).css("box-shadow", "");
+    });
+    	
+	$("#Pause").click(function(){
+			
+			if($("#flag").val() == 'true'){
+				console.log(flag.val())
+				console.log(currentTime)
+					tic = 0
+					$("#flag").val("false")
+					$("#Pause").html("일시중지")
+				
+			}else{
+				console.log(flag.val())
+				if(tic != 0){
+					$("#flag").val("true")
+					$("#Pause").html("초기화")
+					clearInterval(timer);
+				}
+			}
+		}).mouseover(function(){
+    		$(this).css("color", "blue")
+    		$(this).css("box-shadow", "0 0px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%");
+    	}).mouseout(function(){
+    		$(this).css("color", "black")
+    		$(this).css("box-shadow", "");
+    	});
+    	
+//     $(this).css("color", "00c471")
+
 	
-	$("#stop").click(function(){
-		if(tic != 0){
-			console.log($("#saveTimer").val())
-			console.log(timer);
-			clearInterval(timer);
-		}
-	})
-	
+    
 	$("#recode").click(function(){
 		$.ajax({
 			url: "${home}selfstudy/stopWatchInsert",
@@ -155,7 +194,15 @@ $(document).ready(function(){
 				alert("성공하셨습니다.")
 			}
 		})
-	})
+	}).mouseover(function(){
+    	$(this).css("color", "blue")
+    	$(this).css("box-shadow", "0 0px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%");
+    }).mouseout(function(){
+    	$(this).css("color", "black")
+    	$(this).css("box-shadow", "");
+    });
+    
+    $("#StopWatch").css("box-shadow", "0 0px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%")
 	
 });
 </script>
@@ -164,15 +211,18 @@ $(document).ready(function(){
 <body>
 	
 	<i class="fas fa-angle-double-left" id="OpenBtn"></i>
-	<canvas id="jsCanvas" class="canvas"></canvas>
+	<canvas id="jsCanvas" class="canvas">
+	</canvas>
+	<input type=file name="uploadfile" style="width: 300px; "/>
 	
 	<table id="tab">
+			<input type="hidden" id="flag" value="false">
 			<input type="hidden" id="saveTimer" />
 			<th>메뉴</th>
 			<tr>
-				<td colspan="2" style="align="center">기출 문제 불러오기</td>
-				<td colspan="2" style="align="center">필기 불러오기 </td>
-				<td colspan="2" style="align="center">저장하기</td>
+				<td id="qload" colspan="2" style="align="center">기출 문제 불러오기</td>
+				<td id="nload"colspan="2" style="align="center">필기 불러오기 </td>
+				<td id="save" colspan="2" style="align="center">저장하기</td>
 			</tr>
 			
 			<th>스톱워치</th>
@@ -181,17 +231,9 @@ $(document).ready(function(){
 			</tr>
 			
 			<tr align="center">
-					<td id="start" colspan="2" align="center">시작</td>
-					<td id="stop" colspan="1" align="center">멈춤</td>
-					<td id="recode" colspan="2" align="center">기록</td>
-			</tr>
-			
-			<tr>
-				<td><input type="button" value="16" /></td>
-				<td><input type="button" value="17" /></td>
-				<td><input type="button" value="18" /></td>
-				<td><input type="button" value="19" /></td>
-				<td><input type="button" value="20" /></td>
+					<td id="start" colspan="2" align="center">Start</td>
+					<td id="Pause" colspan="1" align="center">Pause</td>
+					<td id="recode" colspan="2" align="center">Recode</td>
 			</tr>
 			
 			<th><label>필기도구</label></th>
