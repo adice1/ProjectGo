@@ -41,8 +41,8 @@ header {
  
 .fa-angle-double-left{
 	size: 30px;
-    right: 27%;
-    top: 600px;
+    right: 37%;
+    top: 450px;
     position: absolute;
     font-size: 4em;
     z-index: 1;
@@ -57,41 +57,39 @@ input {
 }
 
 .canvas{   
-   	width: 1200px;
-    height: 900px;
+   	width: 700px;
+    height: 600px;
     background-color: white;
     border-radius: 15px;
     box-shadow: 0 0px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%);
     position: absolute;
     right: 0%;
     left: 25%;
-    bottom: 17%;
+    bottom: 20%
 }
 
 #tab {
 	display: none;
-	position: absolute;
+    position: absolute;
     width: 400px;
-    height: 900px;
-    right: 12%;
-    top: 202px;
+    height: 600px;
+    right: 17%;
+    top: 175px;
     border-radius: 15px;
     box-shadow: 0 0px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%);
 }
-</style>
+
+
+</style>	
 
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 
 <script>
 $(document).ready(function(){
-    var target = $("#tab");
-    
-		timerStart = setInterval(function() {
-			var nowTime = new Date().getTime() //1ms당 한 번씩 현재시간 timestamp를 불러와 nowTime에 저장
-			var sec = newTime.getSeconds() //초
-			$("stopwatch").html(newTime.getSeconds() - sec)
-			}, 1)
-    
+	let target = $("#tab");
+	var tic = 0;
+    var timer
+	
     // 버튼을 클릭하면 사이드바 열림
     $(document).on("click", "#OpenBtn", function (e){
         target.show();
@@ -106,12 +104,58 @@ $(document).ready(function(){
 	    } 
 	});
 
-// 	$("#stopwatch").click(function(){
-// 		let today = new Date()
-// 		let lastHours = today.getHours();
-// 		console.log(lastHours - today.getHours());
-// 		$("#stopwatch").html(lastHours - today.getHours());
-// 	})
+	$("#start").click(function(){
+		
+		var currentTime;
+		var sec = 0;
+		var min = 0;
+		var hour = 0;
+		
+		timer = setInterval(function(){
+			
+			tic = tic + 1
+			
+			min = Math.floor(tic / 60);
+			hour = Math.floor(min / 60);
+			sec = tic % 60;
+			min = min % 60;
+			
+			var currentHour = hour;
+			var currentMin = min;
+			var currentsec = sec;
+			
+			if(currentHour < 10)	currentHour = "0" + hour
+			if(currentMin < 10)		currentMin = "0" + min
+			if(currentsec < 10)		currentsec = "0" + sec
+	
+			currentTime = currentHour + " : " + currentMin + " : " + currentsec;
+			
+			$("#StopWatch").html(currentTime)
+			$("#saveTimer").val(currentTime)
+			
+			},	1000)
+	})
+	
+	$("#stop").click(function(){
+		if(tic != 0){
+			console.log($("#saveTimer").val())
+			console.log(timer);
+			clearInterval(timer);
+		}
+	})
+	
+	$("#recode").click(function(){
+		$.ajax({
+			url: "${home}selfstudy/stopWatchInsert",
+			type: "POST",
+			data: {
+				timer : $("#saveTimer").val()
+			},
+			success : function(){
+				alert("성공하셨습니다.")
+			}
+		})
+	})
 	
 });
 </script>
@@ -123,25 +167,23 @@ $(document).ready(function(){
 	<canvas id="jsCanvas" class="canvas"></canvas>
 	
 	<table id="tab">
-		
-			<th><label>메뉴</label></th>
+			<input type="hidden" id="saveTimer" />
+			<th>메뉴</th>
 			<tr>
-				<td colspan="2"><center><p>기출 문제 불러오기</p></td>
-				<td colspan="2"><center><p>필기 불러오기 </p></td>
-				<td colspan="2"><center><p>저장하기</p></td>
+				<td colspan="2" style="align="center">기출 문제 불러오기</td>
+				<td colspan="2" style="align="center">필기 불러오기 </td>
+				<td colspan="2" style="align="center">저장하기</td>
 			</tr>
 			
-			<th><label>스톱워치</label></th>
+			<th>스톱워치</th>
 			<tr>
-				<td colspan="6"><center><p id="stopwatch">1</p></center></td>
+				<td id="StopWatch" colspan="6" align="center"></td>
 			</tr>
 			
-			<tr>
-				<td><input type="button" value="11" /></td>
-				<td><input type="button" value="12" /></td>
-				<td><input type="button" value="13" /></td>
-				<td><input type="button" value="14" /></td>
-				<td><input type="button" value="15" /></td>
+			<tr align="center">
+					<td id="start" colspan="2" align="center">시작</td>
+					<td id="stop" colspan="1" align="center">멈춤</td>
+					<td id="recode" colspan="2" align="center">기록</td>
 			</tr>
 			
 			<tr>
@@ -168,7 +210,6 @@ $(document).ready(function(){
 				<td><input type="button" value="29" /></td>
 				<td><input type="button" value="30" /></td>
 			</tr>
-		</center>
 	</table>
 	
   

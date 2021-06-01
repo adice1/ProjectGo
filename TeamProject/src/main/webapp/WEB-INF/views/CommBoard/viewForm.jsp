@@ -171,22 +171,16 @@
 			</td>
 			
 	</tr>
-<%-- 				<c:forEach var="comment" items="${commentlst }"> --%>
 					<tr>
 						<td>
 								<br />
 								<div class="commentlist" id="commentlist">
-<%-- 									<input id="commentlist_no" type="hidden" value="${comment.comment_no }"> --%>
-<%-- 									<input id="commentlist_id" type="text" value="${comment.comment_id}" disabled="disabled" /> --%>
-<%-- 									<input id="commentlist_contents" type="text" value="${comment.comment_contents}" /> --%>
-<%-- 									<input id="commentlist_writedate" type="text" value="${comment.comment_writedate}" disabled="disabled" /> --%>
-<!-- 									<input type="button" id="listbtn" value="수정" /> -->
-<!-- 									<input type="button" id="listdel" value="삭제" /> -->
+
 								</div>
 								</div>
 						</td>
 					</tr>
-<%-- 				</c:forEach> --%>
+
 			
 	
 	<tr>
