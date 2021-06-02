@@ -34,6 +34,8 @@ import com.jin.Login.Login;
 public class SelfStudyController {
 	private static final Logger logger = LoggerFactory.getLogger(SelfStudyController.class);
 	
+	@Autowired private ISelfStudyService iSelfStudyServ;
+	
 	@RequestMapping(value = "test")
 	public String test(String tv) {	
 		logger.warn(tv);
@@ -49,10 +51,13 @@ public class SelfStudyController {
 	@ResponseBody
 	@RequestMapping(value = "InsertStudy", produces="application/json", method = RequestMethod.POST)
 	public void InsertStudy(SelfStudy selfstudy) {
+		
 		logger.warn(selfstudy.getId());
 		logger.warn(selfstudy.getSystemfile());		
 		logger.warn(selfstudy.getOriginfile());		
 		logger.warn("InsertStudy");
+		
+		iSelfStudyServ.InsertSelfStudy(selfstudy);
 	}
 	
 	

@@ -46,6 +46,11 @@
 	p:mapperInterface="com.jin.CommBoardComment.ICommentDao"
 	p:sqlSessionFactory-ref="sqlSessionFactoryBean"/>
 	
+	<bean class="org.mybatis.spring.mapper.MapperFactoryBean"
+	id="SelfStudyMapperFactoryBean"
+	p:mapperInterface="com.jin.SelfStudy.ISelfStudyDao"
+	p:sqlSessionFactory-ref="sqlSessionFactoryBean"/>
+	
 	<bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
 	id="multipartResolver"
 	p:maxInMemorySize="100000000"
