@@ -79,7 +79,6 @@ input {
     box-shadow: 0 0px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%);
 }
 
-
 </style>	
 
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -93,6 +92,45 @@ $(document).ready(function(){
 	var tic = 0;
     var timer
     var currentTime;
+    
+	$("#qload").click(function(){
+
+	}).mouseover(function(){
+		$(this).css("color", "00c471")
+		$(this).css("box-shadow", "0 0px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%");
+	}).mouseout(function(){
+		$(this).css("color", "black")
+		$(this).css("box-shadow", "");
+	});
+		
+	$("#nload").click(function(){
+		
+	}).mouseover(function(){
+		$(this).css("color", "00c471")
+		$(this).css("box-shadow", "0 0px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%");
+	}).mouseout(function(){
+		$(this).css("color", "black")
+		$(this).css("box-shadow", "");
+	});
+		
+	$("#save").click(function(){
+		$.ajax({
+			url: "${home}selfstudy/InsertStudy",
+			type: "POST",
+			data: {
+				
+			},
+			success : function(){
+				alert("성공하셨습니다.")
+			}
+		})
+	}).mouseover(function(){
+		$(this).css("color", "00c471")
+		$(this).css("box-shadow", "0 0px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%");
+	}).mouseout(function(){
+		$(this).css("color", "black")
+		$(this).css("box-shadow", "");
+	});
     
     // 버튼을 클릭하면 사이드바 열림
     $(document).on("click", "#OpenBtn", function (e){
@@ -116,6 +154,7 @@ $(document).ready(function(){
 		var hour = 0;
 		
 		$("#flag").val("false")
+		$("#Pause").html("일시정지")
 		
 		timer = setInterval(function(){
 			
@@ -138,22 +177,19 @@ $(document).ready(function(){
 			
 			$("#StopWatch").html(currentTime)
 			$("#saveTimer").val(currentTime)
-			
-// 			if($("#flag").val() == true){
-// 				currentHour = 0;
-// 				currentMin = 0;
-// 				currentsec = 0;
-// 			}
-			
+
 			},	1000)
 	}).mouseover(function(){
-    	$(this).css("color", "blue")
+		$(this).css("color", "00c471")
     	$(this).css("box-shadow", "0 0px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%");
     }).mouseout(function(){
     	$(this).css("color", "black")
     	$(this).css("box-shadow", "");
     });
     	
+    	
+
+//     $(this).css("color", "00c471")
 	$("#Pause").click(function(){
 			
 			if($("#flag").val() == 'true'){
@@ -161,7 +197,7 @@ $(document).ready(function(){
 				console.log(currentTime)
 					tic = 0
 					$("#flag").val("false")
-					$("#Pause").html("일시중지")
+					$("#Pause").html("일시정지")
 				
 			}else{
 				console.log(flag.val())
@@ -172,15 +208,12 @@ $(document).ready(function(){
 				}
 			}
 		}).mouseover(function(){
-    		$(this).css("color", "blue")
+			$(this).css("color", "00c471")
     		$(this).css("box-shadow", "0 0px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%");
     	}).mouseout(function(){
     		$(this).css("color", "black")
     		$(this).css("box-shadow", "");
     	});
-    	
-//     $(this).css("color", "00c471")
-
 	
     
 	$("#recode").click(function(){
@@ -195,7 +228,7 @@ $(document).ready(function(){
 			}
 		})
 	}).mouseover(function(){
-    	$(this).css("color", "blue")
+		$(this).css("color", "00c471")
     	$(this).css("box-shadow", "0 0px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%");
     }).mouseout(function(){
     	$(this).css("color", "black")
@@ -209,48 +242,43 @@ $(document).ready(function(){
 
 
 <body>
+	<input type="text" id="usrId" value="" />
+	<input type="hidden" id="flag" value="false">
+	<input type="hidden" id="saveTimer" />
 	
 	<i class="fas fa-angle-double-left" id="OpenBtn"></i>
 	<canvas id="jsCanvas" class="canvas">
 	</canvas>
-	<input type=file name="uploadfile" style="width: 300px; "/>
 	
 	<table id="tab">
-			<input type="hidden" id="flag" value="false">
-			<input type="hidden" id="saveTimer" />
-			<th>메뉴</th>
+			<th colspan="6" align="center"><b>메뉴</b></th>
 			<tr>
-				<td id="qload" colspan="2" style="align="center">기출 문제 불러오기</td>
-				<td id="nload"colspan="2" style="align="center">필기 불러오기 </td>
-				<td id="save" colspan="2" style="align="center">저장하기</td>
+				<td id="qload" colspan="1" align="center">기출 문제 불러오기</td>
+				<td id="nload"colspan="2" align="center">필기 불러오기 </td>
+				<td id="save" colspan="2" align="center">저장하기</td>
 			</tr>
-			
-			<th>스톱워치</th>
+			<th colspan="6" align="center"><b>스톱워치</b></th>
 			<tr>
 				<td id="StopWatch" colspan="6" align="center"></td>
 			</tr>
-			
 			<tr align="center">
-					<td id="start" colspan="2" align="center">Start</td>
-					<td id="Pause" colspan="1" align="center">Pause</td>
-					<td id="recode" colspan="2" align="center">Recode</td>
+					<td id="start" colspan="1" align="center">시작</td>
+					<td id="Pause" colspan="2" align="center">일시정지</td>
+					<td id="recode" colspan="2" align="center">저장</td>
 			</tr>
 			
-			<th><label>필기도구</label></th>
+			<th colspan="6" align="center"><b>필기도구</b></th>
 			<tr>
-				<td><input type="button" value="21" /></td>
-				<td><input type="button" value="22" /></td>
-				<td><input type="button" value="23" /></td>
-				<td><input type="button" value="24" /></td>
-				<td><input type="button" value="25" /></td>
+				<td>21</td>
+				<td>22</td>
+				<td>23</td>
+				<td>24</td>
 			</tr>
-			
 			<tr>
-				<td><input type="button" value="26" /></td>
-				<td><input type="button" value="27" /></td>
-				<td><input type="button" value="28" /></td>
-				<td><input type="button" value="29" /></td>
-				<td><input type="button" value="30" /></td>
+				<td>26</td>
+				<td>27</td>
+				<td>28</td>
+				<td>29</td>
 			</tr>
 	</table>
 	

@@ -40,11 +40,16 @@ public class SelfStudyController {
 			logger.warn("테스트가 실행 되었습니다.");
 			return "forward:/index?formpath=home";
 	}
-	
 	@ResponseBody
 	@RequestMapping(value = "stopWatchInsert", produces="application/json", method = RequestMethod.POST)
 	public void stopWatchInsert(String timer) {
-		logger.warn(timer);		
+		logger.warn("stopWatchInsert");		
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "InsertStudy", produces="application/json", method = RequestMethod.POST)
+	public void InsertStudy(HttpSession session) {
+		logger.warn("InsertStudy");
 	}
 	
 	

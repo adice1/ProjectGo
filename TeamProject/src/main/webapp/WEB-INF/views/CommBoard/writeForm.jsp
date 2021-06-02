@@ -2,7 +2,6 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:url var="home" value="/"/>
-
 <center>
 <form action="${home }commboard/${proc}" method="post" enctype="multipart/form-data">
 <input type="hidden" name="pno" value="${pno }">
