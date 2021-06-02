@@ -71,7 +71,6 @@ p {
 }
 </style>
 <head>
-
 <script type="text/javascript">
 
 (function(){
@@ -108,13 +107,10 @@ p {
 </script>
 </head>
 <body>
-
    <h1 style="text-align: center; font-size: 60px;">맞춤형 기출문제 및 자율학습방</h1>
-   <%--  </a>--%><p style="text-align: right;"><a style="text-align: center; font-size: 15px; font-weight: bold;" href="${home}/login/loginProc?id=admin&pw=123">관리자 로그인</a></p>
+   <p style="text-align: right;"><a style="text-align: center; font-size: 15px; font-weight: bold;" href="${home}/login/loginProc?id=admin&pw=123">관리자 로그인</a></p>
 
 <br/>
-
-
    <div class="slide">
       <button class="prev" type="button"><img src="${home }/resources/left.png" alt=""></button>
       <ul>

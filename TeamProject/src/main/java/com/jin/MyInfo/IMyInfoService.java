@@ -12,5 +12,5 @@ public interface IMyInfoService {
 	public List<Postcode> MyPostSelect();
 	public List<Zipcode> zipModifySelect(String addr);
 	public void MyInfoProc(String zipcode, String addr1, String addr2);
-	public void MyInfoProcPw(String newPw);
+	public void MyInfoProcPw(String newPw); 
 }
