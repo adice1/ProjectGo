@@ -1,6 +1,9 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:url var="home" value="/"/>
+<%
+	String usrId = (String)session.getAttribute("id");
+%>
 
 <link
     rel="stylesheet"
@@ -89,13 +92,25 @@ $(document).ready(function(){
 	let target = $("#tab");
 	let flag = $("#flag")
 	
+	var img = $("#scream");
+    var canvas = $("#jsCanvas")[0];
+	
 	var tic = 0;
     var timer
     var currentTime;
     
-	$("#qload").click(function(){
+	 $("#qload").click(function(){
+		 
+    	var ctx = canvas.getContext('2d');
+		
+		
+		ctx.drawImage(img[0], 1, 1);
+// 		ctx.globalCompositeOperation = "source-over";
+		
+// 		console.log(img[0])
+		console.log(canvas.toDataURL())
 
-	}).mouseover(function(){
+    }).mouseover(function(){
 		$(this).css("color", "00c471")
 		$(this).css("box-shadow", "0 0px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%");
 	}).mouseout(function(){
@@ -114,11 +129,16 @@ $(document).ready(function(){
 	});
 		
 	$("#save").click(function(){
+// 		let scream = $("#scream").attr("src")
+		let originfile = $("#scream").attr("src").split("/");
+		console.log(originfile[1]);
 		$.ajax({
 			url: "${home}selfstudy/InsertStudy",
 			type: "POST",
 			data: {
-				
+				id : $("#usrId").val(),
+				systemfile : canvas.toDataURL(),
+				originfile : originfile[1]
 			},
 			success : function(){
 				alert("성공하셨습니다.")
@@ -178,7 +198,7 @@ $(document).ready(function(){
 			$("#StopWatch").html(currentTime)
 			$("#saveTimer").val(currentTime)
 
-			},	1000)
+		},	1000)
 	}).mouseover(function(){
 		$(this).css("color", "00c471")
     	$(this).css("box-shadow", "0 0px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%");
@@ -236,19 +256,24 @@ $(document).ready(function(){
     });
     
     $("#StopWatch").css("box-shadow", "0 0px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%")
-	
+
 });
+
 </script>
 
 
 <body>
-	<input type="text" id="usrId" value="" />
+	<input type="hidden" id="usrId" value="<%=usrId %>" />
 	<input type="hidden" id="flag" value="false">
 	<input type="hidden" id="saveTimer" />
+
+	<img id="scream" width="60px" height="60px" src="resources/Quiz01.png" alt="The Scream">
 	
 	<i class="fas fa-angle-double-left" id="OpenBtn"></i>
+	
 	<canvas id="jsCanvas" class="canvas">
 	</canvas>
+	
 	
 	<table id="tab">
 			<th colspan="6" align="center"><b>메뉴</b></th>
@@ -261,10 +286,12 @@ $(document).ready(function(){
 			<tr>
 				<td id="StopWatch" colspan="6" align="center"></td>
 			</tr>
-			<tr align="center">
+			<tr colspan="6" align="center">
 					<td id="start" colspan="1" align="center">시작</td>
 					<td id="Pause" colspan="2" align="center">일시정지</td>
 					<td id="recode" colspan="2" align="center">저장</td>
+					<td></td>
+					<td></td>
 			</tr>
 			
 			<th colspan="6" align="center"><b>필기도구</b></th>
