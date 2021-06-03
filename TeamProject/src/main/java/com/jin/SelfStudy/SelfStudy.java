@@ -6,7 +6,7 @@ public class SelfStudy {
 
     private String id;
 
-    private String systemfile;
+    private byte[] systemfile;
 
     private String originfile;
 
@@ -26,11 +26,11 @@ public class SelfStudy {
         this.id = id;
     }
 
-    public String getSystemfile() {
+    public byte[] getSystemfile() {
         return systemfile;
     }
 
-    public void setSystemfile(String systemfile) {
+    public void setSystemfile(byte[] systemfile) {
         this.systemfile = systemfile;
     }
 

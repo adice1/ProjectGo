@@ -53,7 +53,7 @@ public class SelfStudyController {
 	public void InsertStudy(SelfStudy selfstudy) {
 		
 		logger.warn(selfstudy.getId());
-		logger.warn(selfstudy.getSystemfile());		
+		logger.warn(selfstudy.getSystemfile() + "");		
 		logger.warn(selfstudy.getOriginfile());		
 		logger.warn("InsertStudy");
 		
