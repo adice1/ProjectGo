@@ -48,7 +48,8 @@ public class SelfStudyController {
 	@ResponseBody
 	@RequestMapping(value = "SelectStudy", produces="application/json", method = RequestMethod.POST)
 	public List<SelfStudy> SelectStudy(SelfStudy selfstudy) {
-		return iSelfStudyServ.SelectSelfStudy(selfstudy);
+		List<SelfStudy> selfstudylst = iSelfStudyServ.SelectSelfStudy(selfstudy);
+		return selfstudylst;
 	}
 	
 	

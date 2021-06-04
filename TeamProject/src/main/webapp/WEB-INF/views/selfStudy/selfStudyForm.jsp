@@ -94,6 +94,7 @@ $(document).ready(function(){
 	let flag = $("#flag")
 	
 	var img = $("#scream");
+	var noteimg = $("#noteimg")
 //  var canvas = $("#jsCanvas")[0];
 // 	console.log(canvas.toDataURL())
 	var tic = 0;
@@ -144,16 +145,14 @@ $(document).ready(function(){
 				id : $("#usrId").val()
 			},
 			success : function(data){
-// 				alert("불러오기 완료!")
 				let newdata = data[0].systemfile
 				let blob = new Blob(
-						[new ArrayBuffer(newdata)],
-						{ 
+						[new ArrayBuffer(newdata)],{ 
 							type: "image/png" 
-							}
-						);
-				const url = window.URL.createObjectURL(blob);
-				$("#scream").attr("src", url)
+						});
+				const url = window.URL.createObjectURL(blob)
+				$("#noteimg").attr("src", url)
+				ctx.drawImage(noteimg[0], 1, 1, 640, 480);
 			}
 		})
 	}).mouseover(function(){
@@ -169,7 +168,7 @@ $(document).ready(function(){
 		let systemfile = canvas.toDataURL()
 // 		console.log(systemfile);
 		
-		systemfile = canvas.toDataURL().split(",")[1]
+// 		systemfile = canvas.toDataURL().split(",")[1]
 		
 		if($("#usrId").val() != "null"){
 			
@@ -301,7 +300,8 @@ $(document).ready(function(){
 	<input type="hidden" id="flag" value="false">
 	<input type="hidden" id="saveTimer" />
 
-	<img id="scream" src="resources/Quiz02.jpg" alt="The Scream">
+	<img id="scream" src="resources/Quiz02.jpg" hidden="true" alt="The Scream">
+	<img id="noteimg">
 	
 	<i class="fas fa-angle-double-left" id="OpenBtn"></i>
 	
