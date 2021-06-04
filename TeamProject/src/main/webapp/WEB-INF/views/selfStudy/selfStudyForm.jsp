@@ -118,7 +118,24 @@ $(document).ready(function(){
     
 //	파일 입출력  ////////////////////////////////////
 ///////////////////////////////////////////////// 
-    
+    $("#newnote").click(function(){
+    	var ctx = canvas.getContext('2d');
+		ctx.fillStyle = "white";
+    	ctx.fillRect(0, 0, canvas.width, canvas.height);
+// 		ctx.drawImage(0, 1, 1, 640, 480);
+		ctx.globalCompositeOperation = "source-over";
+		
+// 		console.log(img[0])
+// 		console.log(canvas.toDataURL())
+
+    }).mouseover(function(){
+		$(this).css("color", "00c471")
+		$(this).css("box-shadow", "0 0px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%");
+	}).mouseout(function(){
+		$(this).css("color", "black")
+		$(this).css("box-shadow", "");
+	});
+		
 	$("#qload").click(function(){
 		 
     	var ctx = canvas.getContext('2d');
@@ -146,13 +163,25 @@ $(document).ready(function(){
 			},
 			success : function(data){
 				let newdata = data[0].systemfile
-				let blob = new Blob(
-						[new ArrayBuffer(newdata)],{ 
-							type: "image/png" 
-						});
-				const url = window.URL.createObjectURL(blob)
-				$("#noteimg").attr("src", url)
-				ctx.drawImage(noteimg[0], 1, 1, 640, 480);
+				console.log(newdata)
+// 				let blob = new Blob(
+// 						[new ArrayBuffer(newdata)],{ 
+// 							type: "image/png" 
+// 						});
+// 				const url = window.URL.createObjectURL(blob)
+// 				$("#noteimg").attr("src", url)
+// 				ctx.drawImage(noteimg[0], 1, 1, 640, 480);
+				canvas.toBlob(function(newdata) {
+					var url = URL.createObjectURL(newdata);
+					console.log(url)
+					const img = document.getElementById('noteimg');
+					img.src = url;
+					img.onload = function() {
+						//cleanup.
+						URL.revokeObjectURL(this.src);
+					}
+				});
+
 			}
 		})
 	}).mouseover(function(){
@@ -311,7 +340,7 @@ $(document).ready(function(){
 	<table id="tab">
 			<th colspan="6" align="center"><b>메뉴</b></th>
 			<tr>
-				<td id="new"  align="center">새로 만들기</td>
+				<td id="newnote"  align="center">새로 만들기</td>
 				<td id="qload" colspan="2" align="center">기출 문제 불러오기</td>
 				<td id="nload" align="center">필기 불러오기 </td>
 				<td id="save" align="center">저장하기</td>
