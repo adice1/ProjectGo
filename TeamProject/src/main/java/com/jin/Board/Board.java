@@ -4,7 +4,7 @@ import java.sql.Date;
 
 //게시판 
 public class Board {
-	// 글번호
+	// 글번호(순번)
 	private Integer no;
 	// 작성자
 	private String id;

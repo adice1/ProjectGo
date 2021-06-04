@@ -21,17 +21,18 @@ public class BoardController {
 	@Autowired private IBoardService iBoardServ;
 	
 	@RequestMapping(value = "QuestionWrite")
-	public String write(Model model, HttpSession session) {
-		model.addAttribute("usrId", session.getAttribute("id"));
-		model.addAttribute("btnName", "글쓰기");
-		model.addAttribute("proc", "writePRoc");
-		
-		return "forward:/index?formpath=questionwrite";
+	public String writeas(Model model,
+			HttpSession session) {
+		model.addAttribute("btnName", "질문글쓰기");
+		model.addAttribute("proc", "QuestionwriteProc");
+		return "forward:/index?formpath=questionaswrite";
 	}
-	
 	
 	@RequestMapping(value = "QuestionwriteProc")
 	public String writeProc(Board question, HttpServletRequest request) {
+		
+		String pno =  request.getParameter("pno");
+		logger.warn(pno);
 		iBoardServ.Write(question, request);
 		return "forward:/QuestionBoard/boardProc";
 	}
@@ -45,25 +46,37 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value = "detailRead")
-	public String boardProc(Model model, @RequestParam String writeNo) {
+	public String detailRead(Model model, @RequestParam String writeNo,
+			HttpSession session) {
 		Map<String, Object>boardMap = iBoardServ.DetailRead(writeNo);
+		List<Board> Replylist = iBoardServ.DetailReply(writeNo);
+		model.addAttribute("btnName", "답변작성");
 		model.addAttribute("board", boardMap.get("board"));
+		model.addAttribute("Replylist", Replylist);
 		model.addAttribute("attachLst", boardMap.get("attachLst"));
+		
+		
 		return "forward:/index?formpath=questionview";
 	}
 	
-	@RequestMapping(value = "reply")
-	public String reply(Model model, @RequestParam String pno) {
+	@RequestMapping(value = "replyProc")
+	public String reply(Model model, @RequestParam String pno,
+			@RequestParam String title,
+			HttpSession session) {
 		logger.warn(pno);
 		model.addAttribute("pno", pno);
+		model.addAttribute("btnName", "글쓰기");
+		model.addAttribute("proc", "QuestionwriteProc");
 		return "forward:/index?formpath=questionwrite";
 	}
+	
 	@RequestMapping(value = "delete")
 	public String delete(@RequestParam String no) {
 		logger.warn(no);
 		iBoardServ.Delete(no);
 		return "forward:/QuestionBoard/boardProc";
 	}
+	
 	@RequestMapping(value = "deletes")
 	public String deletes(HttpServletRequest reqeust) {
 		String [] chkboxs = reqeust.getParameterValues("chkbox");

@@ -10,13 +10,6 @@
 	VALUES(#{no},#{id},#{title},#{contents},#{writedate})
 </insert>
 
-<insert id="AttachFile" parameterType="Map">
-	<selectKey keyProperty="no" resultType="int" order="BEFORE">
-		SELECT nvl(max(no), 0)+1 FROM attachfile
-	</selectKey>
-	INSERT INTO attachfile(no,attacheFile,filepath,fno)
-	VALUES(#{no},#{attacheFile},#{filepath},#{fno})
-</insert>
 <select id="SelectBoard" parameterType="Map" resultType="com.jin.Board.Board">
 SELECT no, id, title, contents, writedate, hit
 		FROM(
@@ -53,10 +46,40 @@ SELECT no, id, title, contents, writedate, hit
 	SELECT * FROM board
 	WHERE no=${writeNo}
 </select>
+
 <select id="DetailreadAttach" parameterType="String" resultType="HashMap">
 	SELECT * FROM attachfile
 	WHERE fno=${writeNo}
 </select>
+<select id="DetailReply" parameterType="String" resultType="com.jin.Board.Board">
+select * 
+from board a join (
+    select b.no
+    from board a  join reply b
+    on a.no = b.pno
+    and b.pno = ${writeNo}) b
+on a.no = b.no
+</select>
+
+<insert id="Hits" parameterType="Map">
+  <selectKey keyProperty="readno" resultType="int" order="BEFORE">
+  SELECT nvl(max(readno), 0)+1
+  FROM hits
+  WHERE no=#{no}
+  </selectKey>
+  <choose>
+     <when test="readno == 1">
+       INSERT INTO hits(no, readNo)
+       VALUES(#{no}, #{readno})
+       
+     </when>
+     <otherwise>
+           UPDATE hits
+           SET readno=#{readno}
+           WHERE no=#{no}
+     </otherwise>
+  </choose>
+</insert>
 
 <insert id="InsertReply" parameterType="HashMap">
      <selectKey keyProperty="depth" resultType="int" order="BEFORE">

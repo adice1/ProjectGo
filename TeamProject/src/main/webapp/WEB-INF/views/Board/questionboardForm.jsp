@@ -1,34 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:url var="home" value="/"/>
-<style>
-div.reply{
-
-   border: 1px solid black; padding: 5px;
-   padding: 10px;
-   margin: 30px;
-}
-
-#reply2{
-  margin-top: 10px;
-   
-}
-
-#reply3{
-   margin-top: 20px;
-
-}
-
-#reply4{
-
-    margin-top: 20px;
-
-}
-.pon{
-   margin-bottom: 25px;
-}
-
-</style>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
@@ -107,19 +79,13 @@ function proc(cmd){
 	<tr><td colspan=5><hr/></td></tr>
 </table>
 </form>
-<div class="reply" align="center" style="width: 620px;">
-<h3>답글목록</h3>
 
-       <div id="reply2" align="center">${board.id } </div>
-       <div id="reply3" align="center">${board.writedate } </div>
-       <div id="reply4" align="center">${board.contents }</div>
-
-</div>
 ${navi }
+
 <table>
 <tr>
 <td>
-<form id="frm" action="${home }QuestionBoard/boardProc" method="post">
+<form id="frm" action="${home}QuestionBoard/boardProc" method="post">
 	<select name="searchName">
 		<option value="all">전체</option>
 		<option value="title">제목</option>

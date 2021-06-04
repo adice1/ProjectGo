@@ -20,4 +20,6 @@ public interface IBoardService {
 
 	public String getNavi(HttpServletRequest request);
 
+	public List<Board> DetailReply(String writeNo);
+
 }

@@ -70,20 +70,21 @@ public class HomeController {
 		return "Board/questionboardForm";
 	}
 	
-	@RequestMapping(value = "/questionview")
-	public String QuestionView() {
-		return "Board/questionviewForm";
-	}
-	
 	@RequestMapping(value = "/questionwrite")
 	public String QuestionWrite() {
 		return "Board/questionwriteForm";
 	}
 	
-	@RequestMapping(value = "/questionreply")
-	public String QuestionReply() {
-		return "Board/questionreplyForm";
+	@RequestMapping(value = "/questionaswrite")
+	public String QuestionasWrite() {
+		return "Board/questionaswriteForm";
 	}
+	
+	@RequestMapping(value = "/questionview")
+	public String QuestionReplyWrite() {
+		return "Board/questionviewForm";
+	}
+	
 	//--자유 게시판 영역--
 	@RequestMapping(value = "/commboard")
 	public String freeBoard() {

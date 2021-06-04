@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,7 +28,6 @@ import com.jin.TeamProject.BoardTools;
 public class BoardServiceImpl implements IBoardService{
 	private static final Logger logger = LoggerFactory.getLogger(BoardServiceImpl.class);
 	@Autowired private IBoardDao iBoardDao;
-	private final String UPLOADPATH = "/resources/upload/";
 	
 	private final int PAGEBLOCK = 10;
 
@@ -36,70 +37,27 @@ public class BoardServiceImpl implements IBoardService{
 		board.setWritedate(writedate);
 		iBoardDao.Write(board);
 		
-		List<Map<String, String>> fileLst = Upload(request);
-		
-		for(Map<String, String> fileMap : fileLst) {
-			fileMap.put("fno", board.getNo().toString());
-			iBoardDao.AttachFile(fileMap);	
-		}
 		
 		if(!"".contentEquals(request.getParameter("pno"))) {
 			Map<String, Integer> replyMap = new HashMap<String, Integer>();
 			replyMap.put("no", board.getNo());
 			replyMap.put("pno", Integer.parseInt(request.getParameter("pno")));
 			iBoardDao.InsertReply(replyMap);
+			
+			
 		}
 	}
-	private List<Map<String, String>> Upload(HttpServletRequest request) {
-		MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest)request;
-		Iterator<String> iterator = multiRequest.getFileNames();
-		MultipartFile multipartFile = null;
-		List<Map<String, String>>fileLst = new ArrayList<Map<String,String>>();
-//		logger.warn("Upload");
-		while(iterator.hasNext()){
-			String fieldName = iterator.next();
-			logger.warn("fieldName : "+fieldName);
-			multipartFile = multiRequest.getFile(fieldName);
-	        
-			if(multipartFile.isEmpty() == false){
-				Map<String, String>fileMap = new HashMap<String, String>();
-				
-				String originFile = multipartFile.getOriginalFilename();
-				String systemFile = originFile+System.currentTimeMillis();
-				fileMap.put("attacheFile", originFile);
-				fileMap.put("filepath", systemFile);
-				fileLst.add(fileMap);
-				String filePath = multiRequest.getSession().getServletContext().getRealPath("/");
-				
-				try {
-					
-					DownloadFile(multipartFile.getInputStream(),filePath, multipartFile.getOriginalFilename());
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-			}
-		}
-		return fileLst;
-	}
-	private void DownloadFile(InputStream inputStream, String filePath, String fileName) {
-		File file = new File(filePath + UPLOADPATH + fileName);	
-		try {
-			Files.copy(inputStream, file.toPath());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-		
-
-	
 
 	@Override
 	public Map<String, Object> DetailRead(String writeNo) {
 		Map<String, Object>boardMap = new HashMap<String, Object>();
 		boardMap.put("board", iBoardDao.DetailRead(writeNo));
 		boardMap.put("attachLst", iBoardDao.DetailreadAttach(writeNo));
+		
+		Map<String, Integer> hitsMap = new HashMap<String, Integer>();
+		hitsMap.put("no", Integer.parseInt(writeNo));
+		iBoardDao.Hits(hitsMap);
+	
 		return boardMap;
 	}
 	@Override
@@ -146,15 +104,23 @@ public class BoardServiceImpl implements IBoardService{
 		Map<String, Object> boardMap = getSearchMap(request);
 		int currentPage = getCurrentPage(request);
 		
-		int totalPage = iBoardDao.BoardCount(boardMap);
-		String url = request.getContextPath()+"QuestionBoard/boardProc?";
-		if(boardMap.get("searchName")!=null){
-			url+="searchName="+boardMap.get("searchName");
-			url+="searchWord="+boardMap.get("searchWord");
+		int totalPage=iBoardDao.BoardCount(boardMap);
+		String url=request.getContextPath()+"/QuestionBoard/boardProc?";
+		if(boardMap.get("searchName")!=null) {
+			url+="searchName="+boardMap.get("searchName")+"&";
+			url+="searchWord="+boardMap.get("searchWord")+"&";	
 		}
 		url+="currentPage=";
+		
 		String tag = BoardTools.getNavi(currentPage, PAGEBLOCK, totalPage, url);
 		return tag;
 	}
+
+	@Override
+	public List<Board> DetailReply(String writeNo) {
+		// TODO Auto-generated method stub
+		return iBoardDao.DetailReply(writeNo);
+	}
+
 }
 
