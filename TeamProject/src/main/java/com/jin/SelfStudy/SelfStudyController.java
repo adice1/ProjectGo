@@ -26,9 +26,6 @@ import com.jin.CommBoardComment.ICommentService;
 import com.jin.Login.ILoginService;
 import com.jin.Login.Login;
 
-/**
- * Handles requests for the application home page.
- */
 @Controller
 @RequestMapping(value = "selfstudy")
 public class SelfStudyController {
@@ -36,12 +33,6 @@ public class SelfStudyController {
 	
 	@Autowired private ISelfStudyService iSelfStudyServ;
 	
-	@RequestMapping(value = "test")
-	public String test(String tv) {	
-		logger.warn(tv);
-		logger.warn("테스트가 실행 되었습니다.");
-		return "forward:/index?formpath=home";
-	}
 	@ResponseBody
 	@RequestMapping(value = "stopWatchInsert", produces="application/json", method = RequestMethod.POST)
 	public void stopWatchInsert(String timer) {
@@ -51,13 +42,13 @@ public class SelfStudyController {
 	@ResponseBody
 	@RequestMapping(value = "InsertStudy", produces="application/json", method = RequestMethod.POST)
 	public void InsertStudy(SelfStudy selfstudy) {
-		
-		logger.warn(selfstudy.getId());
-		logger.warn(selfstudy.getSystemfile() + "");		
-		logger.warn(selfstudy.getOriginfile());		
-		logger.warn("InsertStudy");
-		
 		iSelfStudyServ.InsertSelfStudy(selfstudy);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "SelectStudy", produces="application/json", method = RequestMethod.POST)
+	public List<SelfStudy> SelectStudy(SelfStudy selfstudy) {
+		return iSelfStudyServ.SelectSelfStudy(selfstudy);
 	}
 	
 	

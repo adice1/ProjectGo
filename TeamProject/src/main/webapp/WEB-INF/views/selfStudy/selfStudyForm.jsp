@@ -95,7 +95,7 @@ $(document).ready(function(){
 	
 	var img = $("#scream");
 //  var canvas = $("#jsCanvas")[0];
-	console.log(canvas.toDataURL())
+// 	console.log(canvas.toDataURL())
 	var tic = 0;
     var timer
     var currentTime;
@@ -115,18 +115,18 @@ $(document).ready(function(){
 	    } 
 	});
     
-//	파일 입출력
+//	파일 입출력  ////////////////////////////////////
 ///////////////////////////////////////////////// 
     
 	$("#qload").click(function(){
 		 
-//     	var ctx = canvas.getContext('2d');
+    	var ctx = canvas.getContext('2d');
 		ctx.rect(20, 40, 50, 50);
 		ctx.drawImage(img[0], 1, 1, 640, 480);
 // 		ctx.globalCompositeOperation = "source-over";
 		
 // 		console.log(img[0])
-		console.log(canvas.toDataURL())
+// 		console.log(canvas.toDataURL())
 
     }).mouseover(function(){
 		$(this).css("color", "00c471")
@@ -137,7 +137,25 @@ $(document).ready(function(){
 	});
 		
 	$("#nload").click(function(){
-		
+		$.ajax({
+			url: "${home}selfstudy/SelectStudy",
+			type: "POST",
+			data: {
+				id : $("#usrId").val()
+			},
+			success : function(data){
+// 				alert("불러오기 완료!")
+				let newdata = data[0].systemfile
+				let blob = new Blob(
+						[new ArrayBuffer(newdata)],
+						{ 
+							type: "image/png" 
+							}
+						);
+				const url = window.URL.createObjectURL(blob);
+				$("#scream").attr("src", url)
+			}
+		})
 	}).mouseover(function(){
 		$(this).css("color", "00c471")
 		$(this).css("box-shadow", "0 0px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%");
@@ -149,7 +167,7 @@ $(document).ready(function(){
 	$("#save").click(function(){
 
 		let systemfile = canvas.toDataURL()
-		console.log(systemfile);
+// 		console.log(systemfile);
 		
 		systemfile = canvas.toDataURL().split(",")[1]
 		
@@ -167,7 +185,7 @@ $(document).ready(function(){
 						originfile : originfile
 					},
 					success : function(){
-						alert("저장완료.")
+						alert("저장완료!")
 						console.log(systemfile)
 					}
 				})
@@ -183,7 +201,7 @@ $(document).ready(function(){
 /////////////////////////////////////////////////		
 		
 
-//	타이머
+//// 타이머  ///////////////////////////////////////
 ///////////////////////////////////////////////// 
     $("#start").click(function(){
 		
@@ -225,7 +243,6 @@ $(document).ready(function(){
     	$(this).css("box-shadow", "");
     });
     	
-  
 	$("#Pause").click(function(){
 			
 			if($("#flag").val() == 'true'){
@@ -284,13 +301,12 @@ $(document).ready(function(){
 	<input type="hidden" id="flag" value="false">
 	<input type="hidden" id="saveTimer" />
 
-	<img id="scream" src="resources/Quiz02.jpg" hidden=""  alt="The Scream">
+	<img id="scream" src="resources/Quiz02.jpg" alt="The Scream">
 	
 	<i class="fas fa-angle-double-left" id="OpenBtn"></i>
 	
 	<canvas id="jsCanvas" class="canvas">
 	</canvas>
-	
 	
 	<table id="tab">
 			<th colspan="6" align="center"><b>메뉴</b></th>
@@ -326,116 +342,115 @@ $(document).ready(function(){
 				<td>29</td>
 			</tr>
 	</table>
-	
-  
+
 </body>
 
 <script>
-const canvas = document.getElementById("jsCanvas");
-const ctx = canvas.getContext("2d");
-const colors = document.getElementsByClassName("jsColors");
-const range = document.getElementById("jsRange");
-const mode = document.getElementById("jsMode");
-const saveBtn = document.getElementById("jsSave");
-
-const INITIAL_COLOR = "#2c2c2c";
-const CANVAS_SIZE = 700;
-
-canvas.width = CANVAS_SIZE;
-canvas.height = CANVAS_SIZE;
-
-ctx.fillStyle = "white";
-ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-ctx.strokeStyle = INITIAL_COLOR;
-ctx.fillStyle = INITIAL_COLOR;
-ctx.lineWidth = 2.5;
-
-let painting = false;
-let filling = false;
-
-function stopPainting(){
-    painting = false;
-}
-
-function startPainting(){
-    painting = true;
-}
-
-function onMouseMove(event){
-    const x = event.offsetX;
-    const y = event.offsetY;
-    if(!painting){
-        ctx.beginPath();
-        ctx.moveTo(x, y);
-    } else {
-        ctx.lineTo(x, y);
-        ctx.stroke();
-    }
-}
-
-function handleColorClick(event){
-    const color = event.target.style.backgroundColor;
-    ctx.strokeStyle = color;
-    ctx.fillStyle = color;
-}
-
-function handleRangeChange(event){
-    const size = (event.target.value);
-    ctx.lineWidth = size;
-}
-
-function handleModeClick(event){
-    if(filling === true){
-        filling = false;
-        mode.innerText = "Fill";
-    }else{
-        filling = true;
-        mode.innerText = "Paint";
-        ctx.fillStyle = ctx.strokeStyle;
-    }
-}
-
-function handleCanvasClick(){
-   if(filling){
-       ctx.fillRect(0, 0, canvas.width, canvas.height);
-    }   
-}
-
-function handleCM(event){
-    event.preventDefault();
-}
-
-function handleSaveClick(){
-    const image = canvas.toDataURL();
-    const link = document.createElement("a");
-    link.href = image;
-    link.download = "PaintJS";
-    link.click();
-}
-
-if(canvas){
-    canvas.addEventListener("mousemove", onMouseMove);
-    canvas.addEventListener("mousedown", startPainting);
-    canvas.addEventListener("mouseup", stopPainting);
-    canvas.addEventListener("mouseleave", stopPainting);
-    canvas.addEventListener("click", handleCanvasClick);
-    canvas.addEventListener("contextmenu", handleCM);
-}
-
-Array.from(colors).forEach(color =>
-     color.addEventListener("click", handleColorClick)
-     );
-
-if(range){
-    range.addEventListener("input", handleRangeChange)
-}
-
-if(mode){
-    mode.addEventListener("click", handleModeClick)
-}
-
-if(saveBtn){
-    saveBtn.addEventListener("click", handleSaveClick);
-}
+	const canvas = document.getElementById("jsCanvas");
+	const ctx = canvas.getContext("2d");
+	const colors = document.getElementsByClassName("jsColors");
+	const range = document.getElementById("jsRange");
+	const mode = document.getElementById("jsMode");
+	const saveBtn = document.getElementById("jsSave");
+	
+	const INITIAL_COLOR = "#2c2c2c";
+	const CANVAS_SIZE = 700;
+	
+	canvas.width = CANVAS_SIZE;
+	canvas.height = CANVAS_SIZE;
+	
+	ctx.fillStyle = "white";
+	ctx.fillRect(0, 0, canvas.width, canvas.height);
+	
+	ctx.strokeStyle = INITIAL_COLOR;
+	ctx.fillStyle = INITIAL_COLOR;
+	ctx.lineWidth = 2.5;
+	
+	let painting = false;
+	let filling = false;
+	
+	function stopPainting(){
+	    painting = false;
+	}
+	
+	function startPainting(){
+	    painting = true;
+	}
+	
+	function onMouseMove(event){
+	    const x = event.offsetX;
+	    const y = event.offsetY;
+	    if(!painting){
+	        ctx.beginPath();
+	        ctx.moveTo(x, y);
+	    } else {
+	        ctx.lineTo(x, y);
+	        ctx.stroke();
+	    }
+	}
+	
+	function handleColorClick(event){
+	    const color = event.target.style.backgroundColor;
+	    ctx.strokeStyle = color;
+	    ctx.fillStyle = color;
+	}
+	
+	function handleRangeChange(event){
+	    const size = (event.target.value);
+	    ctx.lineWidth = size;
+	}
+	
+	function handleModeClick(event){
+	    if(filling === true){
+	        filling = false;
+	        mode.innerText = "Fill";
+	    }else{
+	        filling = true;
+	        mode.innerText = "Paint";
+	        ctx.fillStyle = ctx.strokeStyle;
+	    }
+	}
+	
+	function handleCanvasClick(){
+	   if(filling){
+	       ctx.fillRect(0, 0, canvas.width, canvas.height);
+	    }   
+	}
+	
+	function handleCM(event){
+	    event.preventDefault();
+	}
+	
+	function handleSaveClick(){
+	    const image = canvas.toDataURL();
+	    const link = document.createElement("a");
+	    link.href = image;
+	    link.download = "PaintJS";
+	    link.click();
+	}
+	
+	if(canvas){
+	    canvas.addEventListener("mousemove", onMouseMove);
+	    canvas.addEventListener("mousedown", startPainting);
+	    canvas.addEventListener("mouseup", stopPainting);
+	    canvas.addEventListener("mouseleave", stopPainting);
+	    canvas.addEventListener("click", handleCanvasClick);
+	    canvas.addEventListener("contextmenu", handleCM);
+	}
+	
+	Array.from(colors).forEach(color =>
+	     color.addEventListener("click", handleColorClick)
+	     );
+	
+	if(range){
+	    range.addEventListener("input", handleRangeChange)
+	}
+	
+	if(mode){
+	    mode.addEventListener("click", handleModeClick)
+	}
+	
+	if(saveBtn){
+	    saveBtn.addEventListener("click", handleSaveClick);
+	}
 </script>
