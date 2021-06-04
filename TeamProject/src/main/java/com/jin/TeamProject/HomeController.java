@@ -43,9 +43,9 @@ public class HomeController {
 	public String home() {
 		return "home";
 	}
-	@RequestMapping(value = "/intro")
-	public String intro() {
-		return "intro";
+	@RequestMapping(value = "/fee")
+	public String fee() {
+		return "Fee/feeForm";
 	}	
 	@RequestMapping(value = "/login")
 	public String login() {
