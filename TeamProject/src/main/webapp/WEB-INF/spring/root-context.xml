@@ -48,7 +48,8 @@
 	
 	<bean class="org.mybatis.spring.mapper.MapperFactoryBean"
 	id="SelfStudyMapperFactoryBean"
-	p:mapperInterface="com.jin.SelfStudy.ISelfStudyDao"></bean>
+	p:mapperInterface="com.jin.SelfStudy.ISelfStudyDao"
+	p:sqlSessionFactory-ref="sqlSessionFactoryBean"/>
 	
 	<bean class="org.mybatis.spring.mapper.MapperFactoryBean"
 	id="FeeMapperFactoryBean"
