@@ -8,12 +8,13 @@
 <table style="width:100%;">
 <tr>
 	<td style="height:100px;"><%@ include file="common/top.jsp" %><br/>
-	<div style="margin-left: 160px"><a class="panel" href="${topHome}index?formpath=QuestionBoard">Q&A 게시판</a></div>
-   	<div style="margin-left: 160px"><a class="panel" href="${topHome}commboard/commboardProc">커뮤니티 게시판</a></div>
-   	<div style="margin-left: 295px"><a class="questions" href="${topHome}index?formpath=yearExam">연도별</a></div>
-   	<div style="margin-left: 295px"><a class="questions" href="${topHome}index?formpath=smartExam">맞춤형</a></div>
-   	<div style="margin-left: 295px"><a class="questions" href="${topHome}index?formpath=randExam">랜덤 기출</a></div>
    	<div style="margin-left: 1290px"><a class="myLst" href="${topHome}myInfo/MyInfoFormProc">정보수정</a></div>
+	<div style="margin-left: 110px"><a class="panel" href="${topHome}QuestionBoard/boardProc">Q$A 게시판</a></div>
+   	<div style="margin-left: 110px"><a class="panel" href="${topHome}commboard/commboardProc">커뮤니티 게시판</a></div>
+   	<div style="margin-left: 245px"><a class="questions" href="${topHome}index?formpath=yearExam">연도별</a></div>
+   	<div style="margin-left: 245px"><a class="questions" href="${topHome}index?formpath=smartExam">맞춤형</a></div>
+   	<div style="margin-left: 245px"><a class="questions" href="${topHome}index?formpath=randExam">랜덤 기출</a></div>
+   	<div class="myLst" style="margin-left: 1290px"><a href="${topHome}index?formpath=myInfo">정보수정</a></div>
 	<div class="myLst" style="margin-left: 1290px"><a href="${topHome}index?formpath=videoLst">동영상 리스트</a></div>
 	<div class="myLst" style="margin-left: 1290px"><a href="${topHome}login/logout">로그아웃</a></div>
 	</td>
