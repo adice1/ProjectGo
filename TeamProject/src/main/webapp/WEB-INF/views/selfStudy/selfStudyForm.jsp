@@ -174,12 +174,12 @@ $(document).ready(function(){
 				canvas.toBlob(function(newdata) {
 					var url = URL.createObjectURL(newdata);
 					console.log(url)
-					const img = document.getElementById('noteimg');
-					img.src = url;
-					img.onload = function() {
-						//cleanup.
-						URL.revokeObjectURL(this.src);
-					}
+					const noteimgimg = document.getElementById('noteimg');
+					noteimgimg.src = url;
+// 					noteimgimg.onload = function() {
+// 						//cleanup.
+// 						URL.revokeObjectURL(this.src);
+// 					}
 				});
 
 			}
