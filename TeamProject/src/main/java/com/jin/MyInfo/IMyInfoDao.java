@@ -12,5 +12,5 @@ public interface IMyInfoDao {
 	public List<Zipcode> zipModifySelect(String addr);
 	public void MyInfoProcPost(Map<String, String> map);
 	public void MyInfoProcPw(Map<String, String> map);
-	
+	 
 }

@@ -111,5 +111,5 @@ public class MyInfoServiceImpl implements IMyInfoService{
 		}
 		else
 		logger.warn("비밀번호 변경 실패");
-	}
+	} 
 }

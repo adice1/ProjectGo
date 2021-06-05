@@ -10,7 +10,7 @@ function postModify(cmd){
 }
 
 </script>
-
+ 
 <center>
 <h1> ${authNum }</h1>
 <form id="frm" action="${home }myInfo/MyInfoProc" method="post">
