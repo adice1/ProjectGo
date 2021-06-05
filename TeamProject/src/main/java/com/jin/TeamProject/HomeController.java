@@ -77,7 +77,7 @@ public class HomeController {
 	
 	@RequestMapping(value = "/questionaswrite")
 	public String QuestionasWrite() {
-		return "Board/questionaswriteForm";
+		return "Board/questionreplywriteForm";
 	}
 	
 	@RequestMapping(value = "/questionview")

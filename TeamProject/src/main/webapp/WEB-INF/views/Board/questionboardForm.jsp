@@ -60,7 +60,7 @@ function proc(cmd){
 	<c:forEach var="board" items="${boardLst }">
 	<tr>
 		<td style="width: 40px; height:40px;" align="center">
-		<input type="checkbox" name="chkbox" value="${board.no }"/></td>
+		<input type="checkbox" name="chkbox" value="${board.no }" class="chkbox"/></td>
 		<td style="width: 330px; height:40px;" align="center"><pre>
 		<div class="title" id="${board.no }">${board.title }</div></pre></td>
 		<td style="width: 80px; height:40px;" align="center">${board.id }</td>
@@ -70,7 +70,7 @@ function proc(cmd){
 	</c:forEach>
 	<tr><td colspan=5><hr/></td></tr>
 	<tr>
-		<td colspan=2><input id="allSelect" type="checkbox"  />전체선택</td>
+		<td colspan=2><input id="allSelect" type="checkbox"/>전체선택</td>
 		<td colspan=3 align="right">
 			<button style="width: 100px; ">글쓰기</button>
 			<button formaction="${home }QuestionBoard/deletes" style="width: 100px; ">삭제</button>
@@ -79,9 +79,7 @@ function proc(cmd){
 	<tr><td colspan=5><hr/></td></tr>
 </table>
 </form>
-
 ${navi }
-
 <table>
 <tr>
 <td>
