@@ -93,10 +93,9 @@ $(document).ready(function(){
 	let target = $("#tab");
 	let flag = $("#flag")
 	
-	var img = $("#scream");
+	var scream = $("#scream");
 	var noteimg = $("#noteimg")
-//  var canvas = $("#jsCanvas")[0];
-// 	console.log(canvas.toDataURL())
+	
 	var tic = 0;
     var timer
     var currentTime;
@@ -122,12 +121,7 @@ $(document).ready(function(){
     	var ctx = canvas.getContext('2d');
 		ctx.fillStyle = "white";
     	ctx.fillRect(0, 0, canvas.width, canvas.height);
-// 		ctx.drawImage(0, 1, 1, 640, 480);
 		ctx.globalCompositeOperation = "source-over";
-		
-// 		console.log(img[0])
-// 		console.log(canvas.toDataURL())
-
     }).mouseover(function(){
 		$(this).css("color", "00c471")
 		$(this).css("box-shadow", "0 0px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%");
@@ -137,15 +131,9 @@ $(document).ready(function(){
 	});
 		
 	$("#qload").click(function(){
-		 
     	var ctx = canvas.getContext('2d');
 		ctx.rect(20, 40, 50, 50);
-		ctx.drawImage(img[0], 1, 1, 640, 480);
-// 		ctx.globalCompositeOperation = "source-over";
-		
-// 		console.log(img[0])
-// 		console.log(canvas.toDataURL())
-
+		ctx.drawImage(scream[0], 10, 10, 640, 480);
     }).mouseover(function(){
 		$(this).css("color", "00c471")
 		$(this).css("box-shadow", "0 0px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%");
@@ -161,27 +149,22 @@ $(document).ready(function(){
 			data: {
 				id : $("#usrId").val()
 			},
-			success : function(data){
-				let newdata = data[0].systemfile
-				console.log(newdata)
-// 				let blob = new Blob(
-// 						[new ArrayBuffer(newdata)],{ 
-// 							type: "image/png" 
-// 						});
-// 				const url = window.URL.createObjectURL(blob)
-// 				$("#noteimg").attr("src", url)
-// 				ctx.drawImage(noteimg[0], 1, 1, 640, 480);
-				canvas.toBlob(function(newdata) {
-					var url = URL.createObjectURL(newdata);
-					console.log(url)
-					const noteimgimg = document.getElementById('noteimg');
-					noteimgimg.src = url;
-// 					noteimgimg.onload = function() {
-// 						//cleanup.
-// 						URL.revokeObjectURL(this.src);
-// 					}
-				});
-
+			success : function(rdata){
+				var ndata = []
+				ndata.push(rdata[0].systemfile)
+				
+				let nloadBlob = new Blob([ndata], { type: 'image/png' });
+				console.log("nload :: " + nloadBlob)
+				const nloadURL = window.URL.createObjectURL(nloadBlob, 
+						{
+							type: "image/png"
+							}
+				);	
+				console.log("nload :: " + nloadURL)
+				let noteimg = $("#noteimg").attr("src", nloadURL)			
+				var ctx = canvas.getContext('2d');
+				ctx.rect(20, 40, 50, 50);
+				ctx.drawImage(noteimg[0], 5, 5, 640, 480);
 			}
 		})
 	}).mouseover(function(){
@@ -194,11 +177,17 @@ $(document).ready(function(){
 		
 	$("#save").click(function(){
 
-		let systemfile = canvas.toDataURL()
-// 		console.log(systemfile);
+		let systemfile = canvas.toDataURL("image/png")
 		
-// 		systemfile = canvas.toDataURL().split(",")[1]
+		let saveBlob = new Blob([systemfile], { type: 'image/png' });
+		console.log("save :: " + saveBlob)
+		const saveURL = window.URL.createObjectURL(saveBlob, 
+				{
+					type: "image/png"
+					}
+		);	
 		
+		console.log("save :: " + saveURL)
 		if($("#usrId").val() != "null"){
 			
 			let originfile = prompt("저장할 파일 이름을 입력하세요");
@@ -209,12 +198,11 @@ $(document).ready(function(){
 					type: "POST",
 					data: {
 						id : $("#usrId").val(),
-						systemfile : systemfile,
+						systemfile : saveURL,
 						originfile : originfile
 					},
 					success : function(){
 						alert("저장완료!")
-						console.log(systemfile)
 					}
 				})
 			}	else	alert("파일 이름을 입력해주세요!")
@@ -330,7 +318,7 @@ $(document).ready(function(){
 	<input type="hidden" id="saveTimer" />
 
 	<img id="scream" src="resources/Quiz02.jpg" hidden="true" alt="The Scream">
-	<img id="noteimg">
+	<img id="noteimg" >
 	
 	<i class="fas fa-angle-double-left" id="OpenBtn"></i>
 	
@@ -483,3 +471,5 @@ $(document).ready(function(){
 	    saveBtn.addEventListener("click", handleSaveClick);
 	}
 </script>
+
+

@@ -1,5 +1,4 @@
 package com.jin.SelfStudy;
-
 public class SelfStudy {
 
 	private Integer no;
@@ -26,15 +25,16 @@ public class SelfStudy {
         this.id = id;
     }
 
-    public byte[] getSystemfile() {
-        return systemfile;
-    }
 
-    public void setSystemfile(byte[] systemfile) {
-        this.systemfile = systemfile;
-    }
+	public byte[] getSystemfile() {
+		return systemfile;
+	}
 
-    public String getOriginfile() {
+	public void setSystemfile(byte[] systemfile) {
+		this.systemfile = systemfile;
+	}
+
+	public String getOriginfile() {
         return originfile;
     }
 
