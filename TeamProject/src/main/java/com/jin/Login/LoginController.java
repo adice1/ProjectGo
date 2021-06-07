@@ -43,6 +43,14 @@ public class LoginController {
 		session.invalidate();
 		return "forward:/index?formpath=home";
 	}
+	@RequestMapping(value = "loginKakaoDB")
+	public String loginKakaoDB(@RequestParam String id) {
+		logger.warn("카카오 로그인입니다.");
+		logger.warn("id :"+id);
+		
+		iLoginServ.kakaoProc(id);
+		return "forward:/index?formpath=home";
+	}
 	
 	
 }

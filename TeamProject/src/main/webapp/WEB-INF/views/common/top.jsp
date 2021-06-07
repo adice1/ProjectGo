@@ -69,7 +69,7 @@ body .box{
 	<li style="margin-left: 530px"><a href="${topHome}index?formpath=login">로그인</a></li>
 	<li><a href="${topHome}index?formpath=member">회원가입</a></li>
 	<%}else{ 	%>
-	<li style="margin-left: 480px"> ${id } 님 환영합니다.</li>
+	<li style="margin-left: 400px"> ${id } 님 환영합니다.</li>
 	<li id="myRoom" style="margin-left: -5px;"><i class="material-icons">menu</i></li>
 	<%} %>
 </ul>
