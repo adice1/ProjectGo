@@ -47,8 +47,8 @@ function feePamentProc(cmd){
   </tr>
 </table>
 <div class="square">
-	
-	<button onclick="feePamentProc('${home }Fee/feeProc')">결제하기</button>
+	<a onclick="feePamentProc('${home }Fee/feeProc')">결제하기</a>
+	<%-- <button onclick="feePamentProc('${home }Fee/feeProc')">결제하기</button> --%>
 </div>
 </body>
 </center>

@@ -43,6 +43,10 @@ public class HomeController {
 	public String home() {
 		return "home";
 	}
+	@RequestMapping(value = "/info")
+	public String info() {
+		return "info";
+	}
 	@RequestMapping(value = "/fee")
 	public String fee() {
 		return "Fee/feeForm";
@@ -69,6 +73,22 @@ public class HomeController {
 	public String QuestionBoard() {
 		return "Board/questionboardForm";
 	}
+	
+	@RequestMapping(value = "/questionwrite")
+	public String QuestionWrite() {
+		return "Board/questionwriteForm";
+	}
+	
+	@RequestMapping(value = "/questionaswrite")
+	public String QuestionasWrite() {
+		return "Board/questionreplywriteForm";
+	}
+	
+	@RequestMapping(value = "/questionview")
+	public String QuestionReplyWrite() {
+		return "Board/questionviewForm";
+	}
+	
 	//--자유 게시판 영역--
 	@RequestMapping(value = "/commboard")
 	public String freeBoard() {

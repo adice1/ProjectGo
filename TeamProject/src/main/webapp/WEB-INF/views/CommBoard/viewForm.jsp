@@ -122,6 +122,11 @@
 //
 })
 </script>
+<style type="text/css">
+body{
+	padding-bottom: 120px;
+}
+</style>
 <center>
 
 <div class="pb">

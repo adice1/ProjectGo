@@ -7,5 +7,13 @@
 	WHERE id=#{id}
 	AND pw=#{pw}
 </select>
-
+<select id="kakaoProc" parameterType="String" resultType="int">
+	SELECT COUNT(*)
+	FROM login
+	WHERE id=#{id}
+</select>
+<insert id="kakaoInsert" parameterType="String">
+	INSERT INTO Login(id, pw)
+	VALUES(#{id}, '123')
+</insert>
 </mapper>
