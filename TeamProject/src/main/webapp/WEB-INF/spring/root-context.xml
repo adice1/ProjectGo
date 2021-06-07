@@ -47,8 +47,8 @@
 	p:sqlSessionFactory-ref="sqlSessionFactoryBean"/>
 	
 	<bean class="org.mybatis.spring.mapper.MapperFactoryBean"
-	id="FeeMapperFactoryBean"
-	p:mapperInterface="com.jin.FeePayment.IFeePaymentDao"
+	id="BoardMapperFactoryBean"
+	p:mapperInterface="com.jin.Board.IBoardDao"
 	p:sqlSessionFactory-ref="sqlSessionFactoryBean"/>
 	
 	<bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
