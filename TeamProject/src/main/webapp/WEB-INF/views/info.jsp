@@ -32,8 +32,9 @@
 <head>
 </head>
 <body class="zo">
-
+<center>
 <div class="to"><h1 class="op">우리 공부방 소개하기</h1></div>
+</center>
 <div class="do"></div>
 <div class="go">
 </div>
