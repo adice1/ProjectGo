@@ -85,6 +85,11 @@ public class HomeController {
 		return "Board/questionviewForm";
 	}
 	
+	@RequestMapping(value = "/newfile", method = RequestMethod.GET)
+	public String newfile() {
+		return "Board/NewFile";
+	}
+	
 	//--자유 게시판 영역--
 	@RequestMapping(value = "/commboard")
 	public String freeBoard() {

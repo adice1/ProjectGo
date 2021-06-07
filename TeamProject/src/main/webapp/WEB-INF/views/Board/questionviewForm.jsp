@@ -2,12 +2,40 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <style>
+.xo{
+
+background: #F3F4F7;
+}
+.boxs{
+    height: 90px;
+    background: #333B3D;
+      
+}
+.boxa{
+background: #333B3D;
+height: 90px;
+      
+}
+
+#box1{
+    font-size: 35px;
+    font-weight: 300px;
+    color: #fff;
+      
+}
+.foter1{
+      height: 120px;
+      background: #EBEBEB;
+}
 .ip{
-    margin-top: 30px;
     margin-bottom: 30px;
+    margin-top: 30px;
     margin-left: 90px;
     margin-right: 90px;
+    width: 680px;
+    border-radius: 10px;
     border:1px solid; padding:10px;
+    background: #FFFFFF;
 }
 
 .you{
@@ -15,17 +43,35 @@
     margin-bottom: 30px;
     margin-left: 90px;
     margin-right: 90px;
+    width: 680px;
+    border-radius: 10px;
     border:1px solid; padding:10px;
+    background: #FFFFFF;
 }
 #po{
    margin-top: 20px;
 }
+.foter1{
+
+    height: 170px;
+    background: #333B3D;
+}
+.boxc{
+}
+.boxd{
+    
+}
 
 </style>
 <c:url var="home" value="/"/>
-<center>
+<html>
+<body class="xo">
 
-<div>
+<div class="boxs"><h1 id="box1" align="center">해당댓글목록입니다.</h1></div>
+<div class="boxa"><h4></h4></div>
+
+<div class="boxc">
+<center>
 <form class="ip" action="${home }QuestionBoard/QuestionWrite">
 <h2 align="center">질문글입니다.</h2>
 <input type="hidden" name="pno" value="${board.no }">
@@ -65,10 +111,11 @@
 	</tr>
 </table>
 </form>
+</center>
 </div>
 
-
 <div>
+<center>
 <c:forEach var="Reply" items="${Replylist }">
 <form class="you" action="${home }QuestionBoard/QuestionWrite">
 <h2 align="center">답변글입니다.</h2>
@@ -113,8 +160,11 @@
 		
 	</tr>
 </table>
-
 </form>
 </c:forEach>
-</div>
 </center>
+</div>
+</body>
+</html>
+<div class="foter1"></div>
+

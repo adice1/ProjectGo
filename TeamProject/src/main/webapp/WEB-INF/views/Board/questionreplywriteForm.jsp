@@ -1,10 +1,31 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<style>
+.po{
+background: #F3F4F7;
+  
+}
+.go{
+    margin-top: 30px;
+    
+    margin-bottom: 30px;
+}
+.zo{
+    height: 150px;
+    background: #333B3D;
+}
+.so{
+    height: 150px;
+    background: #333B3D;
+}
+</style>
 <c:url var="home" value="/"/>
-
+<html>
+<body class="po">
 <center>
-<h3>질문글 작성</h3>
+<div class="zo"></div>
+<div class="go">
+<h2>질문글 작성</h2>
 <form action="${home }QuestionBoard/${proc}" method="post" enctype="multipart/form-data">
 <input type="hidden" name="pno" value="${pno }">
 <input type="text" name="no" value="${no }">
@@ -27,7 +48,7 @@
 	</tr>
 	<tr>
 		<td align='right' height=40 colspan=2>
-			<input type=file name="uploadfile" style="width: 300px; "/> 
+			<input type=file name="uploadfile" style="width: 300px; "/>버튼 
 		</td>
 	</tr>
 	<tr>
@@ -38,4 +59,8 @@
 	</tr>
 </table>
 </form>
+</div>
+<div class="so"></div>
 </center>
+</body>
+</html>
