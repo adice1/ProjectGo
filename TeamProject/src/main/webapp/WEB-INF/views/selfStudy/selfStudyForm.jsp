@@ -391,6 +391,13 @@ $(document).ready(function(){
 		})
 	})
 	
+	$("#jsRange").on("click", function(e){
+		const size = (e.target.value);
+		ctx.lineWidth = size;
+		$("#rangeprint").html(size)
+		
+	})
+	
 
 //////
 });    
@@ -461,7 +468,9 @@ $(document).ready(function(){
 	
 	<div id="rangetab">
 			<div class="controls__range" id="jsRange">
+				<div id="rangeprint" align="center"></div>
 				<input class="jsRange"  type="range" min="0.1" max="10.0" value="2.5" step="0.1">
+				
 			</div>
 	</div>
 
