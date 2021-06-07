@@ -43,6 +43,10 @@ public class HomeController {
 	public String home() {
 		return "home";
 	}
+	@RequestMapping(value = "/info")
+	public String info() {
+		return "info";
+	}
 	@RequestMapping(value = "/fee")
 	public String fee() {
 		return "Fee/feeForm";

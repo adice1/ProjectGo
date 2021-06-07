@@ -59,17 +59,17 @@ body .box{
 <div class="box"><br/>
 <h1 ><a href="${topHome}index?formpath=home"><img src="${topHome}/resources/icornImg.png" width="139px" height="40px"></a></h1><br/>
 <ul>
-	
+	<li><a href="${topHome}index?formpath=info">소개 페이지</a></li>	
 	<li><a href="${topHome}index?formpath=fee">결제 페이지</a></li>	
 	<li id="board">게시판</li>
 	<li id="Questions">기출문제</li>
 	<li><a href="${topHome}index?formpath=videoLecture">동영상 강의</a></li>
 	<li><a href="${topHome}index?formpath=selfStudy">자율 학습방</a></li>
 	<%	if(sessionId==null){ %>
-	<li style="margin-left: 530px"><a href="${topHome}index?formpath=login">로그인</a></li>
+	<li style="margin-left: 250px"><a href="${topHome}index?formpath=login">로그인</a></li>
 	<li><a href="${topHome}index?formpath=member">회원가입</a></li>
 	<%}else{ 	%>
-	<li style="margin-left: 400px"> ${id } 님 환영합니다.</li>
+	<li style="margin-left: 250px"> ${id } 님 환영합니다.</li>
 	<li id="myRoom" style="margin-left: -5px;"><i class="material-icons">menu</i></li>
 	<%} %>
 </ul>
