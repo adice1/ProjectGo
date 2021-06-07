@@ -73,6 +73,22 @@ public class HomeController {
 	public String QuestionBoard() {
 		return "Board/questionboardForm";
 	}
+	
+	@RequestMapping(value = "/questionwrite")
+	public String QuestionWrite() {
+		return "Board/questionwriteForm";
+	}
+	
+	@RequestMapping(value = "/questionaswrite")
+	public String QuestionasWrite() {
+		return "Board/questionreplywriteForm";
+	}
+	
+	@RequestMapping(value = "/questionview")
+	public String QuestionReplyWrite() {
+		return "Board/questionviewForm";
+	}
+	
 	//--자유 게시판 영역--
 	@RequestMapping(value = "/commboard")
 	public String freeBoard() {

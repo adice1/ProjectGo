@@ -114,8 +114,8 @@ p {
    <div class="slide">
       <button class="prev" type="button"><img src="${home }/resources/left.png" alt=""></button>
       <ul>
-         <li><img style="width: 600px; height: 250px;" src="${home }/resources/home1.png"" alt=""></li>
-         <li><img style="width: 600px; height: 250px;" src="${home }/resources/home2.png"" alt=""></li>
+         <li><img style="width: 600px; height: 250px;" src="${home }/resources/home1.png" alt=""></li>
+         <li><img style="width: 600px; height: 250px;" src="${home }/resources/home2.png" alt=""></li>
          <li><img style="width: 600px; height: 250px;" src="${home }/resources/home3.png" alt=""></li>
       </ul>
       <button class="next" type="button"><img src="${home }/resources/right.png" alt=""></button>
