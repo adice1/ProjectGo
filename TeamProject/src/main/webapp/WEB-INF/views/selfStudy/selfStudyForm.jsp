@@ -51,14 +51,6 @@ header {
     z-index: 1;
 }
 
-input {
-	margin-top : 5%;
-	margin-left : 10%;
-	margin-right : 10%;
-	width : 60px;
-	height : 60px;
-}
-
 .canvas{   
    	width: 700px;
     height: 600px;
@@ -342,9 +334,11 @@ $(document).ready(function(){
 //// 필기 도구  /////////////////////////////////////
 /////////////////////////////////////////////////
 
-Array.from(colors).forEach(color =>
-	     color.addEventListener("click", handleColorClick)
-	     );
+
+	$(".jsColors").click(function(){
+		console.log("hi")
+	})
+
 /////////////////////////////////////////////////
 </script>
 
@@ -400,15 +394,15 @@ Array.from(colors).forEach(color =>
 	<div id="colortab">
 			
 			<div id=jsColors>
-				<div class="Colors" style="background-color: #2c2c2c"></div>
-				<div class="Colors" style="background-color: #white"></div>
-				<div class="Colors" style="background-color: #ff3b30"></div>
-				<div class="Colors" style="background-color: #ff9500"></div>
-				<div class="Colors" style="background-color: #ffcc00"></div>
-				<div class="Colors" style="background-color: #4cd963"></div>
-            	<div class="Colors" style="background-color: #5ac8fa"></div>
-            	<div class="Colors" style="background-color: #0579ff"></div>
-            	<div class="Colors" style="background-color: #5856d6"></div>
+				<div class="Colors" style="background-color: #2c2c2c" value="1"></div>
+				<div class="Colors" style="background-color: #white"  value="2"></div>
+				<div class="Colors" style="background-color: #ff3b30" value="3"></div>
+				<div class="Colors" style="background-color: #ff9500" value="4"></div>
+				<div class="Colors" style="background-color: #ffcc00" value="5"></div>
+				<div class="Colors" style="background-color: #4cd963" value="6"></div>
+            	<div class="Colors" style="background-color: #5ac8fa" value="7"></div>
+            	<div class="Colors" style="background-color: #0579ff" value="8"></div>
+            	<div class="Colors" style="background-color: #5856d6" value="9"></div>
 			</div>
 <!-- 			<tr> -->
 <!-- 				<td align="center" class="controls__color jsColors" style="background-color: #2c2c2c"></td> -->
