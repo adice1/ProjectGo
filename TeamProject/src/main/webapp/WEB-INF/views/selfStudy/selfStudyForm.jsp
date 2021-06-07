@@ -14,7 +14,7 @@
  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine"> 
  
 <style>
-    body {
+body {
     margin: 0px;
 }
  
@@ -61,7 +61,7 @@ input {
 
 .canvas{   
    	width: 700px;
-    height: 700px;
+    height: 600px;
     background-color: white;
     border-radius: 15px;
     box-shadow: 0 0px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%);
@@ -82,6 +82,28 @@ input {
     box-shadow: 0 0px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%);
 }
 
+#colortab{
+	display: none;
+    position: absolute;
+    width: 200px;
+    height: 600px;
+    right: 17%;
+    left: 83.8%;
+    top: 175px;
+    border-radius: 15px;
+    box-shadow: 0 0px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%);
+}
+
+.Colors{
+	width: 170px;
+    height: 50px;
+    margin: 15px;
+    border-radius: 25px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%);
+}
+
+
 </style>	
 
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -91,6 +113,8 @@ input {
 $(document).ready(function(){
 	
 	let target = $("#tab");
+	let colortab = $("#colortab")
+	
 	let flag = $("#flag")
 	
 	var scream = $("#scream");
@@ -100,7 +124,7 @@ $(document).ready(function(){
     var timer
     var currentTime;
     
- // 버튼을 클릭하면 사이드바 열림
+ 	// 버튼을 클릭하면 사이드바 열림
     $(document).on("click", "#OpenBtn", function (e){
         target.show();
         target.addClass('emphasized');
@@ -115,6 +139,21 @@ $(document).ready(function(){
 	    } 
 	});
     
+    
+	// 색 클릭하면 사이드바 열림
+	$(document).on("click", "#color", function (e){
+		colortab.show();
+		colortab.addClass('emphasized');
+        
+    });
+	    
+    // 사이드바 외부를 클릭하면 사이드바 닫힘
+	$(document).mousedown(function (e){
+		if(colortab.has(e.colortab).length==0) {
+			colortab.hide();
+			colortab.removeClass('emphasized');
+	    } 
+	});
 //	파일 입출력  ////////////////////////////////////
 ///////////////////////////////////////////////// 
     $("#newnote").click(function(){
@@ -149,22 +188,22 @@ $(document).ready(function(){
 			data: {
 				id : $("#usrId").val()
 			},
-			success : function(rdata){
-				var ndata = []
-				ndata.push(rdata[0].systemfile)
+			success : function(res){
 				
-				let nloadBlob = new Blob([ndata], { type: 'image/png' });
-				console.log("nload :: " + nloadBlob)
-				const nloadURL = window.URL.createObjectURL(nloadBlob, 
-						{
-							type: "image/png"
-							}
-				);	
-				console.log("nload :: " + nloadURL)
-				let noteimg = $("#noteimg").attr("src", nloadURL)			
+				let ndata = res[0].systemfile
+				ndate = res[0].systemfile.text()
+				var blob = new Blob([ndata], {type:'image/png'});
+
+				nloadURL = URL.createObjectURL(blob)
+				console.log(nloadURL)
+				
+				let noteimg = $("#noteimg").attr("src", nloadURL)
+				
 				var ctx = canvas.getContext('2d');
+				
 				ctx.rect(20, 40, 50, 50);
-				ctx.drawImage(noteimg[0], 5, 5, 640, 480);
+ 				ctx.drawImage(noteimg[0], 5, 5, 640, 480);
+				
 			}
 		})
 	}).mouseover(function(){
@@ -179,15 +218,6 @@ $(document).ready(function(){
 
 		let systemfile = canvas.toDataURL("image/png")
 		
-		let saveBlob = new Blob([systemfile], { type: 'image/png' });
-		console.log("save :: " + saveBlob)
-		const saveURL = window.URL.createObjectURL(saveBlob, 
-				{
-					type: "image/png"
-					}
-		);	
-		
-		console.log("save :: " + saveURL)
 		if($("#usrId").val() != "null"){
 			
 			let originfile = prompt("저장할 파일 이름을 입력하세요");
@@ -198,7 +228,7 @@ $(document).ready(function(){
 					type: "POST",
 					data: {
 						id : $("#usrId").val(),
-						systemfile : saveURL,
+						systemfile : systemfile,
 						originfile : originfile
 					},
 					success : function(){
@@ -309,16 +339,24 @@ $(document).ready(function(){
 });    
 /////////////////////////////////////////////////
 
+//// 필기 도구  /////////////////////////////////////
+/////////////////////////////////////////////////
+
+Array.from(colors).forEach(color =>
+	     color.addEventListener("click", handleColorClick)
+	     );
+/////////////////////////////////////////////////
 </script>
 
 
 <body>
+
 	<input type="hidden" id="usrId" value="<%=usrId %>" />
 	<input type="hidden" id="flag" value="false">
 	<input type="hidden" id="saveTimer" />
 
 	<img id="scream" src="resources/Quiz02.jpg" hidden="true" alt="The Scream">
-	<img id="noteimg" >
+	<img id="noteimg">
 	
 	<i class="fas fa-angle-double-left" id="OpenBtn"></i>
 	
@@ -347,10 +385,9 @@ $(document).ready(function(){
 			
 			<th colspan="6" align="center"><b>필기도구</b></th>
 			<tr>
-				<td>21</td>
-				<td>22</td>
-				<td>23</td>
-				<td>24</td>
+				<td id="color">색 변경</td>
+				<td id="size">크기 변경</td>
+				<td id="paint">채우기</td>
 			</tr>
 			<tr>
 				<td>26</td>
@@ -358,6 +395,37 @@ $(document).ready(function(){
 				<td>28</td>
 				<td>29</td>
 			</tr>
+	</table>
+	
+	<div id="colortab">
+			
+			<div id=jsColors>
+				<div class="Colors" style="background-color: #2c2c2c"></div>
+				<div class="Colors" style="background-color: #white"></div>
+				<div class="Colors" style="background-color: #ff3b30"></div>
+				<div class="Colors" style="background-color: #ff9500"></div>
+				<div class="Colors" style="background-color: #ffcc00"></div>
+				<div class="Colors" style="background-color: #4cd963"></div>
+            	<div class="Colors" style="background-color: #5ac8fa"></div>
+            	<div class="Colors" style="background-color: #0579ff"></div>
+            	<div class="Colors" style="background-color: #5856d6"></div>
+			</div>
+<!-- 			<tr> -->
+<!-- 				<td align="center" class="controls__color jsColors" style="background-color: #2c2c2c"></td> -->
+<!-- 			</tr> -->
+<!-- 			<tr> -->
+<!-- 				<td align="center" class="controls__color jsColors" style="background-color: white"></td> -->
+<!-- 			</tr> -->
+<!-- 			<tr> -->
+<!-- 				<td align="center" class="controls__color jsColors" style="background-color: #ff3b30"></td> -->
+<!-- 			</tr> -->
+<!-- 			<tr> -->
+<!-- 				<td align="center" class="controls__color jsColors" style="background-color: #ff9500"></td> -->
+<!-- 			</tr> -->
+<!-- 			<tr> -->
+<!-- 				<div align="center" class="controls__color jsColors" style="background-color: #ffcc00"></div> -->
+<!-- 			</tr>	 -->
+			
 	</table>
 
 </body>
@@ -373,8 +441,9 @@ $(document).ready(function(){
 	const INITIAL_COLOR = "#2c2c2c";
 	const CANVAS_SIZE = 700;
 	
-	canvas.width = CANVAS_SIZE;
-	canvas.height = CANVAS_SIZE;
+	
+	canvas.width = 700;
+	canvas.height = 600;
 	
 	ctx.fillStyle = "white";
 	ctx.fillRect(0, 0, canvas.width, canvas.height);
