@@ -6,7 +6,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.1/gsap.min.js"></script>
 <html lang="ko">
 <style>
-
 html, body, ul, li, button {
    margin: 0;
    padding: 0;
@@ -36,14 +35,13 @@ button {
 .slide button.prev{
    position: absolute;
    left: 420;
-   top: 400px;
+   top: 760px;
 }
 .slide button.next{
    position: absolute;
    right: 390;
-   top: 400px;
+   top: 760px;
 }
-
 .tableBox table {
    margin:auto;
    text-align: center;
@@ -68,6 +66,9 @@ button {
 }
 p {
    font-size: 20px;
+}
+body{
+	padding-bottom: 116px;
 }
 </style>
 <head>
@@ -109,7 +110,7 @@ p {
 <body>
    <h1 style="text-align: center; font-size: 60px;">맞춤형 기출문제 및 자율학습방</h1>
    <p style="text-align: right;"><a style="text-align: center; font-size: 15px; font-weight: bold;" href="${home}/login/loginProc?id=admin&pw=123">관리자 로그인</a></p>
-
+   <img style="width: 100%; height: 350px;" src="${home }/resources/homeImg.png"" alt="">
 <br/>
    <div class="slide">
       <button class="prev" type="button"><img src="${home }/resources/left.png" alt=""></button>
@@ -174,7 +175,5 @@ p {
           </tr>
        </table>
 </div>
-
 </body>
-
 </html>
