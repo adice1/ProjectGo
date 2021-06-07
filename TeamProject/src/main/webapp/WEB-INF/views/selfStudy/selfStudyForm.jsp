@@ -74,6 +74,18 @@ header {
     box-shadow: 0 0px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%);
 }
 
+#rangetab{
+	display: none;
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    right: 17%;
+    left: 83.8%;
+    top: 175px;
+    border-radius: 15px;
+    box-shadow: 0 0px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%);
+}
+
 #colortab{
 	display: none;
     position: absolute;
@@ -95,6 +107,14 @@ header {
     box-shadow: 0 4px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%);
 }
 
+.jsRange{
+	width: 100px;
+    height: 100px;
+    margin-left: 50px;
+    margin-top: 50px;
+    margin-right: 50px;
+    margin-bottom: 50px;
+}
 
 </style>	
 
@@ -104,8 +124,25 @@ header {
 
 $(document).ready(function(){
 	
+	let canvas = $("#jsCanvas")[0]
+	let ctx = canvas.getContext('2d');
+	let colors = $("#jsColors");
+	
+	const W_CANVAS_SIZE = 700;
+	const H_CANVAS_SIZE = 600;
+	
+	const INITIAL_COLOR = "#2c2c2c";
+	
+	ctx.fillStyle = "white";
+	ctx.fillRect(0, 0, W_CANVAS_SIZE, H_CANVAS_SIZE);
+
+	ctx.strokeStyle = "#2c2c2c";
+	ctx.fillStyle = "#2c2c2c";
+	ctx.lineWidth = 2.5;
+	
 	let target = $("#tab");
 	let colortab = $("#colortab")
+	let rangetab = $("#rangetab");
 	
 	let flag = $("#flag")
 	
@@ -115,43 +152,29 @@ $(document).ready(function(){
 	var tic = 0;
     var timer
     var currentTime;
-    
- 	// 버튼을 클릭하면 사이드바 열림
-    $(document).on("click", "#OpenBtn", function (e){
-        target.show();
-        target.addClass('emphasized');
-        
-    });
-	    
-    // 사이드바 외부를 클릭하면 사이드바 닫힘
-	$(document).mousedown(function (e){
-		if(target.has(e.target).length==0) {
-			target.hide();
-	  		target.removeClass('emphasized');
-	    } 
+   	
+	$("#OpenBtn").click(function(){
+	    target.toggle()
+	    rangetab.hide()
+	    colortab.hide()
+	});  
+	
+	$("#color").click(function(){
+		colortab.toggle();
+		rangetab.hide()
+	})
+	
+	$("#range").click(function(){
+		rangetab.toggle()
+		colortab.hide()
 	});
+	
     
-    
-	// 색 클릭하면 사이드바 열림
-	$(document).on("click", "#color", function (e){
-		colortab.show();
-		colortab.addClass('emphasized');
-        
-    });
-	    
-    // 사이드바 외부를 클릭하면 사이드바 닫힘
-	$(document).mousedown(function (e){
-		if(colortab.has(e.colortab).length==0) {
-			colortab.hide();
-			colortab.removeClass('emphasized');
-	    } 
-	});
 //	파일 입출력  ////////////////////////////////////
 ///////////////////////////////////////////////// 
     $("#newnote").click(function(){
-    	var ctx = canvas.getContext('2d');
 		ctx.fillStyle = "white";
-    	ctx.fillRect(0, 0, canvas.width, canvas.height);
+    	ctx.fillRect(0, 0, W_CANVAS_SIZE, H_CANVAS_SIZE);
 		ctx.globalCompositeOperation = "source-over";
     }).mouseover(function(){
 		$(this).css("color", "00c471")
@@ -162,8 +185,7 @@ $(document).ready(function(){
 	});
 		
 	$("#qload").click(function(){
-    	var ctx = canvas.getContext('2d');
-		ctx.rect(20, 40, 50, 50);
+		ctx.rect(0, 40, 50, 50);
 		ctx.drawImage(scream[0], 10, 10, 640, 480);
     }).mouseover(function(){
 		$(this).css("color", "00c471")
@@ -193,7 +215,7 @@ $(document).ready(function(){
 				
 				var ctx = canvas.getContext('2d');
 				
-				ctx.rect(20, 40, 50, 50);
+// 				ctx.rect(20, 40, 50, 50);
  				ctx.drawImage(noteimg[0], 5, 5, 640, 480);
 				
 			}
@@ -328,18 +350,51 @@ $(document).ready(function(){
     
     $("#StopWatch").css("box-shadow", "0 0px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%")
 
-});    
-/////////////////////////////////////////////////
+//////////////////////////////////
 
-//// 필기 도구  /////////////////////////////////////
-/////////////////////////////////////////////////
+//////////필기도구
+//////////////////////////////////
 
-
-	$(".jsColors").click(function(){
-		console.log("hi")
+	let painting = false
+	let filling = false
+	
+	$("#jsCanvas").click(function(){
+		if(filling){
+			ctx.fillRect(0, 0, W_CANVAS_SIZE, H_CANVAS_SIZE)
+		}
+	}).mousedown(function(){
+		painting = true
+	}).mouseup(function(){
+		painting = false
+	}).mouseleave(function(){
+		painting = false
+	}).on("mousemove", function(event){
+		const x = event.offsetX;
+	    const y = event.offsetY;
+	    if(!painting){
+	        ctx.beginPath();
+	        ctx.moveTo(x, y);
+	    } else {
+	        ctx.lineTo(x, y);
+	        ctx.stroke();
+	    }
+	}).on("contextmenu", function(event){
+		event.preventDefault();
 	})
+	
+	$(".Colors").each(function(e){
+		$(this).click(function(event){
+			event.preventDefault();
+			const color = event.target.style.backgroundColor;
+	 	    ctx.strokeStyle = color;
+	 	    ctx.fillStyle = color;
+		})
+	})
+	
 
-/////////////////////////////////////////////////
+//////
+});    
+
 </script>
 
 
@@ -353,10 +408,9 @@ $(document).ready(function(){
 	<img id="noteimg">
 	
 	<i class="fas fa-angle-double-left" id="OpenBtn"></i>
-	
-	<canvas id="jsCanvas" class="canvas">
-	</canvas>
-	
+
+	<canvas id="jsCanvas" class="canvas" width="700" height="600" ></canvas>
+
 	<table id="tab">
 			<th colspan="6" align="center"><b>메뉴</b></th>
 			<tr>
@@ -379,9 +433,9 @@ $(document).ready(function(){
 			
 			<th colspan="6" align="center"><b>필기도구</b></th>
 			<tr>
-				<td id="color">색 변경</td>
-				<td id="size">크기 변경</td>
-				<td id="paint">채우기</td>
+				<td id="color" colspan="1" align="center">Color</td>
+				<td id="range" colspan="2" align="center">Range</td>
+				<td id="paint" colspan="2" align="center">Fill</td>
 			</tr>
 			<tr>
 				<td>26</td>
@@ -392,147 +446,28 @@ $(document).ready(function(){
 	</table>
 	
 	<div id="colortab">
-			
-			<div id=jsColors>
-				<div class="Colors" style="background-color: #2c2c2c" value="1"></div>
-				<div class="Colors" style="background-color: #white"  value="2"></div>
-				<div class="Colors" style="background-color: #ff3b30" value="3"></div>
-				<div class="Colors" style="background-color: #ff9500" value="4"></div>
-				<div class="Colors" style="background-color: #ffcc00" value="5"></div>
-				<div class="Colors" style="background-color: #4cd963" value="6"></div>
-            	<div class="Colors" style="background-color: #5ac8fa" value="7"></div>
-            	<div class="Colors" style="background-color: #0579ff" value="8"></div>
-            	<div class="Colors" style="background-color: #5856d6" value="9"></div>
+			<div class="controls__colors" id="jsColors">
+				<div class="Colors" style="background-color: #2c2c2c"></div>
+				<div class="Colors" style="background-color: white" ></div>
+				<div class="Colors" style="background-color: #ff3b30"></div>
+				<div class="Colors" style="background-color: #ff9500"></div>
+				<div class="Colors" style="background-color: #ffcc00"></div>
+				<div class="Colors" style="background-color: #4cd963"></div>
+            	<div class="Colors" style="background-color: #5ac8fa"></div>
+            	<div class="Colors" style="background-color: #0579ff"></div>
+            	<div class="Colors" style="background-color: #5856d6"></div>
 			</div>
-<!-- 			<tr> -->
-<!-- 				<td align="center" class="controls__color jsColors" style="background-color: #2c2c2c"></td> -->
-<!-- 			</tr> -->
-<!-- 			<tr> -->
-<!-- 				<td align="center" class="controls__color jsColors" style="background-color: white"></td> -->
-<!-- 			</tr> -->
-<!-- 			<tr> -->
-<!-- 				<td align="center" class="controls__color jsColors" style="background-color: #ff3b30"></td> -->
-<!-- 			</tr> -->
-<!-- 			<tr> -->
-<!-- 				<td align="center" class="controls__color jsColors" style="background-color: #ff9500"></td> -->
-<!-- 			</tr> -->
-<!-- 			<tr> -->
-<!-- 				<div align="center" class="controls__color jsColors" style="background-color: #ffcc00"></div> -->
-<!-- 			</tr>	 -->
-			
-	</table>
+	</div>
+	
+	<div id="rangetab">
+			<div class="controls__range" id="jsRange">
+				<input class="jsRange"  type="range" min="0.1" max="10.0" value="2.5" step="0.1">
+			</div>
+	</div>
 
 </body>
 
-<script>
-	const canvas = document.getElementById("jsCanvas");
-	const ctx = canvas.getContext("2d");
-	const colors = document.getElementsByClassName("jsColors");
-	const range = document.getElementById("jsRange");
-	const mode = document.getElementById("jsMode");
-	const saveBtn = document.getElementById("jsSave");
-	
-	const INITIAL_COLOR = "#2c2c2c";
-	const CANVAS_SIZE = 700;
-	
-	
-	canvas.width = 700;
-	canvas.height = 600;
-	
-	ctx.fillStyle = "white";
-	ctx.fillRect(0, 0, canvas.width, canvas.height);
-	
-	ctx.strokeStyle = INITIAL_COLOR;
-	ctx.fillStyle = INITIAL_COLOR;
-	ctx.lineWidth = 2.5;
-	
-	let painting = false;
-	let filling = false;
-	
-	function stopPainting(){
-	    painting = false;
-	}
-	
-	function startPainting(){
-	    painting = true;
-	}
-	
-	function onMouseMove(event){
-	    const x = event.offsetX;
-	    const y = event.offsetY;
-	    if(!painting){
-	        ctx.beginPath();
-	        ctx.moveTo(x, y);
-	    } else {
-	        ctx.lineTo(x, y);
-	        ctx.stroke();
-	    }
-	}
-	
-	function handleColorClick(event){
-	    const color = event.target.style.backgroundColor;
-	    ctx.strokeStyle = color;
-	    ctx.fillStyle = color;
-	}
-	
-	function handleRangeChange(event){
-	    const size = (event.target.value);
-	    ctx.lineWidth = size;
-	}
-	
-	function handleModeClick(event){
-	    if(filling === true){
-	        filling = false;
-	        mode.innerText = "Fill";
-	    }else{
-	        filling = true;
-	        mode.innerText = "Paint";
-	        ctx.fillStyle = ctx.strokeStyle;
-	    }
-	}
-	
-	function handleCanvasClick(){
-	   if(filling){
-	       ctx.fillRect(0, 0, canvas.width, canvas.height);
-	    }   
-	}
-	
-	function handleCM(event){
-	    event.preventDefault();
-	}
-	
-	function handleSaveClick(){
-	    const image = canvas.toDataURL();
-	    const link = document.createElement("a");
-	    link.href = image;
-	    link.download = "PaintJS";
-	    link.click();
-	}
-	
-	if(canvas){
-	    canvas.addEventListener("mousemove", onMouseMove);
-	    canvas.addEventListener("mousedown", startPainting);
-	    canvas.addEventListener("mouseup", stopPainting);
-	    canvas.addEventListener("mouseleave", stopPainting);
-	    canvas.addEventListener("click", handleCanvasClick);
-	    canvas.addEventListener("contextmenu", handleCM);
-	}
-	
-	Array.from(colors).forEach(color =>
-	     color.addEventListener("click", handleColorClick)
-	     );
-	
-	if(range){
-	    range.addEventListener("input", handleRangeChange)
-	}
-	
-	if(mode){
-	    mode.addEventListener("click", handleModeClick)
-	}
-	
-	if(saveBtn){
-	    saveBtn.addEventListener("click", handleSaveClick);
-	}
-</script>
+
+
 
 
