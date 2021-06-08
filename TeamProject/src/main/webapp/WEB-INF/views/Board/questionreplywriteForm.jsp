@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <style>
 .po{
-background: #F3F4F7;
+background: #FFFFFF;
   
 }
 .go{
@@ -21,6 +21,7 @@ background: #F3F4F7;
 </style>
 <c:url var="home" value="/"/>
 <html>
+<br/>
 <body class="po">
 <center>
 <div class="zo"></div>
@@ -48,7 +49,7 @@ background: #F3F4F7;
 	</tr>
 	<tr>
 		<td align='right' height=40 colspan=2>
-			<input type=file name="uploadfile" style="width: 300px; "/>버튼 
+			<input type=file name="uploadfile" style="width: 300px; " value="버튼 "/>
 		</td>
 	</tr>
 	<tr>
