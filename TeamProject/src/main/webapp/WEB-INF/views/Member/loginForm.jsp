@@ -2,27 +2,48 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:url var="home" value="/"/>
 
+<style type="text/css">
+input {
+	height: 50px;
+	font-size: 25px;
+}
+p {
+	font-size: 25px;
+}
+img {
+	
+	vertical-align: bottom;
+}
+.submit{
+	margin: 0; padding: 0; border: 0; vertical-align: bottom;
+}
+
+</style>
+
+
 <center>
 <h3><font color="red">${msg }</font></h3>
 <form id="frm" action="${home }login/loginProc" method="post">
 <table>
 	<tr>
-		<td>아이디</td>
+		<td style="text-align: center;"><p>아이디</p></td>
 		<td><input type=text id="id" name='id' placeholder='ID 입력'/></td>
 	</tr>
 	<tr>
-		<td>패스워드</td>
+		<td style="text-align: center;"><p>패스워드</p></td>
 		<td><input type=password name='pw' placeholder='PW 입력'/></td>
 	</tr>
 	<tr>
 	<input type="hidden" onclick="loginKakaoDB(frm, '${home}login/loginKakaoDB');" value="카카오로그인" id="kakaoProc">
-		<td colspan=2 align='center'>
-			<input type=submit value='로그인' style="width: 86px; "/>
+		<!-- <td colspan=2 align='center'> -->
+			
+			<td colspan="2" style="text-align : center;">
+			<br/>
+			<input style="width: 160px; height: 60px; " type="submit"value='로그인'/>
 			<a href="javascript:kakaoLogin();"> 
-	<img src="https://www.gb.go.kr/Main/Images/ko/member/certi_kakao_login.png" style="width: 150px; height: 60px;"></a>
-		</td>
+			<img src="https://www.gb.go.kr/Main/Images/ko/member/certi_kakao_login.png" style="width: 160px; height: 60px;"></a>
+			</td>
 	</tr>
-		
 </table>
 </form>
 </center>
