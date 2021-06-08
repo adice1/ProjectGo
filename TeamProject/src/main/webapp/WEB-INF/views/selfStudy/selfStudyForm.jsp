@@ -156,13 +156,14 @@ header {
 
 $(document).ready(function(){
 	
+	var canvas = $("#jsCanvas")[0]
+	var canvas_mode = $("#canvas_mode")
 	
-	let canvas = $("#jsCanvas")[0]
-	let canvas_mode = $("#canvas_mode")
-	var canvas_status = "write" //
-	let ctx = canvas.getContext('2d')
-	let colors = $("#jsColors")
-	let mode = $("#fill")
+	var canvas_status = "draw"
+	
+	var ctx = canvas.getContext('2d')
+	var colors = $("#jsColors")
+	var mode = $("#fill")
 	
 	const W_CANVAS_SIZE = 700
 	const H_CANVAS_SIZE = 600
@@ -180,9 +181,10 @@ $(document).ready(function(){
 	let rangetab = $("#rangetab")
 	let font_tab = $("#font_view_tab");
 	
-	font_style_status = "normal";
-	font_thick_status = "normal";
-	let font_range = $(".font_range");
+	var font_style_status = "normal";
+	var font_thick_status = "normal";
+	var font_range = $(".font_range").val();
+	
 	
 	let flag = $("#flag")
 	
@@ -192,7 +194,14 @@ $(document).ready(function(){
 	var tic = 0;
     var timer
     var currentTime;
+    
+    var fontX
+    var fontY
    	
+//     $("#msg").keyup(function(e){
+//     	$("#msgout").text($("#msg").val())
+//     })
+    
 	$("#OpenBtn").click(function(){
 	    target.toggle()
 	    rangetab.hide()
@@ -451,34 +460,86 @@ $(document).ready(function(){
 //////////필기도구
 //////////////////////////////////
 
-	let painting = false
-	let filling = false
-	console.log(canvas_status)
-	if(canvas_status == "draw"){
-		$("#jsCanvas").click(function(){
+	var painting = false
+	var filling = false
+		
+	$("#canvas_mode").click(function(){
+		if(canvas_status == "draw"){
+			canvas_status = "write"
+			$("#canvas_mode").html("<b>글쓰기 상태</b>")
+		}else if(canvas_status == "write"){
+			canvas_status = "draw"
+			console.log(canvas_status+" 을 선택하셨습니다.")
+			$("#canvas_mode").html("<b>그리기 상태</b>")
+		}
+	}).mouseover(function(){
+		$(this).css("color", "00c471")
+		$(this).css("box-shadow", "0 0px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%");
+	}).mouseout(function(){
+		$(this).css("color", "black")
+		$(this).css("box-shadow", "");
+	});	
+		
+	$("#jsCanvas").click(function(event){
+		if(canvas_status == "draw"){
 			if(filling){
 				ctx.fillRect(0, 0, W_CANVAS_SIZE, H_CANVAS_SIZE)
 			}
-		}).mousedown(function(){
-			painting = true
-		}).mouseup(function(){
-			painting = false
-		}).mouseleave(function(){
-			painting = false
-		}).on("mousemove", function(event){
-			const x = event.offsetX;
-		    const y = event.offsetY;
-		    if(!painting){
-		        ctx.beginPath();
-		        ctx.moveTo(x, y);
-		    } else {
-		        ctx.lineTo(x, y);
-		        ctx.stroke();
-		    }
-		}).on("contextmenu", function(event){
-			event.preventDefault();
-		})
-	}
+			$("#jsCanvas").mousedown(function(){
+				painting = true
+			}).mouseup(function(){
+				painting = false
+			}).mouseleave(function(){
+				painting = false
+			}).on("mousemove", function(event){
+				let x = event.offsetX;
+			    let y = event.offsetY;
+			    if(!painting){
+			        ctx.beginPath();
+			        ctx.moveTo(x, y);
+			    } else {
+			        ctx.lineTo(x, y);
+			        ctx.stroke();
+			    }
+			}).on("contextmenu", function(event){
+			})
+		}else{
+			$("#msg").focus()
+			$("#msg").val("")
+// 			$("#msg").keyup(function(e){
+// 				$("#msgout").html(e.key)
+// 			})
+			
+			fontX = event.offsetX;
+		    fontY = event.offsetY;
+		    
+			ctx.font = font_style_status + " "+ font_thick_status + " " + $(".font_range").val() + "px" + " " + "serif";
+// 			console.log(ctx.font);
+// 			console.log(font_range)
+// 		    console.log(x)
+// 		    console.log(y)
+// 			console.log(canvas_status)
+// 			var font_style_status = "normal";
+// 			var font_thick_status = "normal";
+// 			let font_range = $(".font_range").val();
+			
+		}
+	})
+	
+	$("#msg").keyup(function(event){
+
+		$("#msgout").text($("#msg").val())
+		
+		console.log($("#msgout").text())
+		ctx.fillText($("#msgout").text(), fontX, fontY)
+		console.log($("#msgout").length)
+// 		if($("#msg").length)
+		
+// 		ctx.font = font_style_status + " "+ font_thick_status + " " + $(".font_range").val() + "px" + " " + "serif";
+// 		ctx.fillText($("#msgout").text(), 300, 300)
+// 		ctx.fillText($("#msgout").text(), x, y)
+	})
+	
 	$(".Colors").each(function(e){
 		$(this).click(function(event){
 			event.preventDefault();
@@ -518,14 +579,15 @@ $(document).ready(function(){
 });    
 
 </script>
-<div class="styles" align="center" style="font-style: normal">normal</div>
+<div class="styles" align="center" style="font-style: normal"></div>
 
 <body>
+	<input type="text" id="msg">
+	<div id="msgout"></div>
 
 	<input type="hidden" id="usrId" value="<%=usrId %>" />
 	<input type="hidden" id="flag" value="false">
 	<input type="hidden" id="saveTimer" />
-
 	<img id="scream" src="resources/Quiz02.jpg" hidden="true" alt="The Scream">
 	<img id="noteimg">
 	
@@ -554,7 +616,7 @@ $(document).ready(function(){
 			</tr>
 			
 			<tr>
-				<td id="canvas_mode" colspan="6" align="center"><b>그리기 모드</b></td>
+				<td id="canvas_mode" colspan="6" align="center"><b>그리기</b></td>
 			</tr>
 			
 			<th colspan="6" align="center"><b>그리기 도구</b></th>
@@ -598,7 +660,6 @@ $(document).ready(function(){
 		<input class="font_range"  type="range" min="1.0" max="100.0" value="80.0" step="1.0">
 	</div>
 	
-
 </body>
 
 
