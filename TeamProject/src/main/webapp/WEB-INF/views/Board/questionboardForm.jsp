@@ -3,7 +3,7 @@
 
 <style>
 .ko{
-     background: #F6F4F7;
+     background: #FFFFFF;
 }
 .fo{
     height: 20px;
@@ -103,7 +103,7 @@ function proc(cmd){
 
 </script>
 <html>
-<body class="ko">
+<body class="ko"><br/>
 <div class="go"><h2 align="center" class="fo">이곳은 서로 소통하는 공간입니다.</h2></div>
 <center>
 <div class="pos">
