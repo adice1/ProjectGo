@@ -43,6 +43,7 @@ margin-bottom: 10px;
 }
 .mo{
     padding: 40px;
+    color: #148200;
 }
 .so{
    height: 250px;
@@ -55,15 +56,17 @@ margin-bottom: 10px;
 .top{
     margin-top: 50px;
     padding: 30px;
+    color: #148200;
 }
 .top1{
     margin-top: 30px;
     padding: 30px;
+    color: #EBE215;
 }
 .ao{
     background: #EBF4FA;
-    height: 450px;
-    width: 600px;
+    height: 580px;
+    width: 720px;
 }
 .ao1{
     padding: 20px;
@@ -75,7 +78,7 @@ margin-bottom: 10px;
 .ao3{
 
      float: right;
-     height: 450px;
+     height: 580px;
      width: 150px;
      background: #EBEBEB;
 }
@@ -92,11 +95,25 @@ body, html{
 		
 	}
 .ko{
-     height : 200px;
+     height : 300px;
+     
+}
+.a1{
+      
 }
 .wo{
-     
-}	
+  padding: 20px;
+  width: 180px;
+  float: right;
+  height : 410px;
+  background: #EBEBEB;   
+}
+.no{
+   margin-top: 50px;
+    
+}
+    
+
 </style>
 <html>
 <head>
@@ -125,23 +142,61 @@ body, html{
 </center>
 
 <div class="qo"><h2 class="top1" align="center">3. 채팅</h2><br/>
-<h4 class="qa" align="center">- 실시간 채팅을 활용한 질문, 필지장 공유 등으로 학습의 서로의 부족한 지식을 보완할 수 있습니다.</h4></div>
+<h4 class="qa" align="center">- 실시간 채팅을 활용한 질문, 필기장 공유 등으로 학습의 서로의 부족한 지식을 보완하여 다양한 지식습득과 다양한
+         <br/>사람들과 소통함으로써 커뮤니케이션능력도 향상시킬수 있습니다.</h4></div>
 
-<center><div class="ao"><div class="ao3"><h3 class="wo">주소<br/> 전화번호(02-1234-5678)</h3></div><h2 class="ao1" align="left">찾아오는 길</h2><br/>
+
+<div class="no">
+<center><p style="margin-top:-12px">
+    <em class="link">
+        <a href="javascript:void(0);" onclick="window.open('http://fiy.daum.net/fiy/map/CsGeneral.daum', '_blank', 'width=981, height=650')">
+            혹시 주소 결과가 잘못 나오는 경우에는 여기에 제보해주세요.
+        </a>
+    </em>
+</p></center>
+<center><div class="ao"><h2 class="ao1" align="left">4. 찾아오는 길</h2><br/>
 <h4 class="ao2" align="left">위치는 밑에 지도를 참고해주세요.</h4>
-<div id="map" align="center">지도</div></center>
-		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=69ac8c008f5fb702ccd0bc81da8033a2"></script>
-		<script>
-			var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
-			var options = { //지도를 생성할 때 필요한 기본 옵션
-				center: new kakao.maps.LatLng(37.160865, 127.754386), //지도의 중심좌표.
-				level: 13 //지도의 레벨(확대, 축소 정도)
-			};
-			var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
-		</script>
+<div id="map" style="width:400px;height:360px;margin-top:40px;"></div>
+<div><h3 class="wo">주소<br/> 전화번호(02-1234-5678)</h3></div></div><br/>
+</div>
+</center>
+
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=69ac8c008f5fb702ccd0bc81da8033a2&libraries=services,clusterer,drawing"></script>
+<script>
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+mapOption = {
+    center: new kakao.maps.LatLng(37.567777883180234, 126.98225286058388), // 지도의 중심좌표
+    level: 3 // 지도의 확대 레벨
+};
+
+var map = new kakao.maps.Map(mapContainer, mapOption);
+
+var geocoder = new kakao.maps.services.Geocoder();
+geocoder.addressSearch('서울특별시 중구 남대문로 117', function(result, status) {
+	if (status === kakao.maps.services.Status.OK) {
+
+        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+        // 결과값으로 받은 위치를 마커로 표시합니다
+        var marker = new kakao.maps.Marker({
+            map: map,
+            position: coords
+        });
+        
+        var infowindow = new kakao.maps.InfoWindow({
+            content: '<div style="width:150px;text-align:center;padding:6px 0;">우리학원위치</div>'
+        });
+        infowindow.open(map, marker);
+
+        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+        map.setCenter(coords);
+    } 
+}); 
+</script>
+		
 		</div>
 		
-<div class="ko"></div>
+<div class="ko"><h2 id="a1" align="center">이용해주셔서 감사합니다.</h2></div>
 
 </body>
 </html>
