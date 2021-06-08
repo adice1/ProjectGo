@@ -43,7 +43,7 @@ public class HomeController {
 	public String home() {
 		return "home";
 	}
-	@RequestMapping(value = "/info")
+	@RequestMapping(value = "/info", method = RequestMethod.GET)
 	public String info() {
 		return "info";
 	}

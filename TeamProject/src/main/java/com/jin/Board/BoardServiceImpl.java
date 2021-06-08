@@ -84,7 +84,8 @@ public class BoardServiceImpl implements IBoardService{
 	private int getCurrentPage(HttpServletRequest request) {
 		int currentPage = 1;
 		String param = request.getParameter("currentPage");
-		if(param!=null)	currentPage = Integer.parseInt(param);
+		if(param!=null)	
+			currentPage = Integer.parseInt(param);
 		
 		return currentPage;
 	}
