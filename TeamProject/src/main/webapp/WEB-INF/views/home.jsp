@@ -14,6 +14,7 @@ img {
    display: block;
    border: 0;
    
+   
 }
 button {
    border: 0;
@@ -35,12 +36,12 @@ button {
 .slide button.prev{
    position: absolute;
    left: 420;
-   top: 760px;
+   top: 860px;
 }
 .slide button.next{
    position: absolute;
    right: 390;
-   top: 760px;
+   top: 860px;
 }
 .tableBox table {
    margin:auto;
@@ -110,8 +111,8 @@ body{
 <body>
    <h1 style="text-align: center; font-size: 60px;">맞춤형 기출문제 및 자율학습방</h1>
    <p style="text-align: right;"><a style="text-align: center; font-size: 15px; font-weight: bold;" href="${home}/login/loginProc?id=admin&pw=123">관리자 로그인</a></p>
-   <img style="width: 100%; height: 350px;" src="${home }/resources/homeImg.png"" alt="">
-<br/>
+   <img style="width: 80%; height: 350px; margin : 0 auto ; padding-bottom: 130px;" src="${home }/resources/homeImg.png"" alt="">
+
    <div class="slide">
       <button class="prev" type="button"><img src="${home }/resources/left.png" alt=""></button>
       <ul>
