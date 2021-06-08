@@ -62,11 +62,13 @@ margin-bottom: 10px;
     margin-top: 30px;
     padding: 30px;
     color: #EBE215;
+    
 }
 .ao{
     background: #EBF4FA;
     height: 580px;
-    width: 720px;
+    width: 850px;
+    margin-bottom: 117px;
 }
 .ao1{
     padding: 20px;
@@ -103,7 +105,7 @@ body, html{
 }
 .wo{
   padding: 20px;
-  width: 180px;
+  width: 350px;
   float: right;
   height : 410px;
   background: #EBEBEB;   
@@ -149,7 +151,9 @@ body, html{
 <center><div class="ao"><h2 class="ao1" align="left">4. 찾아오는 길</h2><br/>
 <h4 class="ao2" align="left">위치는 밑에 지도를 참고해주세요.</h4>
 <div id="map" style="width:400px;height:360px;margin-top:40px;"></div>
-<div><h3 class="wo">주소<br/> 전화번호(02-1234-5678)</h3></div></div><br/>
+<div><h3 class="wo">주소<br/> 전화번호(02-1234-5678)<br/>
+<a href="javascript:void(0);" onclick="window.open('https://map.kakao.com/link/to/서울특별시 중구 남대문로 117', '37.567777883180234, 126.98225286058388', 'width=981, height=650')">길찾기
+</h3></div></div><br/>
 </div>
 </center>
 
@@ -157,7 +161,7 @@ body, html{
 <script>
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 mapOption = {
-    center: new kakao.maps.LatLng(37.567777883180234, 126.98225286058388), // 지도의 중심좌표
+    center: new kakao.maps.LatLng( 37.567777883180234, 126.98225286058388), // 지도의 중심좌표
     level: 3 // 지도의 확대 레벨
 };
 
@@ -176,7 +180,7 @@ geocoder.addressSearch('서울특별시 중구 남대문로 117', function(resul
         });
         
         var infowindow = new kakao.maps.InfoWindow({
-            content: '<div style="width:150px;text-align:center;padding:6px 0;">우리학원위치</div>'
+            content: '<div style="width:150px;text-align:center;padding:6px 0;">동아빌딩</div>'
         });
         infowindow.open(map, marker);
 
@@ -188,7 +192,6 @@ geocoder.addressSearch('서울특별시 중구 남대문로 117', function(resul
 		
 		</div>
 		
-<div class="ko"><h2 id="a1" align="center">이용해주셔서 감사합니다.</h2></div>
 
 </body>
 </html>
