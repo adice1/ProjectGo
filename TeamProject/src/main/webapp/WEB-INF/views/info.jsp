@@ -93,6 +93,9 @@ body, html{
 	}
 .ko{
      height : 200px;
+}
+.wo{
+     
 }	
 </style>
 <html>
@@ -124,7 +127,7 @@ body, html{
 <div class="qo"><h2 class="top1" align="center">3. 채팅</h2><br/>
 <h4 class="qa" align="center">- 실시간 채팅을 활용한 질문, 필지장 공유 등으로 학습의 서로의 부족한 지식을 보완할 수 있습니다.</h4></div>
 
-<center><div class="ao"><div class="ao3"><h3>위치, 지도</h3></div><h2 class="ao1" align="left">찾아오는 길</h2><br/>
+<center><div class="ao"><div class="ao3"><h3 class="wo">주소<br/> 전화번호(02-1234-5678)</h3></div><h2 class="ao1" align="left">찾아오는 길</h2><br/>
 <h4 class="ao2" align="left">위치는 밑에 지도를 참고해주세요.</h4>
 <div id="map" align="center">지도</div></center>
 		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=69ac8c008f5fb702ccd0bc81da8033a2"></script>
@@ -137,6 +140,7 @@ body, html{
 			var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
 		</script>
 		</div>
+		
 <div class="ko"></div>
 
 </body>
