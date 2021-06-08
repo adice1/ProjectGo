@@ -122,7 +122,7 @@ body, html{
 </head>
 <body class="zo">
 
-<div class="to"><h1 class="op" align="center"> 소개하기</h1></div>
+<div class="to"><h1 class="op" align="center">학습방 소개하기</h1></div>
 <center><div class="do"><h2 id="co">자격증 기출 문제풀이<br/>
 적절한 기출문제와 응용풀이 문제집</h2></div></center>
 
