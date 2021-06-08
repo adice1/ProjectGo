@@ -119,12 +119,6 @@ body, html{
 <head>
 </head>
 <body class="zo">
-<center>
-<div class="to"><h1 class="op">우리 공부방 소개하기</h1></div>
-</center>
-<div class="do"></div>
-<div class="go">
-
 
 <div class="to"><h1 class="op" align="center"> 소개하기</h1></div>
 <center><div class="do"><h2 id="co">자격증 기출 문제풀이<br/>
@@ -133,9 +127,7 @@ body, html{
 <div class="vo"><h2 class="mo" align="center">1. 맞춤형 기출문제</h2><br/> <h4 class="mo1" align="center">- 사용자는 정답률이 높은 문제 부터 시작하여 점수로 
 사용자 유형별 레벨을 나눠 레벨에 따라 문제가 출제 됩니다.<br/>- 또한 사용자는 해당 레벨 문제를 100점 맞을떄까지 
 반복 출제되며 100점일때 다음 레벨로 올라갈수있습니다. 그리고 각 유형레벨문제에서 자주 틀리는 경우 해당 유형 레벨이 강등됩니다.</h4><br/> 
-
 </div>
-
 
 <center><div class="so"><h2 class="top" align="center">2. 필기노트 기능 소개</h2><br/>
              <h4 class="top2" align="center">- 드래그로 그림, 글자를 자유롭게 필기가 가능합니다.</h4></div>
