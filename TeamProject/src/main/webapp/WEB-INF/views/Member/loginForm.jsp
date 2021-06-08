@@ -39,9 +39,9 @@ img {
 			
 			<td colspan="2" style="text-align : center;">
 			<br/>
-			<input style="width: 130px; height: 50px; " type="submit"value='로그인'/>
+			<input style="width: 160px; height: 60px; " type="submit"value='로그인'/>
 			<a href="javascript:kakaoLogin();"> 
-			<img src="https://www.gb.go.kr/Main/Images/ko/member/certi_kakao_login.png" style="width: 130px; height: 50px;"></a>
+			<img src="https://www.gb.go.kr/Main/Images/ko/member/certi_kakao_login.png" style="width: 160px; height: 60px;"></a>
 			</td>
 	</tr>
 </table>
