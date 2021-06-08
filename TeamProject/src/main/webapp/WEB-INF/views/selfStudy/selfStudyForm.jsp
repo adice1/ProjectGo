@@ -51,6 +51,15 @@ header {
     z-index: 1;
 }
 
+.styles{
+	font-size: 40px;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    height: 50px;
+}
+
 .canvas{   
    	width: 700px;
     height: 600px;
@@ -116,6 +125,7 @@ header {
     margin-bottom: 50px;
 }
 
+
 </style>	
 
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -125,24 +135,27 @@ header {
 $(document).ready(function(){
 	
 	let canvas = $("#jsCanvas")[0]
-	let ctx = canvas.getContext('2d');
-	let colors = $("#jsColors");
+	let ctx = canvas.getContext('2d')
+	let colors = $("#jsColors")
+	let mode = $("#fill")
 	
-	const W_CANVAS_SIZE = 700;
-	const H_CANVAS_SIZE = 600;
+	const W_CANVAS_SIZE = 700
+	const H_CANVAS_SIZE = 600
+	const INITIAL_COLOR = "#2c2c2c"
 	
-	const INITIAL_COLOR = "#2c2c2c";
+	ctx.fillStyle = "white"
+	ctx.fillRect(0, 0, W_CANVAS_SIZE, H_CANVAS_SIZE)
+	ctx.strokeStyle = "#2c2c2c"
+	ctx.fillStyle = "#2c2c2c"
+	ctx.lineWidth = 2.5
 	
-	ctx.fillStyle = "white";
-	ctx.fillRect(0, 0, W_CANVAS_SIZE, H_CANVAS_SIZE);
-
-	ctx.strokeStyle = "#2c2c2c";
-	ctx.fillStyle = "#2c2c2c";
-	ctx.lineWidth = 2.5;
-	
-	let target = $("#tab");
+	let target = $("#tab")
 	let colortab = $("#colortab")
-	let rangetab = $("#rangetab");
+	let rangetab = $("#rangetab")
+	
+// 	let font_style_tab = $("#font_style_tab")
+	font_thick_status = "normal";
+	font_style_status = "normal";
 	
 	let flag = $("#flag")
 	
@@ -162,13 +175,56 @@ $(document).ready(function(){
 	$("#color").click(function(){
 		colortab.toggle();
 		rangetab.hide()
-	})
+	}).mouseover(function(){
+		$(this).css("color", "00c471")
+		$(this).css("box-shadow", "0 0px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%");
+	}).mouseout(function(){
+		$(this).css("color", "black")
+		$(this).css("box-shadow", "");
+	});
 	
 	$("#range").click(function(){
 		rangetab.toggle()
 		colortab.hide()
+	}).mouseover(function(){
+		$(this).css("color", "00c471")
+		$(this).css("box-shadow", "0 0px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%");
+	}).mouseout(function(){
+		$(this).css("color", "black")
+		$(this).css("box-shadow", "");
 	});
 	
+	$("#font_thick").click(function(){
+		if(font_thick_status == "normal"){
+			$("#font_thick").css("font-weight", "bold")
+			font_thick_status = "bold";
+		}else{
+			$("#font_thick").css("font-weight", "normal") 
+			font_thick_status = "normal"
+		}
+	}).mouseover(function(){
+		$(this).css("color", "00c471")
+		$(this).css("box-shadow", "0 0px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%");
+	}).mouseout(function(){
+		$(this).css("color", "black")
+		$(this).css("box-shadow", "");
+	});
+		
+	$("#font_style").click(function(){
+		if(font_style_status == "normal"){
+			$("#font_style").css("font-style", "italic")
+			font_style_status = "italic"
+		}else{
+			$("#font_style").css("font-style", "normal")
+			font_style_status = "normal"
+		}
+	}).mouseover(function(){
+		$(this).css("color", "00c471")
+		$(this).css("box-shadow", "0 0px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%");
+	}).mouseout(function(){
+		$(this).css("color", "black")
+		$(this).css("box-shadow", "");
+	});
     
 //	파일 입출력  ////////////////////////////////////
 ///////////////////////////////////////////////// 
@@ -395,15 +451,29 @@ $(document).ready(function(){
 		const size = (e.target.value);
 		ctx.lineWidth = size;
 		$("#rangeprint").html(size)
-		
-	})
+	});
 	
-
-//////
+	$("#fill").on("click", function(e){
+		 if(filling === true){
+		        filling = false;
+		        mode.html("Fill");
+		    }else{
+		        filling = true;
+		        mode.html("Paint");
+		        ctx.fillStyle = ctx.strokeStyle;
+		    }
+	}).mouseover(function(){
+		$(this).css("color", "00c471")
+		$(this).css("box-shadow", "0 0px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%");
+	}).mouseout(function(){
+		$(this).css("color", "black")
+		$(this).css("box-shadow", "");
+	});
+		
 });    
 
 </script>
-
+<div class="styles" align="center" style="font-style: normal">normal</div>
 
 <body>
 
@@ -431,7 +501,7 @@ $(document).ready(function(){
 				<td id="StopWatch" colspan="6" align="center"></td>
 			</tr>
 			<tr colspan="6" align="center">
-					<td id="start" colspan="1" align="center">시작</td>
+					<td id="start" colspan="2" align="center">시작</td>
 					<td id="Pause" colspan="2" align="center">일시정지</td>
 					<td id="recode" colspan="2" align="center">저장</td>
 					<td></td>
@@ -440,15 +510,15 @@ $(document).ready(function(){
 			
 			<th colspan="6" align="center"><b>필기도구</b></th>
 			<tr>
-				<td id="color" colspan="1" align="center">Color</td>
+				<td id="color" colspan="2" align="center">Color</td>
 				<td id="range" colspan="2" align="center">Range</td>
-				<td id="paint" colspan="2" align="center">Fill</td>
+				<td id="fill" colspan="2" align="center">Fill</td>
 			</tr>
 			<tr>
-				<td>26</td>
-				<td>27</td>
-				<td>28</td>
-				<td>29</td>
+				<td id="font_style"align="center" style="font-size: 15px;">스타일</td>
+				<td id="font_thick" align="center" style="font-size: 15px;">굵기</td>
+				<td align="center">크기</td>
+				<td align="center">서체</td>
 			</tr>
 	</table>
 	
@@ -470,7 +540,6 @@ $(document).ready(function(){
 			<div class="controls__range" id="jsRange">
 				<div id="rangeprint" align="center"></div>
 				<input class="jsRange"  type="range" min="0.1" max="10.0" value="2.5" step="0.1">
-				
 			</div>
 	</div>
 
