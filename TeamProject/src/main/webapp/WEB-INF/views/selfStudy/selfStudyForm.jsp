@@ -50,7 +50,7 @@ header {
     font-size: 4em;
     z-index: 1;
 }
-
+	
 .styles{
 	font-size: 40px;
     margin-top: 10px;
@@ -95,6 +95,18 @@ header {
     box-shadow: 0 0px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%);
 }
 
+#font_view_tab{
+	display: none;
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    right: 17%;
+    left: 83.8%;
+    top: 175px;
+    border-radius: 15px;
+    box-shadow: 0 0px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%);
+}
+
 #colortab{
 	display: none;
     position: absolute;
@@ -125,7 +137,17 @@ header {
     margin-bottom: 50px;
 }
 
-
+.font_view{
+    font-size: 86px;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+.font_range{
+	width: 100px;
+    height: 80px;
+    margin-right: 50px;
+    margin-left: 50px;
+}
 </style>	
 
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -134,7 +156,10 @@ header {
 
 $(document).ready(function(){
 	
+	
 	let canvas = $("#jsCanvas")[0]
+	let canvas_mode = $("#canvas_mode")
+	var canvas_status = "write" //
 	let ctx = canvas.getContext('2d')
 	let colors = $("#jsColors")
 	let mode = $("#fill")
@@ -142,6 +167,7 @@ $(document).ready(function(){
 	const W_CANVAS_SIZE = 700
 	const H_CANVAS_SIZE = 600
 	const INITIAL_COLOR = "#2c2c2c"
+	
 	
 	ctx.fillStyle = "white"
 	ctx.fillRect(0, 0, W_CANVAS_SIZE, H_CANVAS_SIZE)
@@ -152,10 +178,11 @@ $(document).ready(function(){
 	let target = $("#tab")
 	let colortab = $("#colortab")
 	let rangetab = $("#rangetab")
+	let font_tab = $("#font_view_tab");
 	
-// 	let font_style_tab = $("#font_style_tab")
-	font_thick_status = "normal";
 	font_style_status = "normal";
+	font_thick_status = "normal";
+	let font_range = $(".font_range");
 	
 	let flag = $("#flag")
 	
@@ -170,11 +197,13 @@ $(document).ready(function(){
 	    target.toggle()
 	    rangetab.hide()
 	    colortab.hide()
+	    font_tab.hide()
 	});  
 	
 	$("#color").click(function(){
 		colortab.toggle();
 		rangetab.hide()
+		font_tab.hide()
 	}).mouseover(function(){
 		$(this).css("color", "00c471")
 		$(this).css("box-shadow", "0 0px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%");
@@ -186,6 +215,7 @@ $(document).ready(function(){
 	$("#range").click(function(){
 		rangetab.toggle()
 		colortab.hide()
+		font_tab.hide()
 	}).mouseover(function(){
 		$(this).css("color", "00c471")
 		$(this).css("box-shadow", "0 0px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%");
@@ -197,11 +227,16 @@ $(document).ready(function(){
 	$("#font_thick").click(function(){
 		if(font_thick_status == "normal"){
 			$("#font_thick").css("font-weight", "bold")
+			$(".font_view").css("font-weight", "bold")
 			font_thick_status = "bold";
 		}else{
 			$("#font_thick").css("font-weight", "normal") 
+			$(".font_view").css("font-weight", "normal")
 			font_thick_status = "normal"
 		}
+		rangetab.hide()
+		colortab.hide()
+		font_tab.show();
 	}).mouseover(function(){
 		$(this).css("color", "00c471")
 		$(this).css("box-shadow", "0 0px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%");
@@ -213,11 +248,16 @@ $(document).ready(function(){
 	$("#font_style").click(function(){
 		if(font_style_status == "normal"){
 			$("#font_style").css("font-style", "italic")
+			$(".font_view").css("font-style", "italic")
 			font_style_status = "italic"
 		}else{
 			$("#font_style").css("font-style", "normal")
+			$(".font_view").css("font-style", "normal")
 			font_style_status = "normal"
 		}
+		rangetab.hide()
+		colortab.hide()
+		font_tab.show();
 	}).mouseover(function(){
 		$(this).css("color", "00c471")
 		$(this).css("box-shadow", "0 0px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%");
@@ -226,7 +266,7 @@ $(document).ready(function(){
 		$(this).css("box-shadow", "");
 	});
     
-//	파일 입출력  ////////////////////////////////////
+/// 파일 입출력  ////////////////////////////////////
 ///////////////////////////////////////////////// 
     $("#newnote").click(function(){
 		ctx.fillStyle = "white";
@@ -413,31 +453,32 @@ $(document).ready(function(){
 
 	let painting = false
 	let filling = false
-	
-	$("#jsCanvas").click(function(){
-		if(filling){
-			ctx.fillRect(0, 0, W_CANVAS_SIZE, H_CANVAS_SIZE)
-		}
-	}).mousedown(function(){
-		painting = true
-	}).mouseup(function(){
-		painting = false
-	}).mouseleave(function(){
-		painting = false
-	}).on("mousemove", function(event){
-		const x = event.offsetX;
-	    const y = event.offsetY;
-	    if(!painting){
-	        ctx.beginPath();
-	        ctx.moveTo(x, y);
-	    } else {
-	        ctx.lineTo(x, y);
-	        ctx.stroke();
-	    }
-	}).on("contextmenu", function(event){
-		event.preventDefault();
-	})
-	
+	console.log(canvas_status)
+	if(canvas_status == "draw"){
+		$("#jsCanvas").click(function(){
+			if(filling){
+				ctx.fillRect(0, 0, W_CANVAS_SIZE, H_CANVAS_SIZE)
+			}
+		}).mousedown(function(){
+			painting = true
+		}).mouseup(function(){
+			painting = false
+		}).mouseleave(function(){
+			painting = false
+		}).on("mousemove", function(event){
+			const x = event.offsetX;
+		    const y = event.offsetY;
+		    if(!painting){
+		        ctx.beginPath();
+		        ctx.moveTo(x, y);
+		    } else {
+		        ctx.lineTo(x, y);
+		        ctx.stroke();
+		    }
+		}).on("contextmenu", function(event){
+			event.preventDefault();
+		})
+	}
 	$(".Colors").each(function(e){
 		$(this).click(function(event){
 			event.preventDefault();
@@ -469,7 +510,11 @@ $(document).ready(function(){
 		$(this).css("color", "black")
 		$(this).css("box-shadow", "");
 	});
+	
 		
+	$(".font_range").mousemove(function(){
+		$(".font_view").css("font-size", ($(".font_range").val()));
+	})
 });    
 
 </script>
@@ -508,17 +553,21 @@ $(document).ready(function(){
 					<td></td>
 			</tr>
 			
-			<th colspan="6" align="center"><b>필기도구</b></th>
+			<tr>
+				<td id="canvas_mode" colspan="6" align="center"><b>그리기 모드</b></td>
+			</tr>
+			
+			<th colspan="6" align="center"><b>그리기 도구</b></th>
 			<tr>
 				<td id="color" colspan="2" align="center">Color</td>
 				<td id="range" colspan="2" align="center">Range</td>
 				<td id="fill" colspan="2" align="center">Fill</td>
 			</tr>
+				<th colspan="6" align="center"><b>글쓰기 도구</b></th>
 			<tr>
-				<td id="font_style"align="center" style="font-size: 15px;">스타일</td>
-				<td id="font_thick" align="center" style="font-size: 15px;">굵기</td>
-				<td align="center">크기</td>
-				<td align="center">서체</td>
+				<td id="font_style" colspan="2" align="center" style="font-size: 15px;">스타일</td>
+				<td id="font_thick" colspan="2" align="center" style="font-size: 15px;">굵기</td>
+				<td align="center" colspan="2" >서체</td>
 			</tr>
 	</table>
 	
@@ -537,11 +586,18 @@ $(document).ready(function(){
 	</div>
 	
 	<div id="rangetab">
+			
 			<div class="controls__range" id="jsRange">
 				<div id="rangeprint" align="center"></div>
 				<input class="jsRange"  type="range" min="0.1" max="10.0" value="2.5" step="0.1">
 			</div>
 	</div>
+	
+	<div id="font_view_tab">
+		<div class="font_view" align="center">가</div>
+		<input class="font_range"  type="range" min="1.0" max="100.0" value="80.0" step="1.0">
+	</div>
+	
 
 </body>
 
