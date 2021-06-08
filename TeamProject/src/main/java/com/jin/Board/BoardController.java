@@ -48,6 +48,10 @@ public class BoardController {
 	@RequestMapping(value = "detailRead")
 	public String detailRead(Model model, @RequestParam String writeNo,
 			HttpSession session) {
+		String id =(String)session.getAttribute("id");
+		logger.warn("id :"+id);
+		model.addAttribute("sessionId", id);
+		
 		Map<String, Object>boardMap = iBoardServ.DetailRead(writeNo);
 		List<Board> Replylist = iBoardServ.DetailReply(writeNo);
 		model.addAttribute("btnName", "답변작성");
