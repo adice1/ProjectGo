@@ -189,6 +189,5 @@ geocoder.addressSearch('서울특별시 중구 남대문로 117', function(resul
 		</div>
 		
 <div class="ko"><h2 id="a1" align="center">이용해주셔서 감사합니다.</h2></div>
-
 </body>
 </html>
