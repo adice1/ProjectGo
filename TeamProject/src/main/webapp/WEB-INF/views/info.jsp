@@ -65,8 +65,8 @@ margin-bottom: 10px;
 }
 .ao{
     background: #EBF4FA;
-    height: 450px;
-    width: 600px;
+    height: 580px;
+    width: 720px;
 }
 .ao1{
     padding: 20px;
@@ -78,7 +78,7 @@ margin-bottom: 10px;
 .ao3{
 
      float: right;
-     height: 450px;
+     height: 580px;
      width: 150px;
      background: #EBEBEB;
 }
@@ -95,13 +95,25 @@ body, html{
 		
 	}
 .ko{
-     height : 200px;
+     height : 300px;
+     
+}
+.a1{
+      
 }
 .wo{
-
   padding: 20px;
-     
-}	
+  width: 180px;
+  float: right;
+  height : 410px;
+  background: #EBEBEB;   
+}
+.no{
+   margin-top: 50px;
+    
+}
+    
+
 </style>
 <html>
 <head>
@@ -122,84 +134,61 @@ body, html{
 </center>
 
 <div class="qo"><h2 class="top1" align="center">3. 채팅</h2><br/>
-<h4 class="qa" align="center">- 실시간 채팅을 활용한 질문, 필지장 공유 등으로 학습의 서로의 부족한 지식을 보완할 수 있습니다.</h4></div>
+<h4 class="qa" align="center">- 실시간 채팅을 활용한 질문, 필기장 공유 등으로 학습의 서로의 부족한 지식을 보완하여 다양한 지식습득과 다양한
+         <br/>사람들과 소통함으로써 커뮤니케이션능력도 향상시킬수 있습니다.</h4></div>
 
-<center><div class="ao"><div class="ao3"><h3 class="wo">주소<br/> 전화번호(02-1234-5678)</h3></div><h2 class="ao1" align="left">찾아오는 길</h2><br/>
+
+<div class="no">
+<center><p style="margin-top:-12px">
+    <em class="link">
+        <a href="javascript:void(0);" onclick="window.open('http://fiy.daum.net/fiy/map/CsGeneral.daum', '_blank', 'width=981, height=650')">
+            혹시 주소 결과가 잘못 나오는 경우에는 여기에 제보해주세요.
+        </a>
+    </em>
+</p></center>
+<center><div class="ao"><h2 class="ao1" align="left">4. 찾아오는 길</h2><br/>
 <h4 class="ao2" align="left">위치는 밑에 지도를 참고해주세요.</h4>
-<div id="map" align="center">지도</div></center>
-		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=69ac8c008f5fb702ccd0bc81da8033a2"></script>
-		<script>
-			var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
-			var options = { //지도를 생성할 때 필요한 기본 옵션
-				center: new kakao.maps.LatLng(37.160865, 127.754386), //지도의 중심좌표.
-				level: 13 //지도의 레벨(확대, 축소 정도)
-			};
-			var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
-			var geocoder = new kakao.maps.services.Geocoder();
+<div id="map" style="width:400px;height:360px;margin-top:40px;"></div>
+<div><h3 class="wo">주소<br/> 전화번호(02-1234-5678)</h3></div></div><br/>
+</div>
+</center>
 
-			var marker = new kakao.maps.Marker(), // 클릭한 위치를 표시할 마커입니다
-			    infowindow = new kakao.maps.InfoWindow({zindex:1}); // 클릭한 위치에 대한 주소를 표시할 인포윈도우입니다
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=69ac8c008f5fb702ccd0bc81da8033a2&libraries=services,clusterer,drawing"></script>
+<script>
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+mapOption = {
+    center: new kakao.maps.LatLng(37.567777883180234, 126.98225286058388), // 지도의 중심좌표
+    level: 3 // 지도의 확대 레벨
+};
 
-			// 현재 지도 중심좌표로 주소를 검색해서 지도 좌측 상단에 표시합니다
-			searchAddrFromCoords(map.getCenter(), displayCenterInfo);
+var map = new kakao.maps.Map(mapContainer, mapOption);
 
-			// 지도를 클릭했을 때 클릭 위치 좌표에 대한 주소정보를 표시하도록 이벤트를 등록합니다
-			kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
-			    searchDetailAddrFromCoords(mouseEvent.latLng, function(result, status) {
-			        if (status === kakao.maps.services.Status.OK) {
-			            var detailAddr = !!result[0].road_address ? '<div>도로명주소 : ' + result[0].road_address.address_name + '</div>' : '';
-			            detailAddr += '<div>지번 주소 : ' + result[0].address.address_name + '</div>';
-			            
-			            var content = '<div class="bAddr">' +
-			                            '<span class="title">법정동 주소정보</span>' + 
-			                            detailAddr + 
-			                        '</div>';
+var geocoder = new kakao.maps.services.Geocoder();
+geocoder.addressSearch('서울특별시 중구 남대문로 117', function(result, status) {
+	if (status === kakao.maps.services.Status.OK) {
 
-			            // 마커를 클릭한 위치에 표시합니다 
-			            marker.setPosition(mouseEvent.latLng);
-			            marker.setMap(map);
+        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 
-			            // 인포윈도우에 클릭한 위치에 대한 법정동 상세 주소정보를 표시합니다
-			            infowindow.setContent(content);
-			            infowindow.open(map, marker);
-			        }   
-			    });
-			});
+        // 결과값으로 받은 위치를 마커로 표시합니다
+        var marker = new kakao.maps.Marker({
+            map: map,
+            position: coords
+        });
+        
+        var infowindow = new kakao.maps.InfoWindow({
+            content: '<div style="width:150px;text-align:center;padding:6px 0;">우리학원위치</div>'
+        });
+        infowindow.open(map, marker);
 
-			// 중심 좌표나 확대 수준이 변경됐을 때 지도 중심 좌표에 대한 주소 정보를 표시하도록 이벤트를 등록합니다
-			kakao.maps.event.addListener(map, 'idle', function() {
-			    searchAddrFromCoords(map.getCenter(), displayCenterInfo);
-			});
-
-			function searchAddrFromCoords(coords, callback) {
-			    // 좌표로 행정동 주소 정보를 요청합니다
-			    geocoder.coord2RegionCode(coords.getLng(), coords.getLat(), callback);         
-			}
-
-			function searchDetailAddrFromCoords(coords, callback) {
-			    // 좌표로 법정동 상세 주소 정보를 요청합니다
-			    geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
-			}
-
-			// 지도 좌측상단에 지도 중심좌표에 대한 주소정보를 표출하는 함수입니다
-			function displayCenterInfo(result, status) {
-			    if (status === kakao.maps.services.Status.OK) {
-			        var infoDiv = document.getElementById('centerAddr');
-
-			        for(var i = 0; i < result.length; i++) {
-			            // 행정동의 region_type 값은 'H' 이므로
-			            if (result[i].region_type === 'H') {
-			                infoDiv.innerHTML = result[i].address_name;
-			                break;
-			            }
-			        }
-			    }    
-			}
-		</script>
+        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+        map.setCenter(coords);
+    } 
+}); 
+</script>
 		
 		</div>
 		
-<div class="ko"></div>
+<div class="ko"><h2 id="a1" align="center">이용해주셔서 감사합니다.</h2></div>
 
 </body>
 </html>
