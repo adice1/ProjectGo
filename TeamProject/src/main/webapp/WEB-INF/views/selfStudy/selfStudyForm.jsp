@@ -582,8 +582,8 @@ $(document).ready(function(){
 <div class="styles" align="center" style="font-style: normal"></div>
 
 <body>
-	<input type="text" id="msg">
-	<div id="msgout"></div>
+	<input type="text" id="msg" style="margin-left: 500px;">
+	<div id="msgout" style="display : none"></div>
 
 	<input type="hidden" id="usrId" value="<%=usrId %>" />
 	<input type="hidden" id="flag" value="false">
